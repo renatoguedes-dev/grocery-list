@@ -1,0 +1,12 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background-image: url(../../assets/images/bg-photo1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

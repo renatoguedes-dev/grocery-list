@@ -1,0 +1,112 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    position: relative;
+}
+
+.image {
+    height: 500px;
+}
+
+.signUpForm {
+    background: linear-gradient(
+        to bottom,
+        #c3effb 0%,
+        /* Start with #C3EFFB */ #eff2f6 45%,
+        /* Transition to #EFF2F6, covering 75% of the form */ #eff2f6 75%,
+        /* Continue #EFF2F6 until 75% */ #fefefe 100% /* End with #FEFEFE */
+    );
+    width: 450px;
+    height: 475px;
+    border-radius: 16px;
+    padding: 48px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.inputDivs {
+    padding: 14px;
+    border: 2px solid var(--light-grey);
+    border-radius: 12px;
+    background-color: var(--light-grey);
+    height: 45px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.inputs {
+    border: 2px solid transparent;
+    background-color: var(--light-grey);
+    height: 41px;
+    width: 100%;
+    font-size: 18px;
+    outline: none;
+    color: var(--dark-grey);
+}
+
+.inputDivs:focus-within {
+    border: 2px solid var(--dark-grey);
+    border-color: var(--dark-grey);
+}
+
+.inputs::placeholder {
+    color: var(--dark-grey);
+    font-size: 18px;
+}
+
+.imageDiv {
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons {
+    width: 100%;
+    filter: invert(62%) sepia(0%) saturate(59%) hue-rotate(279deg)
+        brightness(84%) contrast(91%);
+}
+
+.showPassword {
+    cursor: pointer;
+    width: 20px;
+}
+
+.accessAccountTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--navy-blue);
+}
+
+.loginBtn {
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: black;
+    background-color: var(--navy-blue);
+    color: white;
+}
+
+.loginBtn:focus {
+    border: 2px solid var(--darker-grey);
+}
+
+.signUpLink,
+.forgotSignUp {
+    align-self: flex-end;
+    color: var(--darker-grey);
+    font-size: 16px;
+}
+
+.signUpSpan {
+    font-weight: 500;
+}
