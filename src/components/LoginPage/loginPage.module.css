@@ -1,10 +1,11 @@
-.root {
+.mainContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 95.98px);
+    min-width: 100%;
     background-image: url(../../assets/images/bg-photo1.jpg);
     background-size: cover;
     background-position: center;

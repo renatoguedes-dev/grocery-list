@@ -20,7 +20,7 @@ const LoginForm = () => {
     return (
         <div className={style.mainContainer}>
             <form action="" className={style.loginForm}>
-                <p className={style.accessAccountTitle}>Access your account</p>
+                <p className={style.accessAccountTitle}>Welcome back</p>
                 <div className={style.inputDivs}>
                     <div className={style.imageDiv}>
                         <img
@@ -60,7 +60,7 @@ const LoginForm = () => {
                         />
                     </div>
                 </div>
-                <Link to="/forgot_password" className={style.signUpLink}>
+                <Link to="/reset-password" className={style.signUpLink}>
                     <p className={style.forgotSignUp}>Forgot password?</p>
                 </Link>
                 <button type="submit" className={style.loginBtn}>

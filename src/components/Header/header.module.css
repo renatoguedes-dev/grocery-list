@@ -4,6 +4,7 @@
     display: flex;
     padding: 24px;
     justify-content: space-between;
+    background-color: var(--darker-grey);
 }
 
 .nameLogo {
@@ -11,24 +12,31 @@
     gap: 10px;
     align-items: center;
     justify-content: center;
-    color: var(--navy-blue);
+    color: white;
+    user-select: none;
+    text-decoration: none;
 }
 
 .logo {
     width: 48px;
 }
 
-.loggedDiv {
+.navLinks {
     display: flex;
     align-items: center;
+    gap: 16px;
 }
 
-.loginLink {
+.links {
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
     color: white;
-    background-color: var(--navy-blue);
+    background-color: var(--darker-grey);
     padding: 12px 14px;
     border-radius: 10px;
+}
+
+.signUpLink {
+    background-color: var(--navy-blue);
 }

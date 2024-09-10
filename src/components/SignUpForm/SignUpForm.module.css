@@ -14,9 +14,9 @@
     background: linear-gradient(
         to bottom,
         #c3effb 0%,
-        /* Start with #C3EFFB */ #eff2f6 45%,
-        /* Transition to #EFF2F6, covering 75% of the form */ #eff2f6 75%,
-        /* Continue #EFF2F6 until 75% */ #fefefe 100% /* End with #FEFEFE */
+        #eff2f6 45%,
+        #eff2f6 75%,
+        #fefefe 100%
     );
     width: 450px;
     height: 475px;

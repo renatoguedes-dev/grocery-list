@@ -1,5 +1,5 @@
 import style from "./SignUpForm.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userIcon from "../../assets/images/user.png";
 import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
@@ -12,6 +12,18 @@ const SignUpForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
     const confirmPasswordInputRef = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
     const handleShowPassword = () => {
         if (passwordInputRef.current) {
@@ -22,15 +34,50 @@ const SignUpForm = () => {
 
     const handleShowConfirmPassword = () => {
         if (confirmPasswordInputRef.current) {
-            confirmPasswordInputRef.current.type = showConfirmPassword ? "password" : "text";
+            confirmPasswordInputRef.current.type = showConfirmPassword
+                ? "password"
+                : "text";
         }
         setShowConfirmPassword((previous) => !previous);
     };
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("http://localhost:3000/api/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("User registered successfully!");
+                navigate("/login");
+            } else {
+                // Handle and log the detailed error message
+                console.log("Error Message:", data.message);
+                if (data.errors) {
+                    data.errors.forEach(
+                        (error: { field: string; message: string }) => {
+                            console.log(`${error.field}: ${error.message}`);
+                        }
+                    );
+                }
+            }
+        } catch (error) {
+            console.error("An error occurred during signup:", error);
+        }
+    };
+
     return (
         <div className={style.mainContainer}>
-            <form action="" className={style.signUpForm}>
-                <p className={style.accessAccountTitle}>Create New Account</p>
+            <form className={style.signUpForm} onSubmit={handleSubmit}>
+                <p className={style.accessAccountTitle}>Create your account</p>
                 <div className={style.inputDivs}>
                     <div className={style.imageDiv}>
                         <img
@@ -41,7 +88,10 @@ const SignUpForm = () => {
                     </div>
                     <input
                         type="text"
+                        name="name"
                         placeholder="Name"
+                        value={formData.name}
+                        onChange={handleInputChange}
                         className={style.inputs}
                         required
                     />
@@ -56,7 +106,10 @@ const SignUpForm = () => {
                     </div>
                     <input
                         type="email"
+                        name="email"
                         placeholder="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
                         className={style.inputs}
                         required
                     />
@@ -71,7 +124,10 @@ const SignUpForm = () => {
                     </div>
                     <input
                         type="password"
+                        name="password"
                         placeholder="Password"
+                        value={formData.password}
+                        onChange={handleInputChange}
                         className={style.inputs}
                         ref={passwordInputRef}
                         required
@@ -95,7 +151,10 @@ const SignUpForm = () => {
                     </div>
                     <input
                         type="password"
+                        name="confirmPassword"
                         placeholder="Confirm Password"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
                         className={style.inputs}
                         ref={confirmPasswordInputRef}
                         required
@@ -109,7 +168,7 @@ const SignUpForm = () => {
                         />
                     </div>
                 </div>
-                
+
                 <button type="submit" className={style.loginBtn}>
                     Sign Up
                 </button>

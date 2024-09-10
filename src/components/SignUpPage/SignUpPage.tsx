@@ -3,9 +3,9 @@ import style from "./SignUpPage.module.css"
 
 const SignUp = () => {
     return (
-        <div className={style.root}>
+        <main className={style.mainContainer}>
             <SignUpForm />
-        </div>
+        </main>
     );
 };
 

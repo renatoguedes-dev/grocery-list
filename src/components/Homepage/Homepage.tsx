@@ -1,21 +1,16 @@
 import style from "./homepage.module.css";
 import Header from "../Header/Header";
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 function Homepage() {
+    const [activePage, setActivePage] = useState<string>("homepage");
+
     return (
         <div className={style.root}>
-            <Header />
+            <Header activePage={activePage} setActivePage={setActivePage}/>
 
-            <div className={style.messageDiv}>
-                <h2 className={style.message}>
-                    Always forgetting what you need when you go grocery
-                    shopping?
-                </h2>
-                <h2 className={style.message}>
-                    Create a grocery list based on what you have at home, or
-                    start a custom list just for you.
-                </h2>
-            </div>
+            <Outlet />
         </div>
     );
 }
