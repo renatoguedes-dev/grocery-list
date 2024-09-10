@@ -1,13 +1,12 @@
 import style from "./header.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import { useContext } from "react";
+import PageContext from "../Contexts/PageContext";
 
-interface HeaderProps {
-    activePage: string;
-    setActivePage: React.Dispatch<React.SetStateAction<string>>;
-}
+const Header = () => {
+    const { activeSection } = useContext(PageContext);
 
-const Header: React.FC<HeaderProps> = ({ activePage }) => {
     return (
         <header className={style.header}>
             <Link to="/" className={style.nameLogo}>
@@ -17,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ activePage }) => {
                 </h1>
             </Link>
 
-            {activePage === "homepage" && (
+            {activeSection === "homepage" && (
                 <nav className={style.navLinks}>
                     <Link
                         to="/login"

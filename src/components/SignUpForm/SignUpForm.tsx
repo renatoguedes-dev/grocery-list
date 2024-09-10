@@ -1,13 +1,16 @@
 import style from "./SignUpForm.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import userIcon from "../../assets/images/user.png";
 import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import PageContext from "../Contexts/PageContext";
 
 const SignUpForm = () => {
+    const { setCreatedUserEmail } = useContext(PageContext);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
@@ -45,22 +48,22 @@ const SignUpForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:3000/api/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+            const response = await axios.post(
+                "http://localhost:3000/api/signup",
+                formData
+            );
 
-            const data = await response.json();
+            console.log(response);
 
-            if (response.ok) {
-                console.log("User registered successfully!");
-                navigate("/login");
-            } else {
-                // Handle and log the detailed error message
+            setCreatedUserEmail(response.data.createdUser.email)
+
+            console.log("User registered successfully!");
+            navigate("/welcome");
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const { data } = error.response || {};
                 console.log("Error Message:", data.message);
+
                 if (data.errors) {
                     data.errors.forEach(
                         (error: { field: string; message: string }) => {
@@ -68,9 +71,12 @@ const SignUpForm = () => {
                         }
                     );
                 }
+            } else {
+                console.error(
+                    "An unexpected error occurred during signup: ",
+                    (error as Error).message
+                );
             }
-        } catch (error) {
-            console.error("An error occurred during signup:", error);
         }
     };
 
@@ -130,6 +136,7 @@ const SignUpForm = () => {
                         onChange={handleInputChange}
                         className={style.inputs}
                         ref={passwordInputRef}
+                        minLength={8}
                         required
                     />
                     <div className={style.imageDiv}>
@@ -157,6 +164,7 @@ const SignUpForm = () => {
                         onChange={handleInputChange}
                         className={style.inputs}
                         ref={confirmPasswordInputRef}
+                        minLength={8}
                         required
                     />
                     <div className={style.imageDiv}>

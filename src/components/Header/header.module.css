@@ -24,7 +24,7 @@
 .navLinks {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
 }
 
 .links {
@@ -32,11 +32,35 @@
     font-size: 16px;
     font-weight: 500;
     color: white;
-    background-color: var(--darker-grey);
+}
+
+.loginLink {
+    background-color: var(--navy-blue);
     padding: 12px 14px;
     border-radius: 10px;
 }
 
+.loginLink:hover {
+    background-color: var(--navy-blue-hover);
+}
+
 .signUpLink {
-    background-color: var(--navy-blue);
+    position: relative;
+    padding: 4px 0;
+}
+
+.signUpLink::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px; /* Adjust thickness as needed */
+    bottom: 0;
+    left: 50%;
+    background-color: white;
+    transition: width 0.5s ease;
+    transform: translateX(-50%);
+}
+
+.signUpLink:hover::after {
+    width: 100%;
 }
