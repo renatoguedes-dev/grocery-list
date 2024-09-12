@@ -82,21 +82,21 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: var(--navy-blue);
+    color: var(--main-color);
 }
 
-.loginBtn {
+.signUpBtn {
     padding: 10px;
     border: 2px solid white;
     border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
     outline: black;
-    background-color: var(--navy-blue);
+    background-color: var(--main-color);
     color: white;
 }
 
-.loginBtn:focus {
+.signUpBtn:focus {
     border: 2px solid var(--darker-grey);
 }
 

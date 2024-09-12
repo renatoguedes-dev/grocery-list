@@ -12,7 +12,10 @@ function App() {
     const location = useLocation();
 
     useEffect(() => {
-        const section = location.pathname.split("/")[1] || "homepage";
+        const section = location.pathname.split("/")[location.pathname.split("/").length - 1] || "homepage";
+
+        console.log(section);
+        
 
         setActiveSection(section);
     }, [location]);

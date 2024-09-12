@@ -1,0 +1,58 @@
+.mainContainer {
+    padding: 48px 16px;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-top: 24px;
+}
+
+.tableHead {
+    font-size: 24px;
+}
+
+.mainContainer th,
+.mainContainer td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.quantityControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.controlButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.buttons {
+    padding: 8px;
+}
+
+.input {
+    border: none;
+    background-color: var(--light-blue);
+    padding: 5px;
+    -moz-appearance: textfield; /* Hide the spinner arrows in Firefox */
+    width: 40px;
+    font-size: 18px;
+    text-align: end;
+    outline: none;
+}
+
+.input:focus {
+    border: 2px solid var(--main-color);
+    border-radius: 5px;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

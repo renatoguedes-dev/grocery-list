@@ -5,12 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 const WelcomePage = () => {
     const navigate = useNavigate();
-    const { createdUserEmail, setCreatedUserEmail } = useContext(PageContext);
+    const { createdUserEmail, setCreatedUserEmail, setActiveSection } =
+        useContext(PageContext);
     const [userEmail, setUserEmail] = useState<string | null>(null);
 
     useEffect(() => {
+        setActiveSection("welcome");
+
         if (!createdUserEmail) {
             navigate("/");
+            setActiveSection("homepage");
         } else {
             setUserEmail(createdUserEmail);
             setCreatedUserEmail(null);

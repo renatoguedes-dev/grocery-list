@@ -5,6 +5,9 @@ import SignUp from "./Pages/SignUpPage/SignUpPage";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import ResetPassword from "./Pages/ResetPassword/resetPassword";
+import Dashboard from "./Pages/DashboardPage/Dashboard";
+import InventoryPage from "./components/Inventory/Inventory";
+import MyLists from "./components/MyLists/MyLists";
 
 const routes = [
     {
@@ -28,10 +31,23 @@ const routes = [
                 path: "/login",
                 element: <LoginPage />,
             },
-
             {
                 path: "/reset-password",
                 element: <ResetPassword />,
+            },
+            {
+                path: "/dashboard",
+                element: <Dashboard />,
+                children: [
+                    {
+                        index: true,
+                        element: <MyLists />,
+                    },
+                    {
+                        path: "/dashboard/inventory",
+                        element: <InventoryPage />,
+                    },
+                ],
             },
         ],
     },

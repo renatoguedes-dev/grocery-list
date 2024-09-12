@@ -1,8 +1,9 @@
 import style from "./header.module.css";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
 import { useContext } from "react";
 import PageContext from "../Contexts/PageContext";
+import logo from "../../assets/images/logo.png";
+import profileIcon from "../../assets/images/profile.png";
 
 const Header = () => {
     const { activeSection } = useContext(PageContext);
@@ -31,6 +32,20 @@ const Header = () => {
                         Sign Up
                     </Link>
                 </nav>
+            )}
+
+            {(activeSection === "dashboard" || activeSection === "inventory") && (
+                <Link
+                    to="/dashboard/profile"
+                    className={`${style.links} ${style.profileLink}`}
+                >
+                    <img
+                        src={profileIcon}
+                        alt="user icon"
+                        className={style.profileIcon}
+                    />
+                    <p>Profile</p>
+                </Link>
             )}
         </header>
     );

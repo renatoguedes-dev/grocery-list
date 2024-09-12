@@ -82,7 +82,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: var(--navy-blue);
+    color: var(--main-color);
 }
 
 .loginBtn {
@@ -92,7 +92,7 @@
     font-size: 16px;
     cursor: pointer;
     outline: black;
-    background-color: var(--navy-blue);
+    background-color: var(--main-color);
     color: white;
 }
 

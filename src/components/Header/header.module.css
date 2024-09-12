@@ -4,7 +4,7 @@
     display: flex;
     padding: 24px;
     justify-content: space-between;
-    background-color: var(--darker-grey);
+    background-color: var(--main-color);
 }
 
 .nameLogo {
@@ -34,14 +34,16 @@
     color: white;
 }
 
-.loginLink {
-    background-color: var(--navy-blue);
+.loginLink,
+.profileLink {
+    background-color: var(--darker-grey);
     padding: 12px 14px;
     border-radius: 10px;
 }
 
-.loginLink:hover {
-    background-color: var(--navy-blue-hover);
+.loginLink:hover,
+.profileLink:hover {
+    background-color: var(--darker-grey-hover);
 }
 
 .signUpLink {
@@ -63,4 +65,18 @@
 
 .signUpLink:hover::after {
     width: 100%;
+}
+
+.profileIcon {
+    width: 18px;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(102deg)
+        brightness(104%) contrast(105%);
+}
+
+.profileLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    /* font-size: 18px; */
 }

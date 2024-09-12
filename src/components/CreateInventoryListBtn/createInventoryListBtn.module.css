@@ -1,0 +1,13 @@
+.createListBtn {
+    border: none;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: white;
+}
+
+.createListBtn:hover {
+    background-color: var(--main-color-hover);
+}

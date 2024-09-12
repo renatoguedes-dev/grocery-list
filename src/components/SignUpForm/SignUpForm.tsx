@@ -177,7 +177,7 @@ const SignUpForm = () => {
                     </div>
                 </div>
 
-                <button type="submit" className={style.loginBtn}>
+                <button type="submit" className={style.signUpBtn}>
                     Sign Up
                 </button>
 

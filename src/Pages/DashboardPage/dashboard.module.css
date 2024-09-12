@@ -1,0 +1,6 @@
+.mainContainer {
+    min-height: calc(100vh - 95.98px);
+    min-width: 100%;
+    display: flex;
+    gap: 24px;
+}
