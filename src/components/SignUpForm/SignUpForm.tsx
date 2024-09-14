@@ -169,7 +169,7 @@ const SignUpForm = () => {
                     />
                     <div className={style.imageDiv}>
                         <img
-                            src={showPassword ? eyeOpen : eyeHidden}
+                            src={showConfirmPassword ? eyeOpen : eyeHidden}
                             alt="show/hide password icon"
                             className={`${style.icons} ${style.showPassword}`}
                             onClick={handleShowConfirmPassword}

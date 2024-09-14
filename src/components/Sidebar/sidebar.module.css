@@ -3,13 +3,13 @@
     flex-direction: column;
     color: var(--darker-grey);
     border-right: 1px solid var(--darker-grey);
-    min-width: 250px;
+    min-width: 180px;
 }
 
-
 .icons {
-    width: 24px;
-    filter: invert(20%) sepia(32%) saturate(989%) hue-rotate(178deg) brightness(92%) contrast(94%);
+    width: 20px;
+    filter: invert(20%) sepia(32%) saturate(989%) hue-rotate(178deg)
+        brightness(92%) contrast(94%);
 }
 
 .nav {
@@ -21,13 +21,13 @@
 .navLink {
     color: var(--main-color);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     display: flex;
     gap: 8px;
     justify-content: flex-start;
     align-items: center;
-    padding: 24px;
+    padding: 16px;
 }
 
 .navLink:hover:not(.active) {

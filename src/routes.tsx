@@ -8,6 +8,7 @@ import ResetPassword from "./Pages/ResetPassword/resetPassword";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
 import InventoryPage from "./components/Inventory/Inventory";
 import MyLists from "./components/MyLists/MyLists";
+import Profile from "./components/Profile/Profile";
 
 const routes = [
     {
@@ -46,6 +47,10 @@ const routes = [
                     {
                         path: "/dashboard/inventory",
                         element: <InventoryPage />,
+                    },
+                    {
+                        path: "/dashboard/profile",
+                        element: <Profile />,
                     },
                 ],
             },

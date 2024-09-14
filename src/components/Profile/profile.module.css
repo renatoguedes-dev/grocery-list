@@ -1,32 +1,50 @@
 .mainContainer {
+    padding: 36px 16px;
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.personalDataDiv {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
     position: relative;
 }
 
-.image {
-    height: 500px;
+.span {
+    font-weight: bold;
+    margin-right: 10px;
 }
 
-.loginForm {
-    background: linear-gradient(
-        to bottom,
-        #c3effb 0%,
-        #eff2f6 45%,
-        #eff2f6 75%,
-        #fefefe 100%
-    );
+.firstPasswordBtn {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    background-color: var(--main-color);
+    color: white;
+    width: fit-content;
+    align-self: center;
+}
+
+.changePasswordForm {
+    background-color: var(--main-color);
     width: 450px;
-    height: 475px;
     border-radius: 16px;
-    padding: 48px 48px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 20px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    left: -10px;
 }
 
 .inputDivs {
@@ -45,7 +63,7 @@
     background-color: var(--light-grey);
     height: 41px;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     outline: none;
     color: var(--dark-grey);
 }
@@ -57,7 +75,7 @@
 
 .inputs::placeholder {
     color: var(--dark-grey);
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .imageDiv {
@@ -78,35 +96,33 @@
     width: 20px;
 }
 
-.accessAccountTitle {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: var(--main-color);
-}
-
-.loginBtn {
+.changePasswordBtn {
     padding: 10px;
     border: 2px solid white;
     border-radius: 12px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    outline: black;
-    background-color: var(--main-color);
-    color: white;
+    outline: white;
+    background-color: white;
+    color: var(--dark-grey);
+    width: fit-content;
+    align-self: center;
 }
 
-.loginBtn:focus {
-    border: 2px solid var(--darker-grey);
+.inputParent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.signUpLink,
-.forgotSignUp {
-    align-self: flex-end;
-    color: var(--darker-grey);
-    font-size: 16px;
+.passwordError {
+    color: red;
+    text-align: end;
+    display: none;
 }
 
-.signUpSpan {
-    font-weight: 500;
+.activateError {
+    display: block;
 }
