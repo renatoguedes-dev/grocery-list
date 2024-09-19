@@ -1,4 +1,4 @@
-import loggedUser from "../In-memory-repository/loggedUser";
+import usersDatabase from "../In-memory-repository/usersDatabase";
 
 interface IChangePasswordForm {
     oldPassword: string;
@@ -6,17 +6,24 @@ interface IChangePasswordForm {
     confirmNewPassword: string;
 }
 
-function handlePasswordChange(formData: IChangePasswordForm): boolean {
+function handlePasswordChange(
+    loggedUserId: number,
+    formData: IChangePasswordForm
+): boolean {
+    const foundUser = usersDatabase.find(
+        (user) => user.userId === loggedUserId
+    );
 
-    if (formData.newPassword !== formData.confirmNewPassword) {
+    if (!foundUser) {
+        return false;
+    }
+
+    if (foundUser.password !== formData.oldPassword) {
         return false
     }
 
-    if (formData.oldPassword === loggedUser.password) {
-        loggedUser.password = formData.newPassword
-    }
-
-    return true
+    foundUser.password = formData.newPassword;
+    return true;
 }
 
 export default handlePasswordChange;

@@ -1,14 +1,24 @@
 import style from "./loginForm.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import usersDatabase from "../../In-memory-repository/usersDatabase";
+import PageContext from "../Contexts/PageContext";
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+    const { loggedUser, setLoggedUser } = useContext(PageContext);
+
     const [showPassword, setShowPassword] = useState(false);
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
+
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
 
     const handleShowPassword = () => {
         if (passwordInputRef.current) {
@@ -17,9 +27,30 @@ const LoginForm = () => {
         setShowPassword((previous) => !previous);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const userFound = usersDatabase.find(
+            (user) =>
+                formData.email === user.email &&
+                formData.password === user.password
+        );
+
+        if (!userFound) {
+            return alert("Incorrect e-mail or password.");
+        }
+
+        setLoggedUser(userFound);
+        navigate("/dashboard");
+    };
+
     return (
         <div className={style.mainContainer}>
-            <form action="" className={style.loginForm}>
+            <form className={style.loginForm} onSubmit={handleSubmit}>
                 <p className={style.accessAccountTitle}>Welcome back</p>
                 <div className={style.inputDivs}>
                     <div className={style.imageDiv}>
@@ -31,7 +62,9 @@ const LoginForm = () => {
                     </div>
                     <input
                         type="email"
+                        name="email"
                         placeholder="Email"
+                        onChange={handleInputChange}
                         className={style.inputs}
                         required
                     />
@@ -46,7 +79,9 @@ const LoginForm = () => {
                     </div>
                     <input
                         type="password"
+                        name="password"
                         placeholder="Password"
+                        onChange={handleInputChange}
                         className={style.inputs}
                         ref={passwordInputRef}
                         required

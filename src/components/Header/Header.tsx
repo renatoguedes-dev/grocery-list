@@ -6,7 +6,7 @@ import logo from "../../assets/images/logo.png";
 import profileIcon from "../../assets/images/profile.png";
 
 const Header = () => {
-    const { activeSection } = useContext(PageContext);
+    const { activeSection, loggedUser } = useContext(PageContext);
 
     return (
         <header className={style.header}>
@@ -17,7 +17,7 @@ const Header = () => {
                 </h1>
             </Link>
 
-            {activeSection === "homepage" && (
+            {!loggedUser && activeSection === "homepage" && (
                 <nav className={style.navLinks}>
                     <Link
                         to="/login"
@@ -44,7 +44,7 @@ const Header = () => {
                         alt="user icon"
                         className={style.profileIcon}
                     />
-                    <p>Profile</p>
+                    <p>{loggedUser?.name}</p>
                 </Link>
             )}
         </header>

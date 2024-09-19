@@ -20,6 +20,7 @@ export const validateFields = (
             ref.current.textContent = "This field cannot be empty *";
             hasError = true;
         } else if (value.length < 8 && ref.current) {
+            console.log(value.length);
             ref.current.classList.add(errorClass);
             ref.current.textContent =
                 "Password must be at least 8 characters *";
@@ -37,7 +38,12 @@ export const validatePasswordsMatch = (
     errorClass: string
 ) => {
     if (password !== confirmPassword) {
-        refs.forEach((ref) => ref.current?.classList.add(errorClass));
+        refs.forEach((ref) => {
+            if (ref.current) {
+                ref.current.classList.add(errorClass);
+                ref.current.textContent = "The passwords must match *";
+            }
+        });
         return true;
     }
     return false;

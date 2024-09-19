@@ -1,21 +1,28 @@
-import { useRef, useState } from "react";
-import loggedUser from "../../In-memory-repository/loggedUser";
+import { useContext, useEffect, useRef, useState } from "react";
 import style from "./profile.module.css";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-// import handlePasswordChange from "../../utils/handlePasswordChange";
 import {
     clearErrorClasses,
     validateFields,
     validatePasswordsMatch,
 } from "../../utils/inputFieldsVerification";
+import PageContext from "../Contexts/PageContext";
+import { useNavigate } from "react-router-dom";
+import handlePasswordChange from "../../utils/handlePasswordChange";
 
 const Profile = () => {
-    const [changePassword, setChangePassword] = useState(false);
+    const navigate = useNavigate();
+    const { loggedUser } = useContext(PageContext);
+
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
+    const [isChangePasswordActive, setIsChangePasswordActive] = useState(false);
+    const [isPasswordChanged, setIsPasswordChanged] = useState(false);
+    const [showResponseDiv, setShowResponseDiv] = useState(false);
 
     // Input refs
     const oldPasswordInputRef = useRef<HTMLInputElement | null>(null);
@@ -28,6 +35,9 @@ const Profile = () => {
     const confNewPwParagraphErrorRef = useRef<HTMLParagraphElement | null>(
         null
     );
+
+    // Response div ref
+    const responseParagraphRef = useRef<HTMLParagraphElement | null>(null);
 
     const [formData, setFormData] = useState({
         oldPassword: "",
@@ -69,6 +79,10 @@ const Profile = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (!loggedUser) {
+            return;
+        }
+
         // Clear all previous error classes
         clearErrorClasses(
             [
@@ -106,8 +120,43 @@ const Profile = () => {
         // If passwords do not match, return early
         if (passwordsDoNotMatch) return;
 
-        // handlePasswordChange(formData);
+        const isPasswordUpdated = handlePasswordChange(
+            loggedUser.userId,
+            formData
+        );
+
+        if (!isPasswordUpdated) {
+            setShowResponseDiv(true);
+
+            return;
+        }
+
+        setIsPasswordChanged(true);
+        setShowResponseDiv(true);
+        setIsChangePasswordActive(false);
     };
+
+    useEffect(() => {
+        if (
+            showResponseDiv &&
+            !isPasswordChanged &&
+            responseParagraphRef.current
+        ) {
+            responseParagraphRef.current.textContent =
+                "Something went wrong. Password not changed.";
+        }
+    }, [showResponseDiv]);
+
+    useEffect(() => {
+        if (!loggedUser) {
+            navigate("/");
+        }
+    }, [loggedUser, navigate]);
+
+    if (!loggedUser) {
+        return null;
+    }
+
     return (
         <main className={style.mainContainer}>
             <h2>Personal Data</h2>
@@ -125,12 +174,12 @@ const Profile = () => {
                     </p>
                 </div>
 
-                {!changePassword && (
+                {!isChangePasswordActive && !showResponseDiv && (
                     <div>
                         <p>
                             <button
                                 className={style.firstPasswordBtn}
-                                onClick={() => setChangePassword(true)}
+                                onClick={() => setIsChangePasswordActive(true)}
                             >
                                 Change Password
                             </button>
@@ -138,7 +187,7 @@ const Profile = () => {
                     </div>
                 )}
 
-                {changePassword && (
+                {isChangePasswordActive && !showResponseDiv && (
                     <form
                         className={style.changePasswordForm}
                         onSubmit={handleSubmit}
@@ -160,6 +209,7 @@ const Profile = () => {
                                     onChange={handleInputChange}
                                     className={style.inputs}
                                     ref={oldPasswordInputRef}
+                                    autoFocus
                                 />
                                 <div className={style.imageDiv}>
                                     <img
@@ -271,6 +321,17 @@ const Profile = () => {
                             Change Password
                         </button>
                     </form>
+                )}
+
+                {showResponseDiv && (
+                    <div className={style.changePasswordForm}>
+                        <p
+                            className={style.paragraph}
+                            ref={responseParagraphRef}
+                        >
+                            Password Successfully Changed.
+                        </p>
+                    </div>
                 )}
             </div>
         </main>

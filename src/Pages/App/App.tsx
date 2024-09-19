@@ -3,19 +3,24 @@ import Header from "../../components/Header/Header";
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PageContext from "../../components/Contexts/PageContext";
+import { ILoggedUser } from "../../In-memory-repository/usersDatabase";
 
 function App() {
     const [activeSection, setActiveSection] = useState<string>("homepage");
     const [createdUserEmail, setCreatedUserEmail] = useState<string | null>(
         null
     );
+    const [loggedUser, setLoggedUser] = useState<ILoggedUser | undefined>(undefined);
+
     const location = useLocation();
 
     useEffect(() => {
-        const section = location.pathname.split("/")[location.pathname.split("/").length - 1] || "homepage";
+        const section =
+            location.pathname.split("/")[
+                location.pathname.split("/").length - 1
+            ] || "homepage";
 
         console.log(section);
-        
 
         setActiveSection(section);
     }, [location]);
@@ -25,6 +30,8 @@ function App() {
         setActiveSection,
         createdUserEmail,
         setCreatedUserEmail,
+        loggedUser,
+        setLoggedUser,
     };
 
     return (
