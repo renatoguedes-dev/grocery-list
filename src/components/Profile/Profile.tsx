@@ -11,23 +11,37 @@ import {
 import PageContext from "../Contexts/PageContext";
 import { useNavigate } from "react-router-dom";
 import handlePasswordChange from "../../utils/handlePasswordChange";
+import usePasswordToggle from "../../hooks/usePasswordToggle";
 
 const Profile = () => {
     const navigate = useNavigate();
     const { loggedUser } = useContext(PageContext);
 
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+    // toggle old password input/icon
+    const {
+        showPassword: showOldPassword,
+        togglePasswordVisibility: togglePasswordVisibility,
+        passwordInputRef: oldPasswordInputRef,
+    } = usePasswordToggle();
 
+    // toggle new password input/icon
+    const {
+        showPassword: showNewPassword,
+        togglePasswordVisibility: toggleNewPasswordVisibility,
+        passwordInputRef: newPasswordInputRef,
+    } = usePasswordToggle();
+
+    // toggle confirm new password input/icon
+    const {
+        showPassword: showConfirmNewPassword,
+        togglePasswordVisibility: toggleConfirmNewPasswordVisibility,
+        passwordInputRef: confirmPasswordInputRef,
+    } = usePasswordToggle();
+
+    // state variables
     const [isChangePasswordActive, setIsChangePasswordActive] = useState(false);
     const [isPasswordChanged, setIsPasswordChanged] = useState(false);
     const [showResponseDiv, setShowResponseDiv] = useState(false);
-
-    // Input refs
-    const oldPasswordInputRef = useRef<HTMLInputElement | null>(null);
-    const passwordInputRef = useRef<HTMLInputElement | null>(null);
-    const confirmPasswordInputRef = useRef<HTMLInputElement | null>(null);
 
     // Error message refs
     const oldPwParagraphErrorRef = useRef<HTMLParagraphElement | null>(null);
@@ -39,6 +53,7 @@ const Profile = () => {
     // Response div ref
     const responseParagraphRef = useRef<HTMLParagraphElement | null>(null);
 
+    // data to update form element
     const [formData, setFormData] = useState({
         oldPassword: "",
         newPassword: "",
@@ -47,33 +62,6 @@ const Profile = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleShowOldPassword = () => {
-        if (oldPasswordInputRef.current) {
-            oldPasswordInputRef.current.type = showOldPassword
-                ? "password"
-                : "text";
-        }
-        setShowOldPassword((previous) => !previous);
-    };
-
-    const handleShowNewPassword = () => {
-        if (passwordInputRef.current) {
-            passwordInputRef.current.type = showNewPassword
-                ? "password"
-                : "text";
-        }
-        setShowNewPassword((previous) => !previous);
-    };
-
-    const handleShowConfirmNewPassword = () => {
-        if (confirmPasswordInputRef.current) {
-            confirmPasswordInputRef.current.type = showConfirmNewPassword
-                ? "password"
-                : "text";
-        }
-        setShowConfirmNewPassword((previous) => !previous);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -145,7 +133,7 @@ const Profile = () => {
             responseParagraphRef.current.textContent =
                 "Something went wrong. Password not changed.";
         }
-    }, [showResponseDiv]);
+    }, [showResponseDiv, isPasswordChanged]);
 
     useEffect(() => {
         if (!loggedUser) {
@@ -220,7 +208,7 @@ const Profile = () => {
                                         }
                                         alt="show/hide password icon"
                                         className={`${style.icons} ${style.showPassword}`}
-                                        onClick={handleShowOldPassword}
+                                        onClick={togglePasswordVisibility}
                                     />
                                 </div>
                             </div>
@@ -249,7 +237,7 @@ const Profile = () => {
                                     value={formData.newPassword}
                                     onChange={handleInputChange}
                                     className={style.inputs}
-                                    ref={passwordInputRef}
+                                    ref={newPasswordInputRef}
                                 />
                                 <div className={style.imageDiv}>
                                     <img
@@ -260,7 +248,7 @@ const Profile = () => {
                                         }
                                         alt="show/hide password icon"
                                         className={`${style.icons} ${style.showPassword}`}
-                                        onClick={handleShowNewPassword}
+                                        onClick={toggleNewPasswordVisibility}
                                     />
                                 </div>
                             </div>
@@ -300,7 +288,9 @@ const Profile = () => {
                                         }
                                         alt="show/hide password icon"
                                         className={`${style.icons} ${style.showPassword}`}
-                                        onClick={handleShowConfirmNewPassword}
+                                        onClick={
+                                            toggleConfirmNewPasswordVisibility
+                                        }
                                     />
                                 </div>
                             </div>

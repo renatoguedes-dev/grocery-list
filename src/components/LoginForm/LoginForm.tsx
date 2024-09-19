@@ -4,28 +4,23 @@ import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import usersDatabase from "../../In-memory-repository/usersDatabase";
 import PageContext from "../Contexts/PageContext";
+import usePasswordToggle from "../../hooks/usePasswordToggle";
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const { loggedUser, setLoggedUser } = useContext(PageContext);
+    const { setLoggedUser } = useContext(PageContext);
 
-    const [showPassword, setShowPassword] = useState(false);
-    const passwordInputRef = useRef<HTMLInputElement | null>(null);
+    // custom hook to deal with variable storing and function.
+    const { showPassword, togglePasswordVisibility, passwordInputRef } =
+        usePasswordToggle();
 
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
-
-    const handleShowPassword = () => {
-        if (passwordInputRef.current) {
-            passwordInputRef.current.type = showPassword ? "password" : "text";
-        }
-        setShowPassword((previous) => !previous);
-    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -91,7 +86,7 @@ const LoginForm = () => {
                             src={showPassword ? eyeOpen : eyeHidden}
                             alt="show/hide password icon"
                             className={`${style.icons} ${style.showPassword}`}
-                            onClick={handleShowPassword}
+                            onClick={togglePasswordVisibility}
                         />
                     </div>
                 </div>

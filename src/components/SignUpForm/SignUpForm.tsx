@@ -6,16 +6,22 @@ import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import PageContext from "../Contexts/PageContext";
+import usePasswordToggle from "../../hooks/usePasswordToggle";
 
 const SignUpForm = () => {
-    const { setCreatedUserEmail } = useContext(PageContext);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const passwordInputRef = useRef<HTMLInputElement | null>(null);
-    const confirmPasswordInputRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
+    const { setCreatedUserEmail } = useContext(PageContext);
+
+    const { showPassword, togglePasswordVisibility, passwordInputRef } =
+        usePasswordToggle();
+
+    const {
+        showPassword: showConfirmPassword,
+        togglePasswordVisibility: toggleConfirmPasswordVisibility,
+        passwordInputRef: confirmPasswordInputRef,
+    } = usePasswordToggle();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -26,22 +32,6 @@ const SignUpForm = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleShowPassword = () => {
-        if (passwordInputRef.current) {
-            passwordInputRef.current.type = showPassword ? "password" : "text";
-        }
-        setShowPassword((previous) => !previous);
-    };
-
-    const handleShowConfirmPassword = () => {
-        if (confirmPasswordInputRef.current) {
-            confirmPasswordInputRef.current.type = showConfirmPassword
-                ? "password"
-                : "text";
-        }
-        setShowConfirmPassword((previous) => !previous);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -55,7 +45,7 @@ const SignUpForm = () => {
 
             console.log(response);
 
-            setCreatedUserEmail(response.data.createdUser.email)
+            setCreatedUserEmail(response.data.createdUser.email);
 
             console.log("User registered successfully!");
             navigate("/welcome");
@@ -144,7 +134,7 @@ const SignUpForm = () => {
                             src={showPassword ? eyeOpen : eyeHidden}
                             alt="show/hide password icon"
                             className={`${style.icons} ${style.showPassword}`}
-                            onClick={handleShowPassword}
+                            onClick={togglePasswordVisibility}
                         />
                     </div>
                 </div>
@@ -172,7 +162,7 @@ const SignUpForm = () => {
                             src={showConfirmPassword ? eyeOpen : eyeHidden}
                             alt="show/hide password icon"
                             className={`${style.icons} ${style.showPassword}`}
-                            onClick={handleShowConfirmPassword}
+                            onClick={toggleConfirmPasswordVisibility}
                         />
                     </div>
                 </div>
