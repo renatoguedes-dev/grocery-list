@@ -1,8 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import style from "./dashboard.module.css";
 import { useContext, useEffect } from "react";
 import PageContext from "../../components/Contexts/PageContext";
+import DashboardContent from "../../components/DashboardContent/DashboardContent";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Dashboard = () => {
     return (
         <main className={style.mainContainer}>
             <Sidebar />
-            <Outlet />
+            <DashboardContent />
         </main>
     );
 };

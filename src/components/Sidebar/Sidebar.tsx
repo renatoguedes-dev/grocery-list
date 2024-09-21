@@ -8,16 +8,17 @@ import PageContext from "../Contexts/PageContext";
 import { useContext } from "react";
 
 const Sidebar = () => {
-
     const { activeSection } = useContext(PageContext);
 
     return (
         <div className={style.sidebar}>
             <nav className={style.nav}>
                 <NavLink
-                    to="/dashboard"
+                    to="/lists"
                     end
-                    className={`${style.navLink} ${activeSection === "dashboard" ? style.active : ""}`}
+                    className={`${style.navLink} ${
+                        activeSection === "lists" ? style.active : ""
+                    }`}
                 >
                     <img
                         src={listIcon}
@@ -27,8 +28,10 @@ const Sidebar = () => {
                     <p>My Lists</p>
                 </NavLink>
                 <NavLink
-                    to="/dashboard/inventory"
-                    className={`${style.navLink} ${activeSection === "inventory" ? style.active : ""}`}
+                    to="/inventory"
+                    className={`${style.navLink} ${
+                        activeSection === "inventory" ? style.active : ""
+                    }`}
                 >
                     <img
                         src={inventoryIcon}
@@ -38,8 +41,10 @@ const Sidebar = () => {
                     <p>My Inventory</p>
                 </NavLink>
                 <NavLink
-                    to="/dashboard/profile"
-                    className={`${style.navLink} ${activeSection === "profile" ? style.active : ""}`}
+                    to="/profile"
+                    className={`${style.navLink} ${
+                        activeSection === "profile" ? style.active : ""
+                    }`}
                 >
                     <img
                         src={userIcon}
@@ -48,14 +53,19 @@ const Sidebar = () => {
                     />
                     <p>Personal Data</p>
                 </NavLink>
-                <button className={`${style.navLink} ${style.logoutBtn}`}>
+                <NavLink
+                    to="/logout"
+                    className={`${style.navLink} ${
+                        activeSection === "logout" ? style.active : ""
+                    }`}
+                >
                     <img
                         src={logoutIcon}
                         alt="logout icon"
                         className={style.icons}
                     />
                     <p>Logout</p>
-                </button>
+                </NavLink>
             </nav>
         </div>
     );

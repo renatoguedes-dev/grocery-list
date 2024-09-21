@@ -6,9 +6,10 @@ import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import ResetPassword from "./Pages/ResetPassword/resetPassword";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
-import InventoryPage from "./components/Inventory/Inventory";
-import MyLists from "./components/MyLists/MyLists";
-import Profile from "./components/Profile/Profile";
+import InventoryPage from "./Pages/Inventory/Inventory";
+import Lists from "./Pages/Lists/Lists";
+import Profile from "./Pages/Profile/Profile";
+import Logout from "./Pages/Logout/Logout";
 
 const routes = [
     {
@@ -39,20 +40,22 @@ const routes = [
             {
                 path: "/dashboard",
                 element: <Dashboard />,
-                children: [
-                    {
-                        index: true,
-                        element: <MyLists />,
-                    },
-                    {
-                        path: "/dashboard/inventory",
-                        element: <InventoryPage />,
-                    },
-                    {
-                        path: "/dashboard/profile",
-                        element: <Profile />,
-                    },
-                ],
+            },
+            {
+                path: "/lists",
+                element: <Lists />,
+            },
+            {
+                path: "/inventory",
+                element: <InventoryPage />,
+            },
+            {
+                path: "/profile",
+                element: <Profile />,
+            },
+            {
+                path: "/logout",
+                element: <Logout />,
             },
         ],
     },

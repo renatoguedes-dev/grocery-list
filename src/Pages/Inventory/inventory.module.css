@@ -1,5 +1,16 @@
 .mainContainer {
-    padding: 48px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.newItemBtn {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: var(--main-color); 
+    font-size: 15px;
 }
 
 .table {
@@ -11,8 +22,8 @@
     font-size: 24px;
 }
 
-.mainContainer th,
-.mainContainer td {
+.table th,
+.table td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;

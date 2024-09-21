@@ -6,7 +6,7 @@
     --light-grey: #e6e6e6;
     --dark-grey: #4a4a4a;
     --darker-grey: hsl(225, 11%, 15%);
-    --darker-grey-hover:  hsl(228, 10%, 18%);
+    --darker-grey-hover: hsl(228, 10%, 18%);
     --light-blue: #d1ebf8;
     --light-blue-hover: hsl(200, 74%, 85%);
     --main-color: #23395d;
@@ -33,4 +33,19 @@ body {
 #root {
     min-width: 100%;
     min-height: 100vh;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    min-height: calc(100vh - 95.98px);
+    min-width: 100%;
+    position: relative;
+}
+
+.mainContainer {
+    padding: 40px;
 }

@@ -19,14 +19,23 @@ class Inventories {
             currentAmount: 22,
             minimumAmount: 4,
         },
+        {
+            userId: 2,
+            itemName: "Nintendo Switch",
+            currentAmount: 0,
+            minimumAmount: 1,
+        },
     ];
 
     addItem(newItem: IInventories) {
         this.items.push(newItem);
     }
 
-    getAllItems(): IInventories[] {
-        return this.items;
+    async getUserInventory(id: number): Promise<{ data: IInventories[] }> {
+        const userItems = this.items.filter(item => item.userId === id)
+        return {
+            data: userItems,
+        };
     }
 
     updateItem(
