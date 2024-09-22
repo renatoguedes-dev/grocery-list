@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Inventories, {
     IInventories,
 } from "../../In-memory-repository/Inventories";
@@ -16,19 +16,24 @@ const InventoryPage = () => {
 
     const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isInventoryUpdated, setIsInventoryUpdated] = useState(false);
 
-    const getInitialInventoryAPI = async () => {
+    const getInventoryAPI = useCallback(async () => {
         if (loggedUser) {
             const result = await Inventories.getUserInventory(
                 loggedUser.userId
             );
             setInventoryData(result.data);
         }
-    };
+    }, [loggedUser]);
 
     useEffect(() => {
-        getInitialInventoryAPI();
-    }, []);
+        getInventoryAPI();
+
+        if (isInventoryUpdated === true) {
+            setIsInventoryUpdated(false);
+        }
+    }, [isInventoryUpdated, getInventoryAPI]);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -58,6 +63,7 @@ const InventoryPage = () => {
                 <InventoryModal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
+                    onNewItem={setIsInventoryUpdated}
                 />
                 <button
                     className={style.newItemBtn}

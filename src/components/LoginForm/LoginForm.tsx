@@ -61,6 +61,7 @@ const LoginForm = () => {
                         placeholder="Email"
                         onChange={handleInputChange}
                         className={style.inputs}
+                        autoFocus
                         required
                     />
                 </div>

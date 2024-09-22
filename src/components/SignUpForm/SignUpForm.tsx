@@ -89,6 +89,7 @@ const SignUpForm = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         className={style.inputs}
+                        autoFocus
                         required
                     />
                 </div>
