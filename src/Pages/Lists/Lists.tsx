@@ -1,6 +1,4 @@
 import style from "./lists.module.css";
-import CreateCustomListBtn from "../../components/CreateCustomListBtn/CreateCustomListBtn";
-import CreateInventoryListBtn from "../../components/CreateInventoryListBtn/CreateInventoryListBtn";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 
@@ -18,8 +16,12 @@ const Lists = () => {
                     inventory.
                 </p>
                 <div className={style.btnsDiv}>
-                    <CreateInventoryListBtn />
-                    <CreateCustomListBtn />
+                    <button className={style.buttons}>
+                        Create Custom List
+                    </button>
+                    <button className={style.buttons}>
+                        Create Inventory List
+                    </button>
                 </div>
             </main>
         </div>

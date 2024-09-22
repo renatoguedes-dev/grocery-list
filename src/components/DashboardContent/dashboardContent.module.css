@@ -1,3 +1,21 @@
 .mainContainer {
-    padding: 48px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.buttonsDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.buttons {
+    border: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: white;
 }

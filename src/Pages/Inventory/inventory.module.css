@@ -13,6 +13,10 @@
     font-size: 15px;
 }
 
+.newItemBtn:hover {
+    background-color: var(--main-color-hover);
+}
+
 .table {
     border-collapse: collapse;
     margin-top: 24px;

@@ -16,3 +16,7 @@
     color: white;
     background-color: var(--main-color);
 }
+
+.logOutBtn:hover {
+    background-color: var(--main-color-hover);
+}
