@@ -6,13 +6,24 @@ import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
 import eyeOpen from "../../assets/images/eye-open.png";
 import eyeHidden from "../../assets/images/eye-hidden.png";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import PageContext from "../Contexts/PageContext";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
+import {
+    clearErrorClasses,
+    validateFields,
+    validatePasswordsMatch,
+} from "../../utils/inputFieldsVerification";
 
 const SignUpForm = () => {
     const navigate = useNavigate();
     const { setCreatedUserEmail } = useContext(PageContext);
+
+    // Error message refs
+    const nameErrorRef = useRef<HTMLParagraphElement | null>(null);
+    const emailErrorRef = useRef<HTMLParagraphElement | null>(null);
+    const passwordErrorRef = useRef<HTMLParagraphElement | null>(null);
+    const confirmPasswordErrorRef = useRef<HTMLParagraphElement | null>(null);
 
     const { showPassword, togglePasswordVisibility, passwordInputRef } =
         usePasswordToggle();
@@ -36,6 +47,54 @@ const SignUpForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Clear all previous error classes
+        clearErrorClasses(
+            [
+                nameErrorRef,
+                emailErrorRef,
+                passwordErrorRef,
+                confirmPasswordErrorRef,
+            ],
+            style.activateError
+        );
+
+        // Validate input fields
+        const hasErrors = validateFields(
+            [
+                { fieldType: "name", value: formData.name, ref: nameErrorRef },
+                {
+                    fieldType: "email",
+                    value: formData.email,
+                    ref: emailErrorRef,
+                },
+                {
+                    fieldType: "password",
+                    value: formData.password,
+                    ref: passwordErrorRef,
+                },
+                {
+                    fieldType: "password",
+                    value: formData.confirmPassword,
+                    ref: confirmPasswordErrorRef,
+                },
+            ],
+            style.activateError
+        );
+
+        // return early if there are empty fields
+        if (hasErrors) return null;
+
+        // Validate if passwords match
+        const passwordsDoNotMatch = validatePasswordsMatch(
+            formData.password,
+            formData.confirmPassword,
+            [passwordErrorRef, confirmPasswordErrorRef],
+            style.activateError
+        );
+
+        // If passwords do not match, return early
+        if (passwordsDoNotMatch) return null;
 
         try {
             const response = await axios.post(
@@ -74,98 +133,120 @@ const SignUpForm = () => {
         <div className={style.mainContainer}>
             <form className={style.signUpForm} onSubmit={handleSubmit}>
                 <p className={style.accessAccountTitle}>Create your account</p>
-                <div className={style.inputDivs}>
-                    <div className={style.imageDiv}>
-                        <img
-                            src={userIcon}
-                            alt="user icon"
-                            className={style.icons}
+
+                <div className={style.nameDiv}>
+                    <div className={style.inputDivs}>
+                        <div className={style.imageDiv}>
+                            <img
+                                src={userIcon}
+                                alt="user icon"
+                                className={style.icons}
+                            />
+                        </div>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            className={style.inputs}
+                            autoFocus
                         />
                     </div>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className={style.inputs}
-                        autoFocus
-                        required
-                    />
+
+                    <p className={style.errorDiv} ref={nameErrorRef}>
+                        This field cannot be empty *
+                    </p>
                 </div>
-                <div className={style.inputDivs}>
-                    <div className={style.imageDiv}>
-                        <img
-                            src={mailIcon}
-                            alt="email icon"
-                            className={style.icons}
+
+                <div className={style.emailDiv}>
+                    <div className={style.inputDivs}>
+                        <div className={style.imageDiv}>
+                            <img
+                                src={mailIcon}
+                                alt="email icon"
+                                className={style.icons}
+                            />
+                        </div>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            className={style.inputs}
                         />
                     </div>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className={style.inputs}
-                        required
-                    />
+
+                    <p className={style.errorDiv} ref={emailErrorRef}>
+                        This field cannot be empty *
+                    </p>
                 </div>
-                <div className={style.inputDivs}>
-                    <div className={style.imageDiv}>
-                        <img
-                            src={lockIcon}
-                            alt="lock icon"
-                            className={style.icons}
+
+                <div className={style.passwordDiv}>
+                    <div className={style.inputDivs}>
+                        <div className={style.imageDiv}>
+                            <img
+                                src={lockIcon}
+                                alt="lock icon"
+                                className={style.icons}
+                            />
+                        </div>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            className={style.inputs}
+                            ref={passwordInputRef}
                         />
+                        <div className={style.imageDiv}>
+                            <img
+                                src={showPassword ? eyeOpen : eyeHidden}
+                                alt="show/hide password icon"
+                                className={`${style.icons} ${style.showPassword}`}
+                                onClick={togglePasswordVisibility}
+                            />
+                        </div>
                     </div>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        className={style.inputs}
-                        ref={passwordInputRef}
-                        minLength={8}
-                        required
-                    />
-                    <div className={style.imageDiv}>
-                        <img
-                            src={showPassword ? eyeOpen : eyeHidden}
-                            alt="show/hide password icon"
-                            className={`${style.icons} ${style.showPassword}`}
-                            onClick={togglePasswordVisibility}
-                        />
-                    </div>
+
+                    <p className={style.errorDiv} ref={passwordErrorRef}>
+                        This field cannot be empty *
+                    </p>
                 </div>
-                <div className={style.inputDivs}>
-                    <div className={style.imageDiv}>
-                        <img
-                            src={lockIcon}
-                            alt="lock icon"
-                            className={style.icons}
+
+                <div className={style.passwordDiv}>
+                    <div className={style.inputDivs}>
+                        <div className={style.imageDiv}>
+                            <img
+                                src={lockIcon}
+                                alt="lock icon"
+                                className={style.icons}
+                            />
+                        </div>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                            className={style.inputs}
+                            ref={confirmPasswordInputRef}
                         />
+                        <div className={style.imageDiv}>
+                            <img
+                                src={showConfirmPassword ? eyeOpen : eyeHidden}
+                                alt="show/hide password icon"
+                                className={`${style.icons} ${style.showPassword}`}
+                                onClick={toggleConfirmPasswordVisibility}
+                            />
+                        </div>
                     </div>
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        value={formData.confirmPassword}
-                        onChange={handleInputChange}
-                        className={style.inputs}
-                        ref={confirmPasswordInputRef}
-                        minLength={8}
-                        required
-                    />
-                    <div className={style.imageDiv}>
-                        <img
-                            src={showConfirmPassword ? eyeOpen : eyeHidden}
-                            alt="show/hide password icon"
-                            className={`${style.icons} ${style.showPassword}`}
-                            onClick={toggleConfirmPasswordVisibility}
-                        />
-                    </div>
+
+                    <p className={style.errorDiv} ref={confirmPasswordErrorRef}>
+                        This field cannot be empty *
+                    </p>
                 </div>
 
                 <button type="submit" className={style.signUpBtn}>

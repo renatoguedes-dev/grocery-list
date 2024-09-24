@@ -8,29 +8,75 @@ export const clearErrorClasses = (
     });
 };
 
-// validateEmptyFields.ts
+// validate emails
+export const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
+// validate empty fields, password length and email
 export const validateFields = (
-    fields: { value: string; ref: React.RefObject<HTMLElement> }[],
+    fields: {
+        fieldType: string;
+        value: string;
+        ref: React.RefObject<HTMLElement>;
+    }[],
     errorClass: string
 ) => {
     let hasError = false;
-    fields.forEach(({ value, ref }) => {
+    fields.forEach(({ fieldType, value, ref }) => {
         if (!value.trim() && ref.current) {
             ref.current.classList.add(errorClass);
             ref.current.textContent = "This field cannot be empty *";
             hasError = true;
-        } else if (value.length < 8 && ref.current) {
-            console.log(value.length);
+        } else if (
+            fieldType === "password" &&
+            value.length < 8 &&
+            ref.current
+        ) {
             ref.current.classList.add(errorClass);
             ref.current.textContent =
                 "Password must be at least 8 characters *";
+            hasError = true;
+        } else if (
+            fieldType === "email" &&
+            ref.current &&
+            !validateEmail(value)
+        ) {
+            ref.current.classList.add(errorClass);
+            ref.current.textContent = "Please enter a valid email *";
+            hasError = true;
+        } else if (fieldType === "name" && ref.current && value.length < 2) {
+            ref.current.classList.add(errorClass);
+            ref.current.textContent = "Provide a valid name *";
             hasError = true;
         }
     });
     return hasError;
 };
 
-// validatePasswordsMatch.ts
+// validate new items form
+export const validateNewItemAmount = (
+    fields: {
+        value: number;
+        ref: React.RefObject<HTMLElement>;
+    }[],
+    errorClass: string
+) => {
+    let amountHasError = false;
+
+    fields.forEach(({ value, ref }) => {
+        if (value < 0 && ref.current) {
+            ref.current.classList.add(errorClass);
+            ref.current.textContent = "Amount cannot be less than 0 *";
+            amountHasError = true;
+        }
+    });
+
+    return amountHasError;
+};
+
+// validate if password and confirm password match
 export const validatePasswordsMatch = (
     password: string,
     confirmPassword: string,

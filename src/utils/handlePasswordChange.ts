@@ -7,7 +7,7 @@ interface IChangePasswordForm {
 }
 
 function handlePasswordChange(
-    loggedUserId: number,
+    loggedUserId: string,
     formData: IChangePasswordForm
 ): boolean {
     const foundUser = usersDatabase.find(

@@ -4,9 +4,11 @@ import { useContext } from "react";
 import PageContext from "../Contexts/PageContext";
 import logo from "../../assets/images/logo.png";
 import profileIcon from "../../assets/images/profile.png";
+import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 
 const Header = () => {
     const { activeSection, loggedUser } = useContext(PageContext);
+    useCheckLoggedUser()
 
     return (
         <header className={style.header}>
@@ -34,9 +36,11 @@ const Header = () => {
                 </nav>
             )}
 
-            {(activeSection === "dashboard" || activeSection === "inventory") && (
+            {(activeSection === "dashboard" ||
+                activeSection === "lists" ||
+                activeSection === "inventory") && (
                 <Link
-                    to="/dashboard/profile"
+                    to="/profile"
                     className={`${style.links} ${style.profileLink}`}
                 >
                     <img

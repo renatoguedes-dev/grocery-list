@@ -87,10 +87,10 @@ const Profile = () => {
         // Validate input fields
         const hasErrors = validateFields(
             [
-                { value: formData.oldPassword, ref: oldPwParagraphErrorRef },
-                { value: formData.newPassword, ref: newPwParagraphErrorRef },
+                { fieldType: "password", value: formData.oldPassword, ref: oldPwParagraphErrorRef },
+                { fieldType: "password", value: formData.newPassword, ref: newPwParagraphErrorRef },
                 {
-                    value: formData.confirmNewPassword,
+                    fieldType: "password", value: formData.confirmNewPassword,
                     ref: confNewPwParagraphErrorRef,
                 },
             ],

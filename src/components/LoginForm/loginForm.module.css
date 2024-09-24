@@ -110,3 +110,14 @@
 .signUpSpan {
     font-weight: 500;
 }
+
+.errorDiv {
+    text-align: end;
+    margin-top: 5px;
+    display: none;
+    color: red;
+}
+
+.activateError {
+    display: block;
+}

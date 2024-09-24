@@ -10,15 +10,17 @@ function App() {
     const [createdUserEmail, setCreatedUserEmail] = useState<string | null>(
         null
     );
-    const [loggedUser, setLoggedUser] = useState<ILoggedUser | undefined>(undefined);
+    const [loggedUser, setLoggedUser] = useState<ILoggedUser | undefined>(
+        undefined
+    );
 
     const location = useLocation();
 
     useEffect(() => {
+        const locationLength = location.pathname.split("/").length;
+
         const section =
-            location.pathname.split("/")[
-                location.pathname.split("/").length - 1
-            ] || "homepage";
+            location.pathname.split("/")[locationLength - 1] || "homepage";
 
         console.log(section);
 

@@ -3,15 +3,20 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import { useContext } from "react";
 import PageContext from "../../components/Contexts/PageContext";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
+import Cookies from "js-cookie";
 
 const Logout = () => {
     useCheckLoggedUser();
-    
-    const { loggedUser, setLoggedUser } = useContext(PageContext);
+
+    const { loggedUser } = useContext(PageContext);
 
     const logout = () => {
-        setLoggedUser(undefined);
+        Cookies.remove("tokenData");
+        Cookies.remove("token");
+
+        window.location.href = "/"
     };
+
     return (
         <div className="container">
             <Sidebar />
@@ -27,7 +32,7 @@ const Logout = () => {
                         onClick={() => logout()}
                         className={style.logOutBtn}
                     >
-                        Log out
+                        Log Out
                     </button>
                 </div>
             </main>

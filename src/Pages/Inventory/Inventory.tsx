@@ -7,7 +7,10 @@ import changeQuantityButtons from "../../utils/changeQuantityButtons";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import PageContext from "../../components/Contexts/PageContext";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
-import InventoryModal from "../../components/InventoryModal/InventoryModal";
+import InventoryModal from "../../components/Modals/InventoryModal/InventoryModal";
+import trashIcon from "../../assets/images/trashIcon.png";
+import plusIcon from "../../assets/images/plusIcon.png";
+import minusIcon from "../../assets/images/minusIcon.png";
 
 const InventoryPage = () => {
     useCheckLoggedUser();
@@ -19,12 +22,11 @@ const InventoryPage = () => {
     const [isInventoryUpdated, setIsInventoryUpdated] = useState(false);
 
     const getInventoryAPI = useCallback(async () => {
-        if (loggedUser) {
-            const result = await Inventories.getUserInventory(
-                loggedUser.userId
-            );
-            setInventoryData(result.data);
-        }
+        if (!loggedUser) return;
+
+        const result = await Inventories.getUserInventory(loggedUser.userId);
+
+        setInventoryData(result.data);
     }, [loggedUser]);
 
     useEffect(() => {
@@ -56,6 +58,15 @@ const InventoryPage = () => {
         setInventoryData(updatedInventory);
     };
 
+    const removeItem = (itemName: string) => {
+        if (!loggedUser) {
+            return;
+        }
+
+        Inventories.deleteItem(loggedUser.userId, itemName);
+        getInventoryAPI();
+    };
+
     return (
         <div className="container">
             <Sidebar />
@@ -65,61 +76,35 @@ const InventoryPage = () => {
                     onClose={() => setIsModalOpen(false)}
                     onNewItem={setIsInventoryUpdated}
                 />
+
                 <button
                     className={style.newItemBtn}
                     onClick={() => setIsModalOpen(true)}
                 >
                     New Item
                 </button>
-                <table className={style.table}>
-                    <thead className={style.tableHead}>
-                        <tr>
-                            <th>Item</th>
-                            <th>Current</th>
-                            <th>Minimum</th>
-                            <th>
-                                Amount
-                                <br /> to buy
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {inventoryData.map((inventory) => {
-                            return (
-                                <tr key={inventory.itemName}>
-                                    <td>{inventory.itemName}</td>
-                                    <td>
-                                        <div className={style.quantityControl}>
-                                            <input
-                                                className={style.input}
-                                                type="number"
-                                                min="0"
-                                                name="currentAmount"
-                                                value={inventory.currentAmount}
-                                                onChange={(e) =>
-                                                    handleInputChange(
-                                                        e,
-                                                        inventory.itemName
-                                                    )
-                                                }
-                                            />
+
+                {inventoryData.length > 0 && (
+                    <table className={style.table}>
+                        <thead className={style.tableHead}>
+                            <tr>
+                                <th>Item</th>
+                                <th>Current</th>
+                                <th>Minimum</th>
+                                <th>Buy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {inventoryData.map((inventory) => {
+                                return (
+                                    <tr key={inventory.itemName}>
+                                        <td>{inventory.itemName}</td>
+                                        <td>
                                             <div
-                                                className={style.controlButtons}
+                                                className={
+                                                    style.quantityControl
+                                                }
                                             >
-                                                <button
-                                                    className={`${style.buttons} ${style.plusBtn}`}
-                                                    onClick={() =>
-                                                        changeQuantityButtons(
-                                                            inventoryData,
-                                                            setInventoryData,
-                                                            inventory,
-                                                            1,
-                                                            "currentAmount"
-                                                        )
-                                                    }
-                                                >
-                                                    +
-                                                </button>
                                                 <button
                                                     className={`${style.buttons} ${style.minusBtn}`}
                                                     onClick={() =>
@@ -136,29 +121,29 @@ const InventoryPage = () => {
                                                         0
                                                     }
                                                 >
-                                                    -
+                                                    <img
+                                                        className={`${style.minusIcon} ${style.icons}`}
+                                                        src={minusIcon}
+                                                        alt=""
+                                                    />
                                                 </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className={style.quantityControl}>
-                                            <input
-                                                className={style.input}
-                                                type="number"
-                                                min="0"
-                                                name="minimumAmount"
-                                                value={inventory.minimumAmount}
-                                                onChange={(e) =>
-                                                    handleInputChange(
-                                                        e,
-                                                        inventory.itemName
-                                                    )
-                                                }
-                                            />
-                                            <div
-                                                className={style.controlButtons}
-                                            >
+
+                                                <input
+                                                    className={style.input}
+                                                    type="number"
+                                                    min="0"
+                                                    name="currentAmount"
+                                                    value={
+                                                        inventory.currentAmount
+                                                    }
+                                                    onChange={(e) =>
+                                                        handleInputChange(
+                                                            e,
+                                                            inventory.itemName
+                                                        )
+                                                    }
+                                                />
+
                                                 <button
                                                     className={`${style.buttons} ${style.plusBtn}`}
                                                     onClick={() =>
@@ -167,12 +152,24 @@ const InventoryPage = () => {
                                                             setInventoryData,
                                                             inventory,
                                                             1,
-                                                            "minimumAmount"
+                                                            "currentAmount"
                                                         )
                                                     }
                                                 >
-                                                    +
+                                                    <img
+                                                        className={`${style.plusIcon} ${style.icons}`}
+                                                        src={plusIcon}
+                                                        alt=""
+                                                    />
                                                 </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div
+                                                className={
+                                                    style.quantityControl
+                                                }
+                                            >
                                                 <button
                                                     className={`${style.buttons} ${style.minusBtn}`}
                                                     onClick={() =>
@@ -189,25 +186,83 @@ const InventoryPage = () => {
                                                         0
                                                     }
                                                 >
-                                                    -
+                                                    <img
+                                                        className={`${style.minusIcon} ${style.icons}`}
+                                                        src={minusIcon}
+                                                        alt=""
+                                                    />
+                                                </button>
+                                                <input
+                                                    className={style.input}
+                                                    type="number"
+                                                    min="0"
+                                                    name="minimumAmount"
+                                                    value={
+                                                        inventory.minimumAmount
+                                                    }
+                                                    onChange={(e) =>
+                                                        handleInputChange(
+                                                            e,
+                                                            inventory.itemName
+                                                        )
+                                                    }
+                                                />
+
+                                                <button
+                                                    className={`${style.buttons} ${style.plusBtn}`}
+                                                    onClick={() =>
+                                                        changeQuantityButtons(
+                                                            inventoryData,
+                                                            setInventoryData,
+                                                            inventory,
+                                                            1,
+                                                            "minimumAmount"
+                                                        )
+                                                    }
+                                                >
+                                                    <img
+                                                        className={`${style.plusIcon} ${style.icons}`}
+                                                        src={plusIcon}
+                                                        alt=""
+                                                    />
                                                 </button>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {inventory.currentAmount -
-                                            inventory.minimumAmount <
-                                        0
-                                            ? (inventory.currentAmount -
-                                                  inventory.minimumAmount) *
-                                              -1
-                                            : 0}
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                                        </td>
+                                        <td>
+                                            {inventory.currentAmount -
+                                                inventory.minimumAmount <
+                                            0
+                                                ? (inventory.currentAmount -
+                                                      inventory.minimumAmount) *
+                                                  -1
+                                                : 0}
+                                        </td>
+                                        <td>
+                                            <img
+                                                className={`${style.trashIcon} ${style.icons}`}
+                                                src={trashIcon}
+                                                alt="trash icon"
+                                                onClick={() =>
+                                                    removeItem(
+                                                        inventory.itemName
+                                                    )
+                                                }
+                                            />
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                )}
+
+                {inventoryData.length <= 0 && (
+                    <>
+                        <p className={style.emptyInventory}>
+                            Your Inventory is empty.
+                        </p>
+                    </>
+                )}
             </main>
         </div>
     );

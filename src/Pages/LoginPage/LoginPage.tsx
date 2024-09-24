@@ -1,7 +1,10 @@
 import LoginForm from "../../components/LoginForm/LoginForm";
 import style from "./loginPage.module.css";
+import useRedirectIfLoggedIn from "../../hooks/useRedirectIfLoggedIn";
 
 const LoginPage = () => {
+    useRedirectIfLoggedIn();
+
     return (
         <main className={style.mainContainer}>
             <LoginForm />

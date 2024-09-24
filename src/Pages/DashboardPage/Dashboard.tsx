@@ -1,19 +1,14 @@
-import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import style from "./dashboard.module.css";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import PageContext from "../../components/Contexts/PageContext";
 import DashboardContent from "../../components/DashboardContent/DashboardContent";
+import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 
 const Dashboard = () => {
-    const navigate = useNavigate();
-    const { loggedUser } = useContext(PageContext);
+    useCheckLoggedUser();
 
-    useEffect(() => {
-        if (!loggedUser) {
-            navigate("/");
-        }
-    }, [loggedUser, navigate]);
+    const { loggedUser } = useContext(PageContext);
 
     if (!loggedUser) {
         return null;

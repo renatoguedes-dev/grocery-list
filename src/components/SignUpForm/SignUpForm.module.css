@@ -19,7 +19,7 @@
         #fefefe 100%
     );
     width: 450px;
-    height: 475px;
+    max-height: 560px;
     border-radius: 16px;
     padding: 48px 48px;
     display: flex;
@@ -109,4 +109,15 @@
 
 .signUpSpan {
     font-weight: 500;
+}
+
+.errorDiv {
+    display: none;
+    margin-top: 5px;
+    text-align: end;
+    color: red;
+}
+
+.activateError {
+    display: block;
 }

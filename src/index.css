@@ -12,7 +12,7 @@
     --main-color: #23395d;
     --main-color-hover: hsl(217, 45%, 35%);
     --red-error: hsl(0, 68%, 69%);
-    --red-error-hover: hsla(0, 68%, 60%);
+    --red-error-hover: #de5454;
 }
 
 *,
