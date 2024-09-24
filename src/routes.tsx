@@ -41,8 +41,6 @@ const routes = [
 ];
 
 if (token) {
-    console.log(routes[0].children);
-
     routes[0].children.push(
         {
             path: "/welcome",
@@ -69,8 +67,6 @@ if (token) {
             element: <Logout />,
         }
     );
-    
-    console.log(routes[0].children);
 }
 
 export default routes;

@@ -13,6 +13,10 @@
     --main-color-hover: hsl(217, 45%, 35%);
     --red-error: hsl(0, 68%, 69%);
     --red-error-hover: #de5454;
+    --buttons-border-radius: 8px;
+    --inputs-border-radius: 10px;
+    --forms-border-radius: 16px;
+    --modals-border-radius: 12px;
 }
 
 *,

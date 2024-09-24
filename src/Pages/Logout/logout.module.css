@@ -1,7 +1,7 @@
 .logOutDiv {
     border: 2px solid var(--main-color);
     padding: 16px;
-    border-radius: 8px;
+    border-radius: var(--modals-border-radius);
 }
 
 .logOutEmail {
@@ -12,7 +12,7 @@
     margin-top: 20px;
     padding: 8px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--buttons-border-radius);
     color: white;
     background-color: var(--main-color);
 }

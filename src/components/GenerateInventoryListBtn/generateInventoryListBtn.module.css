@@ -1,7 +1,7 @@
 .createListBtn {
     border: none;
     padding: 12px 14px;
-    border-radius: 8px;
+    border-radius: var(--buttons-border-radius);
     font-size: 16px;
     cursor: pointer;
     background-color: var(--main-color);

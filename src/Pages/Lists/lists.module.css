@@ -15,7 +15,7 @@
 .buttons {
     border: none;
     padding: 12px 14px;
-    border-radius: 8px;
+    border-radius: var(--buttons-border-radius);
     font-size: 16px;
     cursor: pointer;
     background-color: var(--main-color);
@@ -31,7 +31,7 @@
 }
 .listsDiv {
     border: 2px solid black;
-    border-radius: 5px;
+    border-radius: var(--buttons-border-radius);
     padding: 10px 14px;
     text-align: left;
     align-self: flex-start;

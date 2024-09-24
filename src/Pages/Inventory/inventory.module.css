@@ -8,7 +8,7 @@
 .newItemBtn {
     padding: 10px 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--buttons-border-radius);
     color: white;
     background-color: var(--main-color);
     font-size: 16px;
