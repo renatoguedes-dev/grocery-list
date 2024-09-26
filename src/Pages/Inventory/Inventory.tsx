@@ -4,7 +4,6 @@ import Inventories, {
 } from "../../In-memory-repository/Inventories";
 import style from "./inventory.module.css";
 import changeQuantityButtons from "../../utils/changeQuantityButtons";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import PageContext from "../../components/Contexts/PageContext";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import InventoryModal from "../../components/Modals/InventoryModal/InventoryModal";
@@ -69,7 +68,6 @@ const InventoryPage = () => {
 
     return (
         <div className="container">
-            <Sidebar />
             <main className={`mainContainer ${style.mainContainer}`}>
                 <InventoryModal
                     isOpen={isModalOpen}

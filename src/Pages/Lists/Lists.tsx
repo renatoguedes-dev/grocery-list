@@ -1,7 +1,5 @@
 import style from "./lists.module.css";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
-import GenerateInventoryListBtn from "../../components/GenerateInventoryListBtn/GenerateInventoryListBtn";
 import CustomListModal from "../../components/Modals/CustomListModal/CustomListModal";
 import { useCallback, useContext, useEffect, useState } from "react";
 import PageContext from "../../components/Contexts/PageContext";
@@ -46,7 +44,6 @@ const Lists = () => {
 
     return (
         <div className="container">
-            <Sidebar />
             <main className={`mainContainer ${style.mainContainer}`}>
                 <CustomListModal
                     isOpen={isModalOpen}
@@ -54,40 +51,44 @@ const Lists = () => {
                     onUpdate={getCustomListsAPI}
                 />
 
-                <div className={style.btnsDiv}>
-                    <button
-                        className={style.buttons}
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        Create Custom List
-                    </button>
-                    <GenerateInventoryListBtn />
+                <div className={style.headerDiv}>
+                    <h2 className={style.listsHeader}>Your lists</h2>
+                    {(userCustomLists.length > 0 || inventoryData.length > 0) && (
+                        <button
+                            className={style.customListBtn}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <p>New List</p>
+                        </button>
+                    )}
                 </div>
 
                 {userCustomLists.length <= 0 && inventoryData.length <= 0 && (
                     <>
-                        <h2>You don't have any lists</h2>
-                        <p>
-                            You can create custom lists or a list based on your
-                            inventory.
-                        </p>
+                        <p>You don't have any lists</p>
+                        <button
+                            className={style.insideBtn}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <p>New List</p>
+                        </button>
                     </>
                 )}
 
                 {(userCustomLists.length > 0 || inventoryData.length > 0) && (
                     <>
-                        <h1 className={style.listsHeader}>Your lists:</h1>
+                        <div className={style.listsDiv}>
+                            {inventoryData.length > 0 && (
+                                <div className={style.list}>Inventory List</div>
+                            )}
 
-                        {inventoryData.length > 0 && (
-                            <div className={style.listsDiv}>Inventory List</div>
-                        )}
-
-                        {userCustomLists.length > 0 &&
-                            userCustomLists.map((list) => (
-                                <div key={list.id} className={style.listsDiv}>
-                                    <p>{list.name}</p>
-                                </div>
-                            ))}
+                            {userCustomLists.length > 0 &&
+                                userCustomLists.map((list) => (
+                                    <div key={list.id} className={style.list}>
+                                        <p>{list.name}</p>
+                                    </div>
+                                ))}
+                        </div>
                     </>
                 )}
             </main>

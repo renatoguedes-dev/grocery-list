@@ -1,4 +1,3 @@
-import Sidebar from "../../components/Sidebar/Sidebar";
 import style from "./dashboard.module.css";
 import { useContext } from "react";
 import PageContext from "../../components/Contexts/PageContext";
@@ -16,7 +15,6 @@ const Dashboard = () => {
 
     return (
         <main className={style.mainContainer}>
-            <Sidebar />
             <DashboardContent />
         </main>
     );

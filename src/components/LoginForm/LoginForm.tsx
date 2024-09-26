@@ -49,7 +49,7 @@ const LoginForm = () => {
             Cookies.set("tokenData", JSON.stringify(tokenData));
 
             setLoggedUser(tokenData);
-            window.location.href = "/dashboard"
+            window.location.href = "/dashboard";
             // navigate("/dashboard");
 
             return;

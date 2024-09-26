@@ -1,11 +1,11 @@
 import style from "./sidebar.module.css";
 import { NavLink } from "react-router-dom";
-import listIcon from "../../assets/images/listIcon.png";
-import inventoryIcon from "../../assets/images/inventoryIcon.png";
-import logoutIcon from "../../assets/images/logoutIcon.png";
-import userIcon from "../../assets/images/user.png";
 import PageContext from "../Contexts/PageContext";
 import { useContext } from "react";
+import ListIcon from "../icons/ListIcon/ListIcon";
+import InventoryIcon from "../icons/InventoryIcon/InventoryIcon";
+import ProfileIcon from "../icons/SettingsIcon/ProfileIcon";
+import LogoutIcon from "../icons/LogoutIcon/LogoutIcon";
 
 const Sidebar = () => {
     const { activeSection } = useContext(PageContext);
@@ -20,11 +20,7 @@ const Sidebar = () => {
                         activeSection === "lists" ? style.active : ""
                     }`}
                 >
-                    <img
-                        src={listIcon}
-                        alt="lists icon"
-                        className={style.icons}
-                    />
+                    <ListIcon className={style.icons} />
                     <p>My Lists</p>
                 </NavLink>
                 <NavLink
@@ -33,11 +29,7 @@ const Sidebar = () => {
                         activeSection === "inventory" ? style.active : ""
                     }`}
                 >
-                    <img
-                        src={inventoryIcon}
-                        alt="inventory icon"
-                        className={style.icons}
-                    />
+                    <InventoryIcon className={style.icons} />
                     <p>My Inventory</p>
                 </NavLink>
                 <NavLink
@@ -46,11 +38,7 @@ const Sidebar = () => {
                         activeSection === "profile" ? style.active : ""
                     }`}
                 >
-                    <img
-                        src={userIcon}
-                        alt="user icon"
-                        className={style.icons}
-                    />
+                    <ProfileIcon className={style.icons} />
                     <p>Personal Data</p>
                 </NavLink>
                 <NavLink
@@ -59,11 +47,7 @@ const Sidebar = () => {
                         activeSection === "logout" ? style.active : ""
                     }`}
                 >
-                    <img
-                        src={logoutIcon}
-                        alt="logout icon"
-                        className={style.icons}
-                    />
+                    <LogoutIcon className={style.icons} />
                     <p>Logout</p>
                 </NavLink>
             </nav>

@@ -1,9 +1,3 @@
-.logOutDiv {
-    border: 2px solid var(--main-color);
-    padding: 16px;
-    border-radius: var(--modals-border-radius);
-}
-
 .logOutEmail {
     font-weight: bold;
 }

@@ -1,6 +1,9 @@
 import usersDatabase from "./In-memory-repository/usersDatabase";
 
 export const login = async (email: string, password: string) => {
+
+
+    
     const userFound = usersDatabase.find(
         (user) => email === user.email && password === user.password
     );

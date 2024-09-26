@@ -3,11 +3,11 @@
     color: var(--main-color);
     background-color: var(--light-blue);
 
-    --light-grey: #e6e6e6;
+    --light-grey: #d1d1d1;
     --dark-grey: #4a4a4a;
     --darker-grey: hsl(225, 11%, 15%);
     --darker-grey-hover: hsl(228, 10%, 18%);
-    --light-blue: #dff1fa;
+    --light-blue: #ddf1fd;
     --light-blue-hover: hsl(200, 74%, 85%);
     --main-color: #23395d;
     --main-color-hover: hsl(217, 45%, 35%);
@@ -17,6 +17,7 @@
     --inputs-border-radius: 10px;
     --forms-border-radius: 16px;
     --modals-border-radius: 12px;
+    --main-container-border-radius: 6px;
 }
 
 *,
@@ -34,6 +35,7 @@ html {
 body {
     min-width: 100%;
     min-height: 100vh;
+    position: relative;
 }
 
 #root {
@@ -51,8 +53,18 @@ button {
     min-height: calc(100vh - 95.98px);
     min-width: 100%;
     position: relative;
+    justify-content: center;
 }
 
 .mainContainer {
-    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    height: fit-content;
+    margin-top: 50px;
+    border-radius: var(--main-container-border-radius);
+    padding: 30px;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

@@ -12,7 +12,6 @@ import PageContext from "../../components/Contexts/PageContext";
 import handlePasswordChange from "../../utils/handlePasswordChange";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
-import Sidebar from "../../components/Sidebar/Sidebar";
 
 const Profile = () => {
     // check if user is logged
@@ -87,10 +86,19 @@ const Profile = () => {
         // Validate input fields
         const hasErrors = validateFields(
             [
-                { fieldType: "password", value: formData.oldPassword, ref: oldPwParagraphErrorRef },
-                { fieldType: "password", value: formData.newPassword, ref: newPwParagraphErrorRef },
                 {
-                    fieldType: "password", value: formData.confirmNewPassword,
+                    fieldType: "password",
+                    value: formData.oldPassword,
+                    ref: oldPwParagraphErrorRef,
+                },
+                {
+                    fieldType: "password",
+                    value: formData.newPassword,
+                    ref: newPwParagraphErrorRef,
+                },
+                {
+                    fieldType: "password",
+                    value: formData.confirmNewPassword,
                     ref: confNewPwParagraphErrorRef,
                 },
             ],
@@ -142,9 +150,8 @@ const Profile = () => {
 
     return (
         <div className="container">
-            <Sidebar />
             <main className={`${style.mainContainer} mainContainer`}>
-                <h2>Personal Data</h2>
+                <h2>Account Data</h2>
                 <div className={style.personalDataDiv}>
                     <div>
                         <p>
@@ -160,18 +167,12 @@ const Profile = () => {
                     </div>
 
                     {!isChangePasswordActive && !showResponseDiv && (
-                        <div>
-                            <p>
-                                <button
-                                    className={style.firstPasswordBtn}
-                                    onClick={() =>
-                                        setIsChangePasswordActive(true)
-                                    }
-                                >
-                                    Change Password
-                                </button>
-                            </p>
-                        </div>
+                        <button
+                            className={style.firstPasswordBtn}
+                            onClick={() => setIsChangePasswordActive(true)}
+                        >
+                            Change Password
+                        </button>
                     )}
 
                     {isChangePasswordActive && !showResponseDiv && (

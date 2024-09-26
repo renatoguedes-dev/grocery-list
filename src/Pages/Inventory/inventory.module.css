@@ -1,6 +1,4 @@
 .mainContainer {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     user-select: none;
 }
@@ -47,19 +45,20 @@
 }
 
 .buttons {
-    background-color: var(--light-blue);
+    background-color: white;
     border: none;
 }
 
 .input {
     border: none;
-    background-color: var(--light-blue);
+    background-color: white;
     padding: 5px;
     -moz-appearance: textfield; /* Hide the spinner arrows in Firefox */
     width: 40px;
     font-size: 16px;
     text-align: center;
     outline: none;
+    border: 2px solid white;
 }
 
 .input:focus {
