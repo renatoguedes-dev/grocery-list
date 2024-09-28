@@ -23,6 +23,7 @@ const LoginForm = () => {
     const { showPassword, togglePasswordVisibility, passwordInputRef } =
         usePasswordToggle();
 
+    const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -33,8 +34,10 @@ const LoginForm = () => {
     };
 
     const loginAPI = async () => {
+        setError(null);
         try {
             const userFound = await login(formData.email, formData.password);
+            console.log(userFound);
 
             if (!userFound.data.token) {
                 throw new Error(
@@ -50,12 +53,10 @@ const LoginForm = () => {
 
             setLoggedUser(tokenData);
             window.location.href = "/dashboard";
-            // navigate("/dashboard");
 
             return;
         } catch (err: any) {
-            console.log(err.message);
-            return alert(err.message);
+            setError(err.message);
         }
     };
 
@@ -123,9 +124,13 @@ const LoginForm = () => {
                         This field cannot be empty *
                     </p>
                 </div>
+
                 <Link to="/reset-password" className={style.signUpLink}>
                     <p className={style.forgotSignUp}>Forgot password?</p>
                 </Link>
+
+                {error && <div className={style.backendErrorDiv}>{error}</div>}
+
                 <button type="submit" className={style.loginBtn}>
                     Log in
                 </button>

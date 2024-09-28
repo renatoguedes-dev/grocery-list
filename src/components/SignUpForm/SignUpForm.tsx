@@ -1,6 +1,5 @@
 import style from "./SignUpForm.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import userIcon from "../../assets/images/user.png";
 import mailIcon from "../../assets/images/email.png";
 import lockIcon from "../../assets/images/lock.png";
@@ -14,10 +13,12 @@ import {
     validateFields,
     validatePasswordsMatch,
 } from "../../utils/inputFieldsVerification";
+import { signUp } from "../../axios";
+import { decodeToken } from "react-jwt";
+import Cookies from "js-cookie";
 
 const SignUpForm = () => {
-    const navigate = useNavigate();
-    const { setCreatedUserEmail } = useContext(PageContext);
+    const { setLoggedUser } = useContext(PageContext);
 
     // Error message refs
     const nameErrorRef = useRef<HTMLParagraphElement | null>(null);
@@ -34,6 +35,7 @@ const SignUpForm = () => {
         passwordInputRef: confirmPasswordInputRef,
     } = usePasswordToggle();
 
+    const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -43,6 +45,35 @@ const SignUpForm = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const signUpAPI = async () => {
+        setError(null);
+
+        try {
+            const newUser = await signUp(
+                formData.name,
+                formData.email,
+                formData.password,
+                formData.confirmPassword
+            );
+
+            if (!newUser.data.token)
+                throw new Error("An error occurred on signup.");
+
+            const token = newUser.data.token;
+            const tokenData: any = decodeToken(token);
+
+            Cookies.set("token", token);
+            Cookies.set("tokenData", JSON.stringify(tokenData));
+
+            setLoggedUser(tokenData);
+            window.location.href = "/dashboard";
+
+            return;
+        } catch (err: any) {
+            setError(err.message);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -96,37 +127,40 @@ const SignUpForm = () => {
         // If passwords do not match, return early
         if (passwordsDoNotMatch) return null;
 
-        try {
-            const response = await axios.post(
-                "http://localhost:3000/api/signup",
-                formData
-            );
+        signUpAPI();
 
-            console.log(response);
+        // TODO remove the commented try catch after testing bypass the frontend security to test backend's
+        // try {
+        //     const response = await axios.post(
+        //         "http://localhost:3000/api/signup",
+        //         formData
+        //     );
 
-            setCreatedUserEmail(response.data.createdUser.email);
+        //     console.log(response);
 
-            console.log("User registered successfully!");
-            navigate("/welcome");
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const { data } = error.response || {};
-                console.log("Error Message:", data.message);
+        //     setCreatedUserEmail(response.data.createdUser.email);
 
-                if (data.errors) {
-                    data.errors.forEach(
-                        (error: { field: string; message: string }) => {
-                            console.log(`${error.field}: ${error.message}`);
-                        }
-                    );
-                }
-            } else {
-                console.error(
-                    "An unexpected error occurred during signup: ",
-                    (error as Error).message
-                );
-            }
-        }
+        //     console.log("User registered successfully!");
+        //     navigate("/welcome");
+        // } catch (error) {
+        //     if (axios.isAxiosError(error)) {
+        //         const { data } = error.response || {};
+        //         console.log("Error Message:", data.message);
+
+        //         if (data.errors) {
+        //             data.errors.forEach(
+        //                 (error: { field: string; message: string }) => {
+        //                     console.log(`${error.field}: ${error.message}`);
+        //                 }
+        //             );
+        //         }
+        //     } else {
+        //         console.error(
+        //             "An unexpected error occurred during signup: ",
+        //             (error as Error).message
+        //         );
+        //     }
+        // }
     };
 
     return (
@@ -248,6 +282,8 @@ const SignUpForm = () => {
                         This field cannot be empty *
                     </p>
                 </div>
+
+                {error && <div className={style.backendErrorDiv}>{error}</div>}
 
                 <button type="submit" className={style.signUpBtn}>
                     Sign Up

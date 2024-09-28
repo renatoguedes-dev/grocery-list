@@ -1,6 +1,6 @@
 export interface ICustomLists {
     id: number;
-    userId: string;
+    userId: number;
     name: string;
     date: string;
 }
@@ -9,13 +9,13 @@ class CustomLists {
     private items: ICustomLists[] = [
         {
             id: 1,
-            userId: "1",
+            userId: 1,
             name: "Compras Padaria",
             date: "2024-09-25",
         },
         {
             id: 2,
-            userId: "1",
+            userId: 1,
             name: "Compras Mix Mateus",
             date: "2024-09-26",
         },
@@ -29,7 +29,7 @@ class CustomLists {
         };
     }
 
-    async getListByUser(userId: string): Promise<{ data: ICustomLists[] }> {
+    async getListByUser(userId: number): Promise<{ data: ICustomLists[] }> {
         const userLists = this.items.filter((item) => item.userId === userId);
 
         return {
@@ -37,7 +37,7 @@ class CustomLists {
         };
     }
 
-    async addList(userId: string, name: string, date: string) {
+    async addList(userId: number, name: string, date: string) {
         const newId = ++this.id;
 
         const newList = {

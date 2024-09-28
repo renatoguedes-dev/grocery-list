@@ -1,49 +1,90 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import Inventories, {
-    IInventories,
-} from "../../In-memory-repository/Inventories";
+import { useCallback, useEffect, useState } from "react";
+import { IInventories } from "../../In-memory-repository/Inventories";
 import style from "./inventory.module.css";
 import changeQuantityButtons from "../../utils/changeQuantityButtons";
-import PageContext from "../../components/Contexts/PageContext";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import InventoryModal from "../../components/Modals/InventoryModal/InventoryModal";
 import trashIcon from "../../assets/images/trashIcon.png";
 import plusIcon from "../../assets/images/plusIcon.png";
 import minusIcon from "../../assets/images/minusIcon.png";
+import Cookies from "js-cookie";
+import { removeItem, updateItem, userInventory } from "../../axios";
 
 const InventoryPage = () => {
     useCheckLoggedUser();
 
-    const { loggedUser } = useContext(PageContext);
+    const token = Cookies.get("token");
 
     const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isInventoryUpdated, setIsInventoryUpdated] = useState(false);
 
     const getInventoryAPI = useCallback(async () => {
-        if (!loggedUser) return;
+        if (!token) return;
 
-        const result = await Inventories.getUserInventory(loggedUser.userId);
+        try {
+            const result = await userInventory(token);
 
-        setInventoryData(result.data);
-    }, [loggedUser]);
+            const resultData = result.data.userInventory;
+
+            setInventoryData(resultData);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    }, [token]);
+
+    const removeItemAPI = async (itemId: string) => {
+        if (!token) return;
+
+        try {
+            await removeItem(token, itemId);
+
+            getInventoryAPI();
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const updateItemAPI = async (
+        itemId: string,
+        updatedInventoryArray: IInventories[]
+    ) => {
+        if (!token) throw new Error("No token provided");
+
+        const updatedItemFound = updatedInventoryArray.find(
+            (updated) => updated.id === itemId
+        );
+
+        console.log(updatedItemFound);
+
+        if (!updatedItemFound) throw new Error("No updated item found");
+
+        try {
+            await updateItem(
+                token,
+                itemId,
+                updatedItemFound.current_amount,
+                updatedItemFound.minimum_amount
+            );
+
+            console.log("current: " + updatedItemFound.current_amount);
+            console.log("min: " + updatedItemFound.minimum_amount);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
 
     useEffect(() => {
         getInventoryAPI();
-
-        if (isInventoryUpdated === true) {
-            setIsInventoryUpdated(false);
-        }
-    }, [isInventoryUpdated, getInventoryAPI]);
+    }, [getInventoryAPI, inventoryData]);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
-        item: string
+        currentInventory: IInventories
     ) => {
         const updatedInventory = inventoryData.map((inventory) => {
             // Check if the current inventory item matches the one being
             // updated or not
-            if (inventory.itemName === item) {
+            if (inventory.id === currentInventory.id) {
                 const field = e.target.name;
 
                 // return a new object with updated field
@@ -54,16 +95,7 @@ const InventoryPage = () => {
             return inventory;
         });
 
-        setInventoryData(updatedInventory);
-    };
-
-    const removeItem = (itemName: string) => {
-        if (!loggedUser) {
-            return;
-        }
-
-        Inventories.deleteItem(loggedUser.userId, itemName);
-        getInventoryAPI();
+        updateItemAPI(currentInventory.id, updatedInventory);
     };
 
     return (
@@ -72,7 +104,7 @@ const InventoryPage = () => {
                 <InventoryModal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    onNewItem={setIsInventoryUpdated}
+                    onUpdate={getInventoryAPI}
                 />
 
                 <button
@@ -81,6 +113,14 @@ const InventoryPage = () => {
                 >
                     New Item
                 </button>
+
+                {inventoryData.length <= 0 && (
+                    <>
+                        <p className={style.emptyInventory}>
+                            Your Inventory is empty.
+                        </p>
+                    </>
+                )}
 
                 {inventoryData.length > 0 && (
                     <table className={style.table}>
@@ -95,8 +135,8 @@ const InventoryPage = () => {
                         <tbody>
                             {inventoryData.map((inventory) => {
                                 return (
-                                    <tr key={inventory.itemName}>
-                                        <td>{inventory.itemName}</td>
+                                    <tr key={inventory.id}>
+                                        <td>{inventory.item}</td>
                                         <td>
                                             <div
                                                 className={
@@ -107,22 +147,22 @@ const InventoryPage = () => {
                                                     className={`${style.buttons} ${style.minusBtn}`}
                                                     onClick={() =>
                                                         changeQuantityButtons(
+                                                            updateItemAPI,
                                                             inventoryData,
-                                                            setInventoryData,
                                                             inventory,
                                                             -1,
-                                                            "currentAmount"
+                                                            "current_amount"
                                                         )
                                                     }
                                                     disabled={
-                                                        inventory.currentAmount ===
+                                                        inventory.current_amount ===
                                                         0
                                                     }
                                                 >
                                                     <img
                                                         className={`${style.minusIcon} ${style.icons}`}
                                                         src={minusIcon}
-                                                        alt=""
+                                                        alt="Icon of minus sign"
                                                     />
                                                 </button>
 
@@ -130,14 +170,14 @@ const InventoryPage = () => {
                                                     className={style.input}
                                                     type="number"
                                                     min="0"
-                                                    name="currentAmount"
+                                                    name="current_amount"
                                                     value={
-                                                        inventory.currentAmount
+                                                        inventory.current_amount
                                                     }
                                                     onChange={(e) =>
                                                         handleInputChange(
                                                             e,
-                                                            inventory.itemName
+                                                            inventory
                                                         )
                                                     }
                                                 />
@@ -146,18 +186,18 @@ const InventoryPage = () => {
                                                     className={`${style.buttons} ${style.plusBtn}`}
                                                     onClick={() =>
                                                         changeQuantityButtons(
+                                                            updateItemAPI,
                                                             inventoryData,
-                                                            setInventoryData,
                                                             inventory,
                                                             1,
-                                                            "currentAmount"
+                                                            "current_amount"
                                                         )
                                                     }
                                                 >
                                                     <img
                                                         className={`${style.plusIcon} ${style.icons}`}
                                                         src={plusIcon}
-                                                        alt=""
+                                                        alt="Icon of plus sign"
                                                     />
                                                 </button>
                                             </div>
@@ -172,36 +212,36 @@ const InventoryPage = () => {
                                                     className={`${style.buttons} ${style.minusBtn}`}
                                                     onClick={() =>
                                                         changeQuantityButtons(
+                                                            updateItemAPI,
                                                             inventoryData,
-                                                            setInventoryData,
                                                             inventory,
                                                             -1,
-                                                            "minimumAmount"
+                                                            "minimum_amount"
                                                         )
                                                     }
                                                     disabled={
-                                                        inventory.minimumAmount ===
+                                                        inventory.minimum_amount ===
                                                         0
                                                     }
                                                 >
                                                     <img
                                                         className={`${style.minusIcon} ${style.icons}`}
                                                         src={minusIcon}
-                                                        alt=""
+                                                        alt="Icon of minus sign"
                                                     />
                                                 </button>
                                                 <input
                                                     className={style.input}
                                                     type="number"
                                                     min="0"
-                                                    name="minimumAmount"
+                                                    name="minimum_amount"
                                                     value={
-                                                        inventory.minimumAmount
+                                                        inventory.minimum_amount
                                                     }
                                                     onChange={(e) =>
                                                         handleInputChange(
                                                             e,
-                                                            inventory.itemName
+                                                            inventory
                                                         )
                                                     }
                                                 />
@@ -210,28 +250,28 @@ const InventoryPage = () => {
                                                     className={`${style.buttons} ${style.plusBtn}`}
                                                     onClick={() =>
                                                         changeQuantityButtons(
+                                                            updateItemAPI,
                                                             inventoryData,
-                                                            setInventoryData,
                                                             inventory,
                                                             1,
-                                                            "minimumAmount"
+                                                            "minimum_amount"
                                                         )
                                                     }
                                                 >
                                                     <img
                                                         className={`${style.plusIcon} ${style.icons}`}
                                                         src={plusIcon}
-                                                        alt=""
+                                                        alt="Icon of plus sign"
                                                     />
                                                 </button>
                                             </div>
                                         </td>
                                         <td>
-                                            {inventory.currentAmount -
-                                                inventory.minimumAmount <
+                                            {inventory.current_amount -
+                                                inventory.minimum_amount <
                                             0
-                                                ? (inventory.currentAmount -
-                                                      inventory.minimumAmount) *
+                                                ? (inventory.current_amount -
+                                                      inventory.minimum_amount) *
                                                   -1
                                                 : 0}
                                         </td>
@@ -241,9 +281,7 @@ const InventoryPage = () => {
                                                 src={trashIcon}
                                                 alt="trash icon"
                                                 onClick={() =>
-                                                    removeItem(
-                                                        inventory.itemName
-                                                    )
+                                                    removeItemAPI(inventory.id)
                                                 }
                                             />
                                         </td>
@@ -252,14 +290,6 @@ const InventoryPage = () => {
                             })}
                         </tbody>
                     </table>
-                )}
-
-                {inventoryData.length <= 0 && (
-                    <>
-                        <p className={style.emptyInventory}>
-                            Your Inventory is empty.
-                        </p>
-                    </>
                 )}
             </main>
         </div>

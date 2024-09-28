@@ -57,5 +57,5 @@
     align-self: flex-start;
     display: flex;
     flex-direction: column;
-    background-color: #f78f21;
+    background-color: var(--buttons-list-color);
 }

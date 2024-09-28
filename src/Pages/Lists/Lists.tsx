@@ -24,14 +24,14 @@ const Lists = () => {
     const getCustomListsAPI = useCallback(async () => {
         if (!loggedUser) return;
 
-        const result = await CustomLists.getListByUser(loggedUser.userId);
+        const result = await CustomLists.getListByUser(loggedUser.id);
         setUserCustomLists(result.data);
     }, [loggedUser]);
 
     const getInventoryAPI = useCallback(async () => {
         if (!loggedUser) return;
 
-        const result = await Inventories.getUserInventory(loggedUser.userId);
+        const result = await Inventories.getUserInventory(loggedUser.id);
 
         setInventoryData(result.data);
     }, [loggedUser]);
@@ -53,7 +53,8 @@ const Lists = () => {
 
                 <div className={style.headerDiv}>
                     <h2 className={style.listsHeader}>Your lists</h2>
-                    {(userCustomLists.length > 0 || inventoryData.length > 0) && (
+                    {(userCustomLists.length > 0 ||
+                        inventoryData.length > 0) && (
                         <button
                             className={style.customListBtn}
                             onClick={() => setIsModalOpen(true)}

@@ -121,3 +121,14 @@
 .activateError {
     display: block;
 }
+
+.backendErrorDiv {
+    height: 40px;
+    background-color: var(--red-error);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: var(--inputs-border-radius);
+}

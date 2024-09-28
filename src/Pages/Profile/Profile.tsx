@@ -119,10 +119,7 @@ const Profile = () => {
         // If passwords do not match, return early
         if (passwordsDoNotMatch) return;
 
-        const isPasswordUpdated = handlePasswordChange(
-            loggedUser.userId,
-            formData
-        );
+        const isPasswordUpdated = handlePasswordChange(loggedUser.id, formData);
 
         if (!isPasswordUpdated) {
             setShowResponseDiv(true);

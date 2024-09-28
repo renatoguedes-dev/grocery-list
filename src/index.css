@@ -11,7 +11,8 @@
     --light-blue-hover: hsl(200, 74%, 85%);
     --main-color: #23395d;
     --main-color-hover: hsl(217, 45%, 35%);
-    --red-error: hsl(0, 68%, 69%);
+    --buttons-list-color: #fc8f00;
+    --red-error: hsl(0, 72%, 47%);
     --red-error-hover: #de5454;
     --buttons-border-radius: 8px;
     --inputs-border-radius: 10px;

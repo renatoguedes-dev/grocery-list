@@ -1,33 +1,22 @@
-import {
-    FC,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import style from "./inventoryModal.module.css";
-import PageContext from "../../Contexts/PageContext";
-import Inventories from "../../../In-memory-repository/Inventories";
 import {
     clearErrorClasses,
     validateFields,
     validateNewItemAmount,
 } from "../../../utils/inputFieldsVerification";
+import Cookies from "js-cookie";
+import { addNewInventoryItem } from "../../../axios";
 
 interface InventoryModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onNewItem: React.Dispatch<React.SetStateAction<boolean>>;
+    onUpdate: () => void;
 }
 
-const InventoryModal: FC<InventoryModalProps> = ({
-    isOpen,
-    onClose,
-    onNewItem,
-}) => {
-    const { loggedUser } = useContext(PageContext);
+const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
+    const token = Cookies.get("token");
 
     const dialogRef = useRef<HTMLDialogElement | null>(null);
 
@@ -49,6 +38,10 @@ const InventoryModal: FC<InventoryModalProps> = ({
             minimumAmount: 0,
         });
 
+        if (dialogRef.current) {
+            dialogRef.current.close(); // This should close the modal
+        }
+
         onClose();
     }, [onClose]);
 
@@ -56,7 +49,24 @@ const InventoryModal: FC<InventoryModalProps> = ({
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const newInventoryItemAPI = async () => {
+        if (!token) throw new Error("User not logged in.");
+
+        try {
+            const itemAdded = await addNewInventoryItem(
+                token,
+                formData.item,
+                formData.currentAmount,
+                formData.minimumAmount
+            );
+
+            if (!itemAdded) throw new Error("Error in newInventoryItemAPI");
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Clear all previous error classes
@@ -88,19 +98,13 @@ const InventoryModal: FC<InventoryModalProps> = ({
         // return early if there are errors.
         if (hasErrors || amountHasErrors) return null;
 
-        if (loggedUser) {
-            Inventories.addItem({
-                userId: loggedUser.userId,
-                itemName: formData.item,
-                currentAmount: formData.currentAmount,
-                minimumAmount: formData.minimumAmount,
-            });
-        }
+        try {
+            await newInventoryItemAPI();
 
-        if (dialogRef.current) {
-            dialogRef.current.close();
-            onNewItem(true);
             closeModal();
+            onUpdate();
+        } catch (err: any) {
+            console.error("Failed to add item:", err.message);
         }
     };
 

@@ -1,26 +1,27 @@
 export interface IInventories {
-    userId: string;
-    itemName: string;
-    currentAmount: number;
-    minimumAmount: number;
+    id: string;
+    user_id: string;
+    item: string;
+    current_amount: number;
+    minimum_amount: number;
 }
 
 class Inventories {
     private items: IInventories[] = [
         {
-            userId: "1",
+            userId: 1,
             itemName: "Milk",
             currentAmount: 7,
             minimumAmount: 3,
         },
         {
-            userId: "1",
+            userId: 1,
             itemName: "Dish soap",
             currentAmount: 2,
             minimumAmount: 4,
         },
         {
-            userId: "2",
+            userId: 2,
             itemName: "Nintendo Switch",
             currentAmount: 0,
             minimumAmount: 1,
@@ -31,7 +32,7 @@ class Inventories {
         this.items.push(newItem);
     }
 
-    async getUserInventory(id: string): Promise<{ data: IInventories[] }> {
+    async getUserInventory(id: number): Promise<{ data: IInventories[] }> {
         const userItems = this.items.filter((item) => item.userId === id);
 
         return {
@@ -40,7 +41,7 @@ class Inventories {
     }
 
     updateItem(
-        userId: string,
+        userId: number,
         itemName: string,
         updatedData: Partial<IInventories>
     ): void {
@@ -55,7 +56,7 @@ class Inventories {
         }
     }
 
-    deleteItem(userId: string, itemName: string): void {
+    deleteItem(userId: number, itemName: string): void {
         const index = this.items.findIndex(
             (repo) => repo.userId === userId && repo.itemName === itemName
         );

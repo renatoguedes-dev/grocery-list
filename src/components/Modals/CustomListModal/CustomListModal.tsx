@@ -38,6 +38,9 @@ const CustomListModal: FC<CustomListModalProps> = ({
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(typeof formData.listDate);
+        console.log(formData.listDate);
+        
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -73,7 +76,7 @@ const CustomListModal: FC<CustomListModalProps> = ({
         if (!loggedUser) return null;
 
         CustomLists.addList(
-            loggedUser?.userId,
+            loggedUser?.id,
             formData.listName,
             formData.listDate
         );
