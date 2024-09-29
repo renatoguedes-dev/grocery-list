@@ -39,7 +39,7 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
         });
 
         if (dialogRef.current) {
-            dialogRef.current.close(); // This should close the modal
+            dialogRef.current.close(); 
         }
 
         onClose();

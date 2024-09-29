@@ -19,7 +19,7 @@ const InventoryPage = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const getInventoryAPI = useCallback(async () => {
-        if (!token) return;
+        if (!token) throw new Error("No token provided");
 
         try {
             const result = await userInventory(token);
@@ -33,7 +33,7 @@ const InventoryPage = () => {
     }, [token]);
 
     const removeItemAPI = async (itemId: string) => {
-        if (!token) return;
+        if (!token) throw new Error("No token provided");
 
         try {
             await removeItem(token, itemId);

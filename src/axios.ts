@@ -121,3 +121,37 @@ export const updateItem = async (
         throw new Error(err.response.data.message);
     }
 };
+
+export const addCustomList = async (
+    token: string,
+    listName: string,
+    listDate: string
+) => {
+    try {
+        const result = await axios.post(
+            `${BASE_URL_API}/api/lists`,
+            { name: listName, date: listDate },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (!result) throw new Error("Error at addCustomList");
+
+        return result;
+    } catch (err: any) {
+        throw new Error(err.response.data.message);
+    }
+};
+
+export const getUserCustomLists = async (token: string) => {
+    try {
+        const result = await axios.get(`${BASE_URL_API}/api/lists`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!result) throw new Error("Error at getCustomLists");
+
+        return result;
+    } catch (err: any) {
+        throw new Error(err.response.data.message);
+    }
+};

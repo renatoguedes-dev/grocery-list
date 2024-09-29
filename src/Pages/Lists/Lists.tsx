@@ -1,20 +1,17 @@
 import style from "./lists.module.css";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import CustomListModal from "../../components/Modals/CustomListModal/CustomListModal";
-import { useCallback, useContext, useEffect, useState } from "react";
-import PageContext from "../../components/Contexts/PageContext";
-import CustomLists, {
-    ICustomLists,
-} from "../../In-memory-repository/CustomLists";
-import Inventories, {
-    IInventories,
-} from "../../In-memory-repository/Inventories";
+import { useCallback, useEffect, useState } from "react";
+import { ICustomLists } from "../../In-memory-repository/CustomLists";
+import { IInventories } from "../../In-memory-repository/Inventories";
+import Cookies from "js-cookie";
+import { getUserCustomLists, userInventory } from "../../axios";
 
 const Lists = () => {
     // check if user is logged correctly
     useCheckLoggedUser();
 
-    const { loggedUser } = useContext(PageContext);
+    const token = Cookies.get("token");
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -22,19 +19,35 @@ const Lists = () => {
     const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
 
     const getCustomListsAPI = useCallback(async () => {
-        if (!loggedUser) return;
+        if (!token) throw new Error("No token provided");
 
-        const result = await CustomLists.getListByUser(loggedUser.id);
-        setUserCustomLists(result.data);
-    }, [loggedUser]);
+        try {
+            const result = await getUserCustomLists(token);
+
+            console.log(result.data.userCustomLists);
+
+            setUserCustomLists(result.data.userCustomLists);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    }, [token]);
 
     const getInventoryAPI = useCallback(async () => {
-        if (!loggedUser) return;
+        if (!token) throw new Error("No token provided");
 
-        const result = await Inventories.getUserInventory(loggedUser.id);
+        try {
+            const result = await userInventory(token);
 
-        setInventoryData(result.data);
-    }, [loggedUser]);
+            const resultData = result.data.userInventory;
+
+            console.log(resultData);
+            
+
+            setInventoryData(resultData);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    }, [token]);
 
     useEffect(() => {
         getCustomListsAPI();

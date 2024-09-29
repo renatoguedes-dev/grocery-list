@@ -1,19 +1,12 @@
 import { createPortal } from "react-dom";
 import style from "./customListModal.module.css";
-import {
-    FC,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
-import PageContext from "../../Contexts/PageContext";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
     clearErrorClasses,
     validateFields,
 } from "../../../utils/inputFieldsVerification";
-import CustomLists from "../../../In-memory-repository/CustomLists";
+import Cookies from "js-cookie";
+import { addCustomList } from "../../../axios";
 
 interface CustomListModalProps {
     isOpen: boolean;
@@ -21,12 +14,12 @@ interface CustomListModalProps {
     onUpdate: () => void;
 }
 
-const CustomListModal: FC<CustomListModalProps> = ({
+const CustomListModal = ({
     isOpen,
     onClose,
     onUpdate,
-}) => {
-    const { loggedUser } = useContext(PageContext);
+}: CustomListModalProps) => {
+    const token = Cookies.get("token");
 
     const dialogRef = useRef<HTMLDialogElement | null>(null);
     const listNameErrorRef = useRef<HTMLParagraphElement | null>(null);
@@ -38,13 +31,26 @@ const CustomListModal: FC<CustomListModalProps> = ({
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(typeof formData.listDate);
-        console.log(formData.listDate);
-        
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const addCustomListAPI = async () => {
+        if (!token) throw new Error("User not logged in.");
+
+        try {
+            const listAdded = await addCustomList(
+                token,
+                formData.listName,
+                formData.listDate
+            );
+
+            if (!listAdded) throw new Error("Error in newInventoryItemAPI");
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Clear all previous error classes
@@ -73,20 +79,13 @@ const CustomListModal: FC<CustomListModalProps> = ({
         // return early if there are errors.
         if (hasErrors) return null;
 
-        if (!loggedUser) return null;
+        try {
+            await addCustomListAPI();
 
-        CustomLists.addList(
-            loggedUser?.id,
-            formData.listName,
-            formData.listDate
-        );
-
-        const dialog = dialogRef.current;
-
-        if (dialog) {
-            dialog.close();
             closeModal();
             onUpdate();
+        } catch (err: any) {
+            console.error("Failed to add list:", err.message);
         }
     };
 
@@ -95,6 +94,10 @@ const CustomListModal: FC<CustomListModalProps> = ({
             listName: "",
             listDate: "",
         });
+
+        if (dialogRef.current) {
+            dialogRef.current.close();
+        }
 
         onClose();
     }, [onClose]);
