@@ -54,20 +54,17 @@ const InventoryPage = () => {
             (updated) => updated.id === itemId
         );
 
-        console.log(updatedItemFound);
-
         if (!updatedItemFound) throw new Error("No updated item found");
 
         try {
             await updateItem(
                 token,
                 itemId,
-                updatedItemFound.current_amount,
-                updatedItemFound.minimum_amount
+                updatedItemFound.currentAmount,
+                updatedItemFound.minimumAmount
             );
 
-            console.log("current: " + updatedItemFound.current_amount);
-            console.log("min: " + updatedItemFound.minimum_amount);
+            getInventoryAPI();
         } catch (err: any) {
             console.log(err.message);
         }
@@ -75,7 +72,7 @@ const InventoryPage = () => {
 
     useEffect(() => {
         getInventoryAPI();
-    }, [getInventoryAPI, inventoryData]);
+    }, [getInventoryAPI]);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -151,11 +148,11 @@ const InventoryPage = () => {
                                                             inventoryData,
                                                             inventory,
                                                             -1,
-                                                            "current_amount"
+                                                            "currentAmount"
                                                         )
                                                     }
                                                     disabled={
-                                                        inventory.current_amount ===
+                                                        inventory.currentAmount ===
                                                         0
                                                     }
                                                 >
@@ -170,9 +167,9 @@ const InventoryPage = () => {
                                                     className={style.input}
                                                     type="number"
                                                     min="0"
-                                                    name="current_amount"
+                                                    name="currentAmount"
                                                     value={
-                                                        inventory.current_amount
+                                                        inventory.currentAmount
                                                     }
                                                     onChange={(e) =>
                                                         handleInputChange(
@@ -190,7 +187,7 @@ const InventoryPage = () => {
                                                             inventoryData,
                                                             inventory,
                                                             1,
-                                                            "current_amount"
+                                                            "currentAmount"
                                                         )
                                                     }
                                                 >
@@ -216,11 +213,11 @@ const InventoryPage = () => {
                                                             inventoryData,
                                                             inventory,
                                                             -1,
-                                                            "minimum_amount"
+                                                            "minimumAmount"
                                                         )
                                                     }
                                                     disabled={
-                                                        inventory.minimum_amount ===
+                                                        inventory.minimumAmount ===
                                                         0
                                                     }
                                                 >
@@ -234,9 +231,9 @@ const InventoryPage = () => {
                                                     className={style.input}
                                                     type="number"
                                                     min="0"
-                                                    name="minimum_amount"
+                                                    name="minimumAmount"
                                                     value={
-                                                        inventory.minimum_amount
+                                                        inventory.minimumAmount
                                                     }
                                                     onChange={(e) =>
                                                         handleInputChange(
@@ -254,7 +251,7 @@ const InventoryPage = () => {
                                                             inventoryData,
                                                             inventory,
                                                             1,
-                                                            "minimum_amount"
+                                                            "minimumAmount"
                                                         )
                                                     }
                                                 >
@@ -267,11 +264,11 @@ const InventoryPage = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            {inventory.current_amount -
-                                                inventory.minimum_amount <
+                                            {inventory.currentAmount -
+                                                inventory.minimumAmount <
                                             0
-                                                ? (inventory.current_amount -
-                                                      inventory.minimum_amount) *
+                                                ? (inventory.currentAmount -
+                                                      inventory.minimumAmount) *
                                                   -1
                                                 : 0}
                                         </td>

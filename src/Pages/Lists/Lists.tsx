@@ -41,7 +41,6 @@ const Lists = () => {
             const resultData = result.data.userInventory;
 
             console.log(resultData);
-            
 
             setInventoryData(resultData);
         } catch (err: any) {

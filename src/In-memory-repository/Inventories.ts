@@ -1,28 +1,31 @@
 export interface IInventories {
     id: string;
-    user_id: string;
+    userId: string;
     item: string;
-    current_amount: number;
-    minimum_amount: number;
+    currentAmount: number;
+    minimumAmount: number;
 }
 
 class Inventories {
     private items: IInventories[] = [
         {
-            userId: 1,
-            itemName: "Milk",
+            id: "23453",
+            userId: "1",
+            item: "Milk",
             currentAmount: 7,
             minimumAmount: 3,
         },
         {
-            userId: 1,
-            itemName: "Dish soap",
+            id: "23353",
+            userId: "1",
+            item: "Dish soap",
             currentAmount: 2,
             minimumAmount: 4,
         },
         {
-            userId: 2,
-            itemName: "Nintendo Switch",
+            id: "23323",
+            userId: "2",
+            item: "Nintendo Switch",
             currentAmount: 0,
             minimumAmount: 1,
         },
@@ -32,7 +35,7 @@ class Inventories {
         this.items.push(newItem);
     }
 
-    async getUserInventory(id: number): Promise<{ data: IInventories[] }> {
+    async getUserInventory(id: string): Promise<{ data: IInventories[] }> {
         const userItems = this.items.filter((item) => item.userId === id);
 
         return {
@@ -41,12 +44,12 @@ class Inventories {
     }
 
     updateItem(
-        userId: number,
+        userId: string,
         itemName: string,
         updatedData: Partial<IInventories>
     ): void {
         const index = this.items.findIndex(
-            (repo) => repo.userId === userId && repo.itemName === itemName
+            (repo) => repo.userId === userId && repo.item === itemName
         );
 
         if (index !== -1) {
@@ -56,9 +59,9 @@ class Inventories {
         }
     }
 
-    deleteItem(userId: number, itemName: string): void {
+    deleteItem(userId: string, itemName: string): void {
         const index = this.items.findIndex(
-            (repo) => repo.userId === userId && repo.itemName === itemName
+            (repo) => repo.userId === userId && repo.item === itemName
         );
 
         if (index !== -1) {
