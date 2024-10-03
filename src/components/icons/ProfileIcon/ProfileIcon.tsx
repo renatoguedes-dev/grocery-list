@@ -1,14 +1,10 @@
-interface SettingsIconProps {
-    color?: string;
-    size?: string;
-    className?: string;
-}
+import { IconProps } from "../../../models/IconProps";
 
-const SettingsIcon = ({
+const ProfileIcon = ({
     color = "#000000",
     size = "24",
     className,
-}: SettingsIconProps) => {
+}: IconProps) => {
     const svgProps = className
         ? { className } // If className is provided, use only className
         : { width: size, height: size, fill: color };
@@ -24,4 +20,4 @@ const SettingsIcon = ({
     );
 };
 
-export default SettingsIcon;
+export default ProfileIcon;

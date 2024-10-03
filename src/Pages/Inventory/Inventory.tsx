@@ -103,20 +103,31 @@ const InventoryPage = () => {
                     onClose={() => setIsModalOpen(false)}
                     onUpdate={getInventoryAPI}
                 />
-
-                <button
-                    className={style.newItemBtn}
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    New Item
-                </button>
+                <div className={style.headerDiv}>
+                    <h2 className={style.inventoryHeader}>Inventory</h2>
+                    {inventoryData.length > 0 && (
+                        <button
+                            className={style.newItemBtn}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            New Item
+                        </button>
+                    )}
+                </div>
 
                 {inventoryData.length <= 0 && (
-                    <>
+                    <div className={style.emptyDiv}>
                         <p className={style.emptyInventory}>
                             Your Inventory is empty.
                         </p>
-                    </>
+
+                        <button
+                            className={style.newItemBtn}
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            New Item
+                        </button>
+                    </div>
                 )}
 
                 {inventoryData.length > 0 && (

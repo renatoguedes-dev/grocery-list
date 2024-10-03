@@ -1,15 +1,7 @@
 .mainContainer {
-    align-items: flex-start;
     user-select: none;
-}
-
-.newItemBtn {
-    padding: 10px 12px;
-    border: none;
-    border-radius: var(--buttons-border-radius);
-    color: white;
-    background-color: var(--main-color);
-    font-size: 16px;
+    min-width: 350px;
+    align-items: center;
 }
 
 .newItemBtn:hover {
@@ -93,5 +85,48 @@
 .emptyInventory {
     margin-top: 40px;
     font-size: 16px;
-    font-weight: bold;
 }
+
+.headerDiv {
+    border-bottom: 1px solid var(--light-grey);
+    width: 100%;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventoryHeader {
+    text-align: left;
+}
+
+.headerDiv .newItemBtn {
+    padding: 8px 10px;
+    border: none;
+    border-radius: var(--buttons-border-radius);
+    color: white;
+    background-color: var(--main-color);
+    font-size: 12px;
+}
+
+.emptyDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.emptyDiv .newItemBtn {
+    padding: 10px 12px;
+    border: none;
+    border-radius: var(--buttons-border-radius);
+    color: white;
+    background-color: var(--main-color);
+    font-size: 16px;
+    align-self: center;
+}
+
+.newItemBtn:hover {
+    background-color: var(--main-color-hover);
+}
+

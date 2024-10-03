@@ -20,7 +20,6 @@
     padding: 8px 10px;
     border-radius: var(--buttons-border-radius);
     font-size: 12px;
-    cursor: pointer;
     background-color: var(--main-color);
     color: white;
     width: 100px;
@@ -44,8 +43,45 @@
 
 .listsDiv {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 20px;
+    width: 100%;
+}
+
+.inventoryList {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 85%;
+}
+
+.inventoryList .bottomDiv {
+    align-self: flex-end;
+}
+.customListsDiv {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.listDiv {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    min-width: 85%;
+}
+
+.listHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
 }
 
 .list {
@@ -58,4 +94,31 @@
     display: flex;
     flex-direction: column;
     background-color: var(--buttons-list-color);
+    gap: 16px;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+}
+
+.bottomDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.listDate {
+    font-size: 13px;
+}
+
+.removeBtn {
+    background-color: var(--buttons-list-color);
+    border: none;
+    color: white;
+    position: relative;
+}
+
+.settingsIcon {
+    height: 24px;
+    fill: white;
 }

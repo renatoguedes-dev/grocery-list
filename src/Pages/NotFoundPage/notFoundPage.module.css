@@ -6,3 +6,11 @@
     justify-content: center;
     gap: 24px;
 }
+
+.notFoundImage {
+    height: 300px;
+}
+
+.link {
+    color: inherit;
+}

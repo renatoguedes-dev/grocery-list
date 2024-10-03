@@ -11,6 +11,7 @@ import Lists from "./Pages/Lists/Lists";
 import Profile from "./Pages/Profile/Profile";
 import Logout from "./Pages/Logout/Logout";
 import Cookies from "js-cookie";
+import ListById from "./Pages/ListById/ListById";
 
 const token = Cookies.get("token");
 
@@ -53,6 +54,10 @@ if (token) {
         {
             path: "/lists",
             element: <Lists />,
+        },
+        {
+            path: "/lists/:id",
+            element: <ListById />
         },
         {
             path: "/inventory",

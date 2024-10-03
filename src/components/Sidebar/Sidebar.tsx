@@ -4,7 +4,7 @@ import PageContext from "../Contexts/PageContext";
 import { useContext } from "react";
 import ListIcon from "../icons/ListIcon/ListIcon";
 import InventoryIcon from "../icons/InventoryIcon/InventoryIcon";
-import ProfileIcon from "../icons/SettingsIcon/ProfileIcon";
+import ProfileIcon from "../icons/ProfileIcon/ProfileIcon";
 import LogoutIcon from "../icons/LogoutIcon/LogoutIcon";
 
 const Sidebar = () => {

@@ -7,7 +7,7 @@ import profileIcon from "../../assets/images/profile.png";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import Cookies from "js-cookie";
 import LogoutIcon from "../icons/LogoutIcon/LogoutIcon";
-import SettingsIcon from "../icons/SettingsIcon/ProfileIcon";
+import ProfileIcon from "../icons/ProfileIcon/ProfileIcon";
 
 const Header = () => {
     const token = Cookies.get("token");
@@ -84,7 +84,7 @@ const Header = () => {
                                     to="/profile"
                                     className={style.accountLinks}
                                 >
-                                    <SettingsIcon className={style.icons} />
+                                    <ProfileIcon className={style.icons} />
                                     <p>Settings</p>
                                 </Link>
 

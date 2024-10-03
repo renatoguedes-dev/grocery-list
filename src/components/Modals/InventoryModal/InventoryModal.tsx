@@ -39,7 +39,7 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
         });
 
         if (dialogRef.current) {
-            dialogRef.current.close(); 
+            dialogRef.current.close();
         }
 
         onClose();
@@ -56,8 +56,8 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
             const itemAdded = await addNewInventoryItem(
                 token,
                 formData.item,
-                formData.currentAmount,
-                formData.minimumAmount
+                Number(formData.currentAmount),
+                Number(formData.minimumAmount)
             );
 
             if (!itemAdded) throw new Error("Error in newInventoryItemAPI");

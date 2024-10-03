@@ -1,14 +1,20 @@
 import { Link } from "react-router-dom";
-import style from "./notFoundPage.module.css"
+import style from "./notFoundPage.module.css";
+import notFoundImage from "../../assets/images/404notfound.jpg"
 
 const NotFoundPage = () => {
     return (
-        <div className={style.mainContainer}>
-            <h1>The page you are trying to access doesn't exist</h1>
-            <span>
-                Back to <Link to="/">Homepage</Link>
-            </span>
-            
+        <div className="container">
+            <div className={`mainContainer ${style.mainContainer}`}>
+                <img className={style.notFoundImage} src={notFoundImage} alt="" />
+                <h2>We can't seem to find the page you're looking for.</h2>
+                <span>
+                    Back to{" "}
+                    <Link to="/" className={style.link}>
+                        Homepage
+                    </Link>
+                </span>
+            </div>
         </div>
     );
 };
