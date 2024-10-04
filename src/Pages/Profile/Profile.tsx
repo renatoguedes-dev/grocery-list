@@ -9,10 +9,10 @@ import {
   validatePasswordsMatch,
 } from "../../utils/inputFieldsVerification";
 import PageContext from "../../components/Contexts/PageContext";
-import handlePasswordChange from "../../utils/handlePasswordChange";
 import usePasswordToggle from "../../hooks/usePasswordToggle";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import Cookies from "js-cookie";
+import { changePassword } from "../../axios";
 
 const Profile = () => {
   // check if user is logged
@@ -47,6 +47,7 @@ const Profile = () => {
   const [isChangePasswordActive, setIsChangePasswordActive] = useState(false);
   const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const [showResponseDiv, setShowResponseDiv] = useState(false);
+  const [error, setError] = useState("");
 
   // Error message refs
   const oldPwParagraphErrorRef = useRef<HTMLParagraphElement | null>(null);
@@ -71,18 +72,29 @@ const Profile = () => {
     if (!token) throw new Error("No token provided");
 
     try {
-        const result = await changePasswordAPI(token)
+      const result = await changePassword(
+        token,
+        formData.oldPassword,
+        formData.newPassword
+      );
+
+      console.log(result);
+      console.log("here");
+
+      if (result) {
+        setIsPasswordChanged(true);
+        setShowResponseDiv(true);
+        setIsChangePasswordActive(false);
+      }
     } catch (err: any) {
-        console.log(err.message);
+      setShowResponseDiv(true);
+      setError(err.message);
+      console.log(err.message);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!loggedUser) {
-      return;
-    }
 
     // Clear all previous error classes
     clearErrorClasses(
@@ -130,25 +142,14 @@ const Profile = () => {
     // If passwords do not match, return early
     if (passwordsDoNotMatch) return;
 
-    const isPasswordUpdated = handlePasswordChange(loggedUser.id, formData);
-
-    if (!isPasswordUpdated) {
-      setShowResponseDiv(true);
-
-      return;
-    }
-
-    setIsPasswordChanged(true);
-    setShowResponseDiv(true);
-    setIsChangePasswordActive(false);
+    await changePasswordAPI();
   };
 
   useEffect(() => {
     if (showResponseDiv && !isPasswordChanged && responseParagraphRef.current) {
-      responseParagraphRef.current.textContent =
-        "Something went wrong. Password not changed.";
+      responseParagraphRef.current.textContent = error;
     }
-  }, [showResponseDiv, isPasswordChanged]);
+  }, [showResponseDiv, isPasswordChanged, error]);
 
   if (!loggedUser) return null;
 
@@ -294,7 +295,7 @@ const Profile = () => {
           {showResponseDiv && (
             <div className={style.changePasswordForm}>
               <p className={style.paragraph} ref={responseParagraphRef}>
-                Password Successfully Changed.
+                Password Changed Successfully.
               </p>
             </div>
           )}

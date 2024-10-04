@@ -1,23 +1,22 @@
 import style from "./dashboard.module.css";
-import { useContext } from "react";
-import PageContext from "../../components/Contexts/PageContext";
 import DashboardContent from "../../components/DashboardContent/DashboardContent";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
-    useCheckLoggedUser();
+  useCheckLoggedUser();
 
-    const { loggedUser } = useContext(PageContext);
+  const token = Cookies.get("token");
 
-    if (!loggedUser) {
-        return null;
-    }
+  if (!token) {
+    return null;
+  }
 
-    return (
-        <main className={style.mainContainer}>
-            <DashboardContent />
-        </main>
-    );
+  return (
+    <main className={style.mainContainer}>
+      <DashboardContent />
+    </main>
+  );
 };
 
 export default Dashboard;

@@ -34,6 +34,10 @@ const routes = [
                 element: <SignUp />,
             },
             {
+                path: "/dashboard",
+                element: <Dashboard />,
+            },
+            {
                 path: "/reset-password",
                 element: <ResetPassword />,
             },
@@ -47,10 +51,7 @@ if (token) {
             path: "/welcome",
             element: <WelcomePage />,
         },
-        {
-            path: "/dashboard",
-            element: <Dashboard />,
-        },
+        
         {
             path: "/lists",
             element: <Lists />,
