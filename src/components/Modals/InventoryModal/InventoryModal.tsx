@@ -7,7 +7,7 @@ import {
     validateNewItemAmount,
 } from "../../../utils/inputFieldsVerification";
 import Cookies from "js-cookie";
-import { addNewInventoryItem } from "../../../axios";
+import { addInventoryItem } from "../../../axios";
 
 interface InventoryModalProps {
     isOpen: boolean;
@@ -53,7 +53,7 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
         if (!token) throw new Error("User not logged in.");
 
         try {
-            const itemAdded = await addNewInventoryItem(
+            const itemAdded = await addInventoryItem(
                 token,
                 formData.item,
                 Number(formData.currentAmount),

@@ -1,124 +1,132 @@
 .mainContainer {
-    gap: 40px;
-    width: 400px;
+  gap: 40px;
+  width: 400px;
 }
 
 .headerDiv {
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid var(--light-grey);
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
-    position: relative;
-    padding-bottom: 7px;
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--light-grey);
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  padding-bottom: 7px;
 }
 
 .customListBtn,
 .insideBtn {
-    border: none;
-    padding: 8px 10px;
-    border-radius: var(--buttons-border-radius);
-    font-size: 12px;
-    background-color: var(--main-color);
-    color: white;
-    width: 100px;
+  border: none;
+  padding: 8px 10px;
+  border-radius: var(--buttons-border-radius);
+  font-size: 12px;
+  background-color: var(--main-color);
+  color: white;
+  width: 100px;
 }
 
 .customListBtn:hover,
 .insideBtn:hover {
-    background-color: var(--main-color-hover);
+  background-color: var(--main-color-hover);
 }
 
 .insideBtn {
-    padding: 14px 16px;
-    font-size: 16px;
+  padding: 14px 16px;
+  font-size: 16px;
 }
 
 .listsHeader {
-    text-align: left;
-    align-self: self-start;
-    width: 100%;
+  text-align: left;
+  align-self: self-start;
+  width: 100%;
 }
 
 .listsDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
 }
 
 .inventoryList {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 85%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 85%;
 }
 
 .inventoryList .bottomDiv {
-    align-self: flex-end;
+  align-self: flex-start;
 }
 .customListsDiv {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .listDiv {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    text-decoration: none;
-    min-width: 85%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  min-width: 85%;
 }
 
 .listHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
 }
 
 .list {
-    border: 0;
-    border-radius: var(--buttons-border-radius);
-    padding: 10px 14px;
-    color: white;
-    text-align: left;
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--buttons-list-color);
-    gap: 16px;
-    position: relative;
-    cursor: pointer;
-    width: 100%;
+  border: 0;
+  border-radius: var(--buttons-border-radius);
+  padding: 10px 14px;
+  color: white;
+  text-align: left;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--buttons-list-color);
+  gap: 16px;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
 }
 
 .bottomDiv {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  position: relative;
 }
 
 .listDate {
-    font-size: 13px;
+  font-size: 13px;
 }
 
-.removeBtn {
-    background-color: var(--buttons-list-color);
-    border: none;
-    color: white;
-    position: relative;
+.settingsBtn {
+  background-color: var(--buttons-list-color);
+  border: none;
+  color: white;
+  position: relative;
 }
 
 .settingsIcon {
-    height: 24px;
-    fill: white;
+  height: 24px;
+  fill: white;
+}
+
+.trashIcon {
+  height: 16px;
+  filter: invert(100%) sepia(3%) saturate(728%) hue-rotate(241deg)
+    brightness(118%) contrast(100%);
+  cursor: pointer;
 }

@@ -8,7 +8,7 @@ import trashIcon from "../../assets/images/trashIcon.png";
 import plusIcon from "../../assets/images/plusIcon.png";
 import minusIcon from "../../assets/images/minusIcon.png";
 import Cookies from "js-cookie";
-import { removeItem, updateItem, userInventory } from "../../axios";
+import { removeInventoryItem, updateInventoryItem, getUserInventory } from "../../axios";
 
 const InventoryPage = () => {
     useCheckLoggedUser();
@@ -22,7 +22,7 @@ const InventoryPage = () => {
         if (!token) throw new Error("No token provided");
 
         try {
-            const result = await userInventory(token);
+            const result = await getUserInventory(token);
 
             const resultData = result.data.userInventory;
 
@@ -36,7 +36,7 @@ const InventoryPage = () => {
         if (!token) throw new Error("No token provided");
 
         try {
-            await removeItem(token, itemId);
+            await removeInventoryItem(token, itemId);
 
             getInventoryAPI();
         } catch (err: any) {
@@ -57,7 +57,7 @@ const InventoryPage = () => {
         if (!updatedItemFound) throw new Error("No updated item found");
 
         try {
-            await updateItem(
+            await updateInventoryItem(
                 token,
                 itemId,
                 updatedItemFound.currentAmount,

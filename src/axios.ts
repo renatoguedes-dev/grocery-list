@@ -47,12 +47,10 @@ export const signUp = async (
   }
 };
 
-export const userInventory = async (token: string) => {
+export const getUserInventory = async (token: string) => {
   try {
     const result = await axios.get(`${BASE_URL_API}/api/inventory`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Include the JWT token in the Authorization header
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     return result;
@@ -61,7 +59,7 @@ export const userInventory = async (token: string) => {
   }
 };
 
-export const addNewInventoryItem = async (
+export const addInventoryItem = async (
   token: string,
   item: string,
   currentAmount: number,
@@ -76,9 +74,7 @@ export const addNewInventoryItem = async (
         minimumAmount,
       },
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
 
@@ -90,14 +86,14 @@ export const addNewInventoryItem = async (
   }
 };
 
-export const removeItem = async (token: string, itemId: string) => {
+export const removeInventoryItem = async (token: string, itemId: string) => {
   try {
     const result = await axios.delete(`${BASE_URL_API}/api/inventory`, {
       data: { itemId },
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (!result) throw new Error("Error at removeItem");
+    if (!result) throw new Error("Error at removeInventoryItem");
 
     return result;
   } catch (err: any) {
@@ -105,7 +101,7 @@ export const removeItem = async (token: string, itemId: string) => {
   }
 };
 
-export const updateItem = async (
+export const updateInventoryItem = async (
   token: string,
   itemId: string,
   currentAmount: number,
@@ -118,7 +114,7 @@ export const updateItem = async (
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    if (!result) throw new Error("Error at updateItem");
+    if (!result) throw new Error("Error at updateInventoryItem");
 
     return result;
   } catch (err: any) {
@@ -167,6 +163,21 @@ export const getListById = async (token: string, id: string) => {
     });
 
     if (!result) throw new Error("Error at getListById");
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const deleteCustomList = async (token: string, id: string) => {
+  try {
+    const result = await axios.delete(`${BASE_URL_API}/api/lists`, {
+      data: { id },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!result) throw new Error("Error at deleteCustomList");
 
     return result;
   } catch (err: any) {

@@ -1,14 +1,18 @@
 import style from "./lists.module.css";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import CustomListModal from "../../components/Modals/CustomListModal/CustomListModal";
-import { useCallback, useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
 import { ICustomLists } from "../../In-memory-repository/CustomLists";
 import { IInventories } from "../../In-memory-repository/Inventories";
 import Cookies from "js-cookie";
-import { getUserCustomLists, userInventory } from "../../axios";
-import SettingsIcon from "../../components/icons/SettingsIcon/SettingsIcon";
+import {
+  deleteCustomList,
+  getUserCustomLists,
+  getUserInventory,
+} from "../../axios";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/datesFormatter";
+import trashIcon from "../../assets/images/trashIcon.png";
 
 const Lists = () => {
   // check if user is logged correctly
@@ -25,7 +29,7 @@ const Lists = () => {
     if (!token) throw new Error("No token provided");
 
     try {
-      const result = await userInventory(token);
+      const result = await getUserInventory(token);
 
       const resultData = result.data.userInventory;
 
@@ -55,6 +59,22 @@ const Lists = () => {
       console.log(err.message);
     }
   }, [token]);
+
+  const deleteCustomListAPI = async (e: MouseEvent, listId: string) => {
+    e.preventDefault();
+
+    if (!token) throw new Error("No token provided");
+
+    try {
+      const result = await deleteCustomList(token, listId);
+
+      console.log(result);
+
+      getCustomListsAPI();
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
 
   useEffect(() => {
     getCustomListsAPI();
@@ -104,11 +124,15 @@ const Lists = () => {
                     <div className={style.listHeader}>
                       <p>Inventory List</p>
 
-                      <p>0 Items</p>
+                      <p>{inventoryData.length} Items</p>
                     </div>
 
                     <div className={style.bottomDiv}>
-                      <SettingsIcon className={style.settingsIcon} />
+                      <div className={style.listDate}>
+                        <span>Date: </span>
+                        {formatDate(Date())}
+                      </div>
+                      <button className={style.settingsBtn}></button>
                     </div>
                   </div>
                 </div>
@@ -126,7 +150,7 @@ const Lists = () => {
                         <div className={style.listHeader}>
                           <div className={style.listName}>{list.name}</div>
 
-                          <p>0 Items</p>
+                          <p>{list.listItems.length} Items</p>
                         </div>
 
                         <div className={style.bottomDiv}>
@@ -134,8 +158,13 @@ const Lists = () => {
                             <span>Date: </span>
                             {formatDate(list.date)}
                           </div>
-                          <button className={style.removeBtn}>
-                            <SettingsIcon className={style.settingsIcon} />
+                          <button className={style.settingsBtn}>
+                            <img
+                              className={`${style.trashIcon}`}
+                              src={trashIcon}
+                              alt="trash icon"
+                              onClick={(e) => deleteCustomListAPI(e, list.id)}
+                            />
                           </button>
                         </div>
                       </div>
