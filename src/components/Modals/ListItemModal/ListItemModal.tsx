@@ -13,9 +13,15 @@ interface ListItemModalProps {
   listId: string;
   isOpen: boolean;
   onClose: () => void;
+  onUpdate: () => void;
 }
 
-const ListItemModal = ({ listId, isOpen, onClose }: ListItemModalProps) => {
+const ListItemModal = ({
+  listId,
+  isOpen,
+  onClose,
+  onUpdate,
+}: ListItemModalProps) => {
   const token = Cookies.get("token");
 
   const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -86,6 +92,7 @@ const ListItemModal = ({ listId, isOpen, onClose }: ListItemModalProps) => {
       await newListItemAPI();
 
       closeModal();
+      onUpdate();
     } catch (err: any) {
       console.error("Failed to add item: ", err.message);
     }

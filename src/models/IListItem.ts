@@ -3,4 +3,5 @@ export interface IListItem {
   listId: string
   name: string;
   amount: number;
+  complete: boolean;
 }

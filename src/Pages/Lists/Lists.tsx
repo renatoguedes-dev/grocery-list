@@ -129,7 +129,6 @@ const Lists = () => {
 
                     <div className={style.bottomDiv}>
                       <div className={style.listDate}>
-                        <span>Date: </span>
                         {formatDate(Date())}
                       </div>
                       <button className={style.settingsBtn}></button>
@@ -155,7 +154,6 @@ const Lists = () => {
 
                         <div className={style.bottomDiv}>
                           <div className={style.listDate}>
-                            <span>Date: </span>
                             {formatDate(list.date)}
                           </div>
                           <button className={style.settingsBtn}>

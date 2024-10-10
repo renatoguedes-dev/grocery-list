@@ -226,6 +226,46 @@ export const addListItem = async (
   }
 };
 
+export const updateCompleteStatus = async (
+  token: string,
+  listId: string,
+  itemId: string,
+  complete: boolean
+) => {
+  try {
+    const result = await axios.post(
+      `${BASE_URL_API}/api/lists/${listId}/${itemId}`,
+      {
+        complete,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    if (!result) throw new Error("Error at updateCompleteStatus");
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const deleteListItem = async (
+  token: string,
+  listId: string,
+  itemId: string
+) => {
+  try {
+    const result = await axios.delete(
+      `${BASE_URL_API}/api/lists/${listId}/${itemId}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export const changePassword = async (
   token: string,
   oldPassword: string,

@@ -1,54 +1,129 @@
 .listHeader {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    border-bottom: 1px solid var(--light-grey);
-    padding-bottom: 7px;
-    gap: 20px;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid var(--light-grey);
+  padding-bottom: 7px;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .listBody {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    /* justify-content: flex-end; */
-    /* align-items: flex-end; */
-    width: 100%;
-    padding-top: 7px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 7px;
 }
 
 .dateDiv {
-    align-self: flex-end;
-    font-size: 13px;
-    margin-bottom: 20px;
+  align-self: flex-end;
+  font-size: 13px;
+  margin-bottom: 20px;
 }
 
-.contentDiv {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+.emptyListDiv {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
 
-.addItemBtn {
-    border: none;
-    padding: 8px 10px;
-    border-radius: var(--buttons-border-radius);
-    font-size: 13px;
-    background-color: var(--main-color);
-    color: white;
-    width: fit-content;
+.addItemBtn,
+.insideAddItemBtn {
+  border: none;
+  padding: 8px 10px;
+  border-radius: var(--buttons-border-radius);
+  font-size: 13px;
+  background-color: var(--main-color);
+  color: white;
+  width: fit-content;
 }
 
-.addItemBtn:hover {
-    background-color: var(--main-color-hover);
+.addItemBtn:hover,
+.insideAddItemBtn:hover {
+  background-color: var(--main-color-hover);
 }
 
 .settingsDiv {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .settingsIcon {
-    height: 24px;
+  height: 24px;
+}
+
+.contentDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.itemDiv {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  background-color: var(--light-blue);
+  padding: 6px 8px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkboxDiv {
+  flex: 1;
+  cursor: pointer;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+  border: 2px solid var(--light-grey);
+  border-radius: 4px;
+  outline: none;
+  position: relative;
+}
+
+.checkboxDiv:checked {
+  background-color: var(--main-color); /* Change this to your desired color */
+  border-color: var(--main-color);
+}
+
+.checkboxDiv:checked::after {
+  content: "\2714";
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+}
+
+.itemNameDiv {
+  flex: 8;
+  text-align: left;
+}
+
+.itemAmountDiv {
+  flex: 1;
+}
+
+.insideAddItemBtn {
+  align-self: flex-start;
+  padding: 6px 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.trashIcon {
+  height: 16px;
+  filter: invert(57%) sepia(87%) saturate(2989%) hue-rotate(324deg)
+    brightness(88%) contrast(98%);
+  cursor: pointer;
 }
