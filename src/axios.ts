@@ -185,6 +185,47 @@ export const deleteCustomList = async (token: string, id: string) => {
   }
 };
 
+export const getListItems = async (token: string, listId: string) => {
+  try {
+    const result = await axios.get(
+      `${BASE_URL_API}/api/lists/${listId}/list_items/`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    if (!result) throw new Error("Error at getListItems");
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const addListItem = async (
+  token: string,
+  listId: string,
+  itemName: string,
+  itemAmount: number
+) => {
+  try {
+    const result = await axios.post(
+      `${BASE_URL_API}/api/lists/${listId}`,
+      {
+        name: itemName,
+        amount: itemAmount,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    if (!result) throw new Error("Error at addListItem");
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export const changePassword = async (
   token: string,
   oldPassword: string,
