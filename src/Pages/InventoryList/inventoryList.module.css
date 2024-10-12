@@ -21,59 +21,35 @@
   margin-bottom: 20px;
 }
 
-.emptyListDiv {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-.addItemBtn,
-.insideAddItemBtn {
-  border: none;
-  padding: 8px 10px;
-  border-radius: var(--buttons-border-radius);
-  font-size: 13px;
-  background-color: var(--main-color);
-  color: white;
-  width: fit-content;
-}
-
-.addItemBtn:hover,
-.insideAddItemBtn:hover {
-  background-color: var(--main-color-hover);
-}
-
-.settingsDiv {
-  cursor: pointer;
-}
-
-.settingsIcon {
-  height: 24px;
-}
-
 .contentDiv {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   width: 100%;
+  margin-top: 10px;
 }
 
 .itemDiv {
   display: flex;
   gap: 10px;
-  width: 100%;
+  min-width: 100%;
   background-color: var(--light-blue);
   padding: 6px 8px;
   border-radius: 5px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
+.leftSide,
+.rightSide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
 .checkboxDiv {
-  flex: 1;
   cursor: pointer;
   appearance: none;
   width: 18px;
@@ -105,26 +81,8 @@
 }
 
 .itemNameDiv {
-  flex: 8;
   text-align: left;
 }
 
 .itemAmountDiv {
-  flex: 1;
-}
-
-.insideAddItemBtn {
-  align-self: flex-start;
-  padding: 6px 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.trashIcon {
-  height: 16px;
-  filter: invert(57%) sepia(87%) saturate(2989%) hue-rotate(324deg)
-    brightness(88%) contrast(98%);
-  cursor: pointer;
 }

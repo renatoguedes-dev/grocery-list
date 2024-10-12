@@ -119,7 +119,7 @@ const Lists = () => {
           <>
             <div className={style.listsDiv}>
               {inventoryData.length > 0 && (
-                <div className={style.inventoryList}>
+                <Link to="/inventory/list" className={style.inventoryList}>
                   <div className={style.list}>
                     <div className={style.listHeader}>
                       <p>Inventory List</p>
@@ -128,13 +128,11 @@ const Lists = () => {
                     </div>
 
                     <div className={style.bottomDiv}>
-                      <div className={style.listDate}>
-                        {formatDate(Date())}
-                      </div>
+                      <div className={style.listDate}>{formatDate(Date())}</div>
                       <button className={style.settingsBtn}></button>
                     </div>
                   </div>
-                </div>
+                </Link>
               )}
 
               {userCustomLists.length > 0 && (

@@ -1,141 +1,175 @@
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    height: fit-content;
-    margin-top: 50px;
-    border-radius: var(--forms-border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  height: fit-content;
+  margin-top: 50px;
+  border-radius: var(--forms-border-radius);
 }
 
 .personalDataDiv {
-    margin-top: 42px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    position: relative;
+  margin-top: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: relative;
 }
 
 .span {
-    font-weight: bold;
-    margin-right: 10px;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
 .firstPasswordBtn {
-    padding: 12px;
-    border: none;
-    border-radius: var(--buttons-border-radius);
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
-    background-color: var(--main-color);
-    color: white;
-    width: fit-content;
-    align-self: center;
+  padding: 12px;
+  border: none;
+  border-radius: var(--buttons-border-radius);
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  background-color: var(--main-color);
+  color: white;
+  width: fit-content;
+  align-self: center;
 }
 
 .firstPasswordBtn:hover {
-    background-color: var(--main-color-hover);
+  background-color: var(--main-color-hover);
 }
 
 .changePasswordForm {
-    background-color: var(--main-color);
-    width: 450px;
-    border-radius: var(--forms-border-radius);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-    left: -10px;
+  background-color: var(--main-color);
+  width: 450px;
+  border-radius: var(--forms-border-radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  left: -10px;
 }
 
 .inputDivs {
-    padding: 14px;
-    border: 2px solid var(--light-grey);
-    border-radius: var(--inputs-border-radius);
-    background-color: var(--light-grey);
-    height: 45px;
-    gap: 10px;
-    display: flex;
-    align-items: center;
+  padding: 14px;
+  border: 2px solid var(--light-grey);
+  border-radius: var(--inputs-border-radius);
+  background-color: var(--light-grey);
+  height: 45px;
+  gap: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .inputs {
+  border: 2px solid transparent;
+  background-color: var(--light-grey);
+  height: 41px;
+  width: 100%;
+  font-size: 16px;
+  outline: none;
+  color: var(--dark-grey);
+}
+
+.inputs::placeholder {
+  color: var(--dark-grey);
+  font-size: 16px;
+}
+
+.inputDivs:focus-within .inputs::placeholder {
+  color: black;
+}
+
+.imageDiv {
+  width: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icons {
+  width: 100%;
+  filter: invert(62%) sepia(0%) saturate(59%) hue-rotate(279deg) brightness(84%)
+    contrast(91%);
+}
+
+.showPassword {
+  cursor: pointer;
+  width: 20px;
+}
+
+.changePasswordBtn {
+  padding: 10px;
+  border: 2px solid white;
+  border-radius: var(--buttons-border-radius);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  background-color: white;
+  color: var(--dark-grey);
+  width: fit-content;
+  align-self: center;
+}
+
+.changePasswordBtn:hover {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+.inputParent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.passwordError {
+  color: red;
+  text-align: end;
+  display: none;
+}
+
+.activateError {
+  display: block;
+}
+
+.paragraph {
+  color: white;
+}
+
+@media screen and (max-width: 670px) {
+  .personalDataDiv {
+    margin-top: 24px;
+    align-items: flex-start;
+    gap: 18px;
+    position: relative;
+  }
+  .changePasswordForm {
+    max-width: 300px;
+    padding: 16px;
+    gap: 12px;
+    left: 0px;
+  }
+
+  .inputs {
     border: 2px solid transparent;
     background-color: var(--light-grey);
     height: 41px;
     width: 100%;
-    font-size: 16px;
+    font-size: 15px;
     outline: none;
     color: var(--dark-grey);
-}
+  }
 
-.inputs::placeholder {
-    color: var(--dark-grey);
-    font-size: 16px;
-}
+  .inputs::placeholder {
+    font-size: 15px;
+  }
 
-.inputDivs:focus-within .inputs::placeholder {
-    color: black;
-}
-
-.imageDiv {
-    width: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icons {
-    width: 100%;
-    filter: invert(62%) sepia(0%) saturate(59%) hue-rotate(279deg)
-        brightness(84%) contrast(91%);
-}
-
-.showPassword {
-    cursor: pointer;
-    width: 20px;
-}
-
-.changePasswordBtn {
-    padding: 10px;
-    border: 2px solid white;
-    border-radius: var(--buttons-border-radius);
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
-    background-color: white;
-    color: var(--dark-grey);
-    width: fit-content;
-    align-self: center;
-}
-
-.changePasswordBtn:hover {
-    background-color: lightgray;
-    border-color: lightgray;
-}
-
-.inputParent {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.passwordError {
-    color: red;
-    text-align: end;
-    display: none;
-}
-
-.activateError {
-    display: block;
-}
-
-.paragraph {
-    color: white;
+  .changePasswordBtn {
+    padding: 8px;
+    font-size: 14px;
+  }
 }

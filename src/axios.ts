@@ -55,6 +55,7 @@ export const getUserInventory = async (token: string) => {
 
     return result;
   } catch (err: any) {
+
     throw new Error(err.response.data.message);
   }
 };

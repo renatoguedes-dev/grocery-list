@@ -1,132 +1,181 @@
 .mainContainer {
-    user-select: none;
-    min-width: 350px;
-    align-items: center;
+  user-select: none;
+  min-width: 350px;
+  align-items: center;
 }
 
 .newItemBtn:hover {
-    background-color: var(--main-color-hover);
+  background-color: var(--main-color-hover);
 }
 
 .table {
-    border-collapse: collapse;
-    margin-top: 24px;
-    user-select: text;
+  border-collapse: collapse;
+  margin-top: 24px;
+  user-select: text;
 }
 
 .tableHead {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .table th,
 .table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
 }
 
 .table td {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .quantityControl {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .buttons {
-    background-color: white;
-    border: none;
+  background-color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
-    border: none;
-    background-color: white;
-    padding: 5px;
-    -moz-appearance: textfield; /* Hide the spinner arrows in Firefox */
-    width: 40px;
-    font-size: 16px;
-    text-align: center;
-    outline: none;
-    border: 2px solid white;
+  border: none;
+  background-color: white;
+  padding: 5px;
+  -moz-appearance: textfield; /* Hide the spinner arrows in Firefox */
+  width: 40px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  border: 2px solid white;
 }
 
 .input:focus {
-    border: 2px solid var(--main-color);
-    border-radius: 5px;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
 }
 
 .input::-webkit-outer-spin-button,
 .input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .icons {
-    height: 24px;
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .plusIcon,
 .minusIcon {
-    height: 18px;
-    filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(80deg)
-        brightness(100%) contrast(92%);
+  height: 18px;
+  filter: invert(27%) sepia(0%) saturate(0%) hue-rotate(80deg) brightness(100%)
+    contrast(92%);
 }
 
 .trashIcon {
-    height: 16px;
-    filter: invert(57%) sepia(87%) saturate(2989%) hue-rotate(324deg)
-        brightness(88%) contrast(98%);
+  height: 16px;
+  filter: invert(57%) sepia(87%) saturate(2989%) hue-rotate(324deg)
+    brightness(88%) contrast(98%);
 }
 
 .emptyInventory {
-    margin-top: 40px;
-    font-size: 16px;
+  margin-top: 40px;
+  font-size: 16px;
 }
 
 .headerDiv {
-    border-bottom: 1px solid var(--light-grey);
-    width: 100%;
-    padding-bottom: 7px;
-    display: flex;
-    justify-content: space-between;
+  border-bottom: 1px solid var(--light-grey);
+  width: 100%;
+  padding-bottom: 7px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .inventoryHeader {
-    text-align: left;
+  text-align: left;
 }
 
 .headerDiv .newItemBtn {
-    padding: 8px 10px;
-    border: none;
-    border-radius: var(--buttons-border-radius);
-    color: white;
-    background-color: var(--main-color);
-    font-size: 12px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: var(--buttons-border-radius);
+  color: white;
+  background-color: var(--main-color);
+  font-size: 12px;
 }
 
 .emptyDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 }
 
 .emptyDiv .newItemBtn {
-    padding: 10px 12px;
-    border: none;
-    border-radius: var(--buttons-border-radius);
-    color: white;
-    background-color: var(--main-color);
-    font-size: 16px;
-    align-self: center;
+  padding: 10px 12px;
+  border: none;
+  border-radius: var(--buttons-border-radius);
+  color: white;
+  background-color: var(--main-color);
+  font-size: 16px;
+  align-self: center;
 }
 
 .newItemBtn:hover {
-    background-color: var(--main-color-hover);
+  background-color: var(--main-color-hover);
 }
 
+@media screen and (max-width: 670px) {
+  .mainContainer {
+    min-width: 300px;
+    max-width: 340px;
+  }
+
+  .inventoryHeader {
+    font-size: 20px;
+  }
+
+  .tableHead {
+    font-size: 15px;
+  }
+
+  .table th,
+  .table td {
+    padding: 5px;
+  }
+
+  .table td {
+    word-wrap: break-word;
+    font-size: 14px;
+  }
+
+  .itemTD {
+    max-width: 100px;
+  }
+
+  .table td:not(.itemTD) {
+    padding: 5px 3px;
+  }
+
+  .input {
+    padding: 2px;
+    font-size: 15px;
+    width: 26px;
+  }
+
+  .plusIcon,
+  .minusIcon {
+    height: 16px;
+  }
+
+  .trashIcon {
+    height: 14px;
+  }
+}

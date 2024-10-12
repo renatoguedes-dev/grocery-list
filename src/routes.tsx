@@ -12,67 +12,72 @@ import Profile from "./Pages/Profile/Profile";
 import Logout from "./Pages/Logout/Logout";
 import Cookies from "js-cookie";
 import ListById from "./Pages/ListById/ListById";
+import InventoryList from "./Pages/InventoryList/InventoryList";
 
 const token = Cookies.get("token");
 
 const routes = [
-    {
-        path: "/",
-        element: <App />,
-        errorElement: <NotFoundPage />,
-        children: [
-            {
-                index: true,
-                element: <HomeContent />,
-            },
-            {
-                path: "/login",
-                element: <LoginPage />,
-            },
-            {
-                path: "/signup",
-                element: <SignUp />,
-            },
-            {
-                path: "/dashboard",
-                element: <Dashboard />,
-            },
-            {
-                path: "/reset-password",
-                element: <ResetPassword />,
-            },
-        ],
-    },
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        index: true,
+        element: <HomeContent />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
+      },
+    ],
+  },
 ];
 
 if (token) {
-    routes[0].children.push(
-        {
-            path: "/welcome",
-            element: <WelcomePage />,
-        },
-        
-        {
-            path: "/lists",
-            element: <Lists />,
-        },
-        {
-            path: "/lists/:id",
-            element: <ListById />
-        },
-        {
-            path: "/inventory",
-            element: <InventoryPage />,
-        },
-        {
-            path: "/profile",
-            element: <Profile />,
-        },
-        {
-            path: "/logout",
-            element: <Logout />,
-        }
-    );
+  routes[0].children.push(
+    {
+      path: "/welcome",
+      element: <WelcomePage />,
+    },
+
+    {
+      path: "/lists",
+      element: <Lists />,
+    },
+    {
+      path: "/lists/:id",
+      element: <ListById />,
+    },
+    {
+      path: "/inventory/list",
+      element: <InventoryList />,
+    },
+    {
+      path: "/inventory",
+      element: <InventoryPage />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
+      path: "/logout",
+      element: <Logout />,
+    }
+  );
 }
 
 export default routes;

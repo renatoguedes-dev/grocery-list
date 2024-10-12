@@ -3,13 +3,15 @@ import style from "./loginPage.module.css";
 import useRedirectIfLoggedIn from "../../hooks/useRedirectIfLoggedIn";
 
 const LoginPage = () => {
-    useRedirectIfLoggedIn();
+  useRedirectIfLoggedIn();
 
-    return (
-        <main className={style.mainContainer}>
-            <LoginForm />
-        </main>
-    );
+  return (
+    <div className="container">
+      <main className={style.mainContainer}>
+        <LoginForm />
+      </main>
+    </div>
+  );
 };
 
 export default LoginPage;

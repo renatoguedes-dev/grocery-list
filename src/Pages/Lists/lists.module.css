@@ -56,6 +56,7 @@
   align-items: center;
   gap: 10px;
   width: 85%;
+  text-decoration: none;
 }
 
 .inventoryList .bottomDiv {
@@ -129,4 +130,20 @@
   filter: invert(100%) sepia(3%) saturate(728%) hue-rotate(241deg)
     brightness(118%) contrast(100%);
   cursor: pointer;
+}
+
+@media screen and (max-width: 670px) {
+  .mainContainer {
+    width: 100%;
+    margin: 50px 15px;
+  }
+
+  .list {
+    padding: 8px 12px;
+    color: white;
+    gap: 16px;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+  }
 }
