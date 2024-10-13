@@ -9,7 +9,7 @@ const HomeContent = () => {
 
   useEffect(() => {
     if (loggedUser) {
-      navigate("/dashboard");
+      navigate("/lists");
     }
   }, [loggedUser, navigate]);
 

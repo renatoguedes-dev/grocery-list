@@ -37,7 +37,6 @@ const LoginForm = () => {
         setError(null);
         try {
             const userFound = await login(formData.email, formData.password);
-            console.log(userFound);
 
             if (!userFound.data.token) {
                 throw new Error(
@@ -52,7 +51,7 @@ const LoginForm = () => {
             Cookies.set("tokenData", JSON.stringify(tokenData));
 
             setLoggedUser(tokenData);
-            window.location.href = "/dashboard";
+            window.location.href = "/lists";
 
             return;
         } catch (err: any) {

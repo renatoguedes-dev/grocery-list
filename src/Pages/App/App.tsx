@@ -6,45 +6,43 @@ import PageContext from "../../components/Contexts/PageContext";
 import { ILoggedUser } from "../../In-memory-repository/usersDatabase";
 
 function App() {
-    const [activeSection, setActiveSection] = useState<string>("homepage");
-    const [createdUserEmail, setCreatedUserEmail] = useState<string | null>(
-        null
-    );
-    const [loggedUser, setLoggedUser] = useState<ILoggedUser | undefined>(
-        undefined
-    );
+  const [activeSection, setActiveSection] = useState<string>("homepage");
+  const [loggedUser, setLoggedUser] = useState<ILoggedUser | undefined>(
+    undefined
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
-    const location = useLocation();
+  const location = useLocation();
 
-    useEffect(() => {
-        const locationLength = location.pathname.split("/").length;
+  useEffect(() => {
+    const locationLength = location.pathname.split("/").length;
 
-        const section =
-            location.pathname.split("/")[locationLength - 1] || "homepage";
+    const section =
+      location.pathname.split("/")[locationLength - 1] || "homepage";
 
-        console.log(section);
+    console.log(section);
 
-        setActiveSection(section);
-    }, [location]);
+    setActiveSection(section);
+  }, [location]);
 
-    const pageContextValue = {
-        activeSection,
-        setActiveSection,
-        createdUserEmail,
-        setCreatedUserEmail,
-        loggedUser,
-        setLoggedUser,
-    };
+  const pageContextValue = {
+    activeSection,
+    setActiveSection,
+    loggedUser,
+    setLoggedUser,
+    loading,
+    setLoading,
+  };
 
-    return (
-        <div className={style.root}>
-            <PageContext.Provider value={pageContextValue}>
-                <Header />
+  return (
+    <div className={style.root}>
+      <PageContext.Provider value={pageContextValue}>
+        <Header />
 
-                <Outlet />
-            </PageContext.Provider>
-        </div>
-    );
+        <Outlet />
+      </PageContext.Provider>
+    </div>
+  );
 }
 
 export default App;

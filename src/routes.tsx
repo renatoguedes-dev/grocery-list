@@ -2,7 +2,6 @@ import App from "./Pages/App/App";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import HomeContent from "./components/HomeContent/HomeContent";
 import SignUp from "./Pages/SignUpPage/SignUpPage";
-import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import ResetPassword from "./Pages/ResetPassword/resetPassword";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
@@ -39,6 +38,10 @@ const routes = [
         element: <Dashboard />,
       },
       {
+        path: "/lists",
+        element: <Lists />,
+      },
+      {
         path: "/reset-password",
         element: <ResetPassword />,
       },
@@ -48,15 +51,6 @@ const routes = [
 
 if (token) {
   routes[0].children.push(
-    {
-      path: "/welcome",
-      element: <WelcomePage />,
-    },
-
-    {
-      path: "/lists",
-      element: <Lists />,
-    },
     {
       path: "/lists/:id",
       element: <ListById />,

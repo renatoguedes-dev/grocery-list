@@ -83,7 +83,7 @@ button {
   .container {
     height: calc(100vh - 60px);
   }
-  body {
+  body, html {
     overflow-x: hidden;
   }
 

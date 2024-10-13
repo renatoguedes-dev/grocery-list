@@ -48,12 +48,15 @@
   font-size: 16px;
   font-weight: 500;
   color: white;
-}
-
-.profileLink {
   background-color: var(--darker-grey);
   padding: 12px 14px;
   border-radius: var(--buttons-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  width: 118px;
 }
 
 .links {
@@ -83,15 +86,6 @@
     brightness(104%) contrast(105%);
 }
 
-.profileLink {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  width: 118px;
-}
-
 .accountBtnAndOther {
   position: relative;
   transition: all 0.5s ease-in-out;
@@ -106,7 +100,7 @@
   width: 118px;
   background-color: var(--darker-grey);
   color: white;
-  animation: top-to-bottom 0.2s ease-in;
+  animation: show-opacity 0.2s ease-in;
   border-bottom-right-radius: var(--buttons-border-radius);
   border-bottom-left-radius: var(--buttons-border-radius);
 
@@ -123,6 +117,7 @@
   padding: 6px 12px;
   width: 100%;
   position: relative;
+  justify-content: flex-start;
 }
 
 .accountLinks::after {
@@ -151,7 +146,7 @@
   background-color: white;
 }
 
-@keyframes top-to-bottom {
+@keyframes show-opacity {
   0% {
     opacity: 0;
   }
@@ -181,7 +176,6 @@
     padding: 36px 16px;
     font-size: 18px;
 
-
     position: fixed;
     gap: 10px;
     width: 100vw;
@@ -200,5 +194,33 @@
 
   .menuBtn {
     display: flex;
+  }
+
+  .profileLink {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--main-color);
+    padding: 4px 0px 12px;
+    border-radius: var(--buttons-border-radius);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    width: 118px;
+  }
+
+  .menuHover {
+    border-radius: var(--buttons-border-radius);
+  }
+
+  .accountLinks {
+    justify-content: flex-start;
+  }
+
+  .accountLinks p {
+    font-size: 16px;
   }
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { IInventories } from "../../In-memory-repository/Inventories";
 import style from "./inventory.module.css";
 import changeQuantityButtons from "../../utils/changeQuantityButtons";
@@ -13,11 +13,15 @@ import {
   updateInventoryItem,
   getUserInventory,
 } from "../../axios";
+import PageContext from "../../components/Contexts/PageContext";
+import Spinner from "../../components/Spinner/Spinner";
 
 const InventoryPage = () => {
   useCheckLoggedUser();
 
   const token = Cookies.get("token");
+
+  const { loading, setLoading } = useContext(PageContext);
 
   const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -26,24 +30,30 @@ const InventoryPage = () => {
     if (!token) throw new Error("No token provided");
 
     try {
+      setLoading(true);
       const result = await getUserInventory(token);
 
       const resultData = result.data.userInventory;
 
       setInventoryData(resultData);
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       console.log(err.message);
     }
-  }, [token]);
+  }, [token, setLoading]);
 
   const removeItemAPI = async (itemId: string) => {
     if (!token) throw new Error("No token provided");
 
     try {
+      setLoading(true);
       await removeInventoryItem(token, itemId);
 
       getInventoryAPI();
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       console.log(err.message);
     }
   };
@@ -61,6 +71,7 @@ const InventoryPage = () => {
     if (!updatedItemFound) throw new Error("No updated item found");
 
     try {
+      setLoading(true);
       await updateInventoryItem(
         token,
         itemId,
@@ -69,7 +80,9 @@ const InventoryPage = () => {
       );
 
       getInventoryAPI();
+      setLoading(false);
     } catch (err: any) {
+      setLoading(false);
       console.log(err.message);
     }
   };
@@ -109,7 +122,8 @@ const InventoryPage = () => {
         />
         <div className={style.headerDiv}>
           <h2 className={style.inventoryHeader}>Inventory</h2>
-          {inventoryData.length > 0 && (
+
+          {!loading && inventoryData.length > 0 && (
             <button
               className={style.newItemBtn}
               onClick={() => setIsModalOpen(true)}
@@ -119,7 +133,13 @@ const InventoryPage = () => {
           )}
         </div>
 
-        {inventoryData.length <= 0 && (
+        {loading && (
+          <div style={{ marginTop: "15px" }}>
+            <Spinner loading={loading} />
+          </div>
+        )}
+
+        {!loading && inventoryData.length <= 0 && (
           <div className={style.emptyDiv}>
             <p className={style.emptyInventory}>Your Inventory is empty.</p>
 
@@ -132,7 +152,7 @@ const InventoryPage = () => {
           </div>
         )}
 
-        {inventoryData.length > 0 && (
+        {!loading && inventoryData.length > 0 && (
           <table className={style.table}>
             <thead className={style.tableHead}>
               <tr>
