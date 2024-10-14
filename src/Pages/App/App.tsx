@@ -20,8 +20,6 @@ function App() {
     const section =
       location.pathname.split("/")[locationLength - 1] || "homepage";
 
-    console.log(section);
-
     setActiveSection(section);
   }, [location]);
 

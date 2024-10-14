@@ -118,6 +118,13 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
       dialog.close();
     }
 
+    // Handle Clicking outside the modal for closing it
+    const handleBackdropClick = (event: MouseEvent) => {
+      if (event.target === event.currentTarget) {
+        closeModal();
+      }
+    };
+
     // Handle Escape key
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -125,9 +132,11 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
       }
     };
 
+    dialog?.addEventListener("mousedown", handleBackdropClick);
     window.addEventListener("keydown", handleEscape);
 
     return () => {
+      dialog?.removeEventListener("mousedown", handleBackdropClick);
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose, closeModal]);
@@ -135,74 +144,76 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <dialog ref={dialogRef} className={style.modal}>
-      <h1 className={style.modalHeader}>Add a new item</h1>
-      <form
-        method="dialog"
-        className={style.newItemForm}
-        onSubmit={handleSubmit}
-      >
-        <div className={style.itemDiv}>
-          <div className={style.inputDivs}>
-            <label htmlFor="newItem">Item</label>
-            <input
-              id="newItem"
-              type="text"
-              name="item"
-              value={formData.item}
-              onChange={handleInputChange}
-              autoFocus
-            />
+    <dialog className={style.dialog} ref={dialogRef}>
+      <div className={style.modal}>
+        <h1 className={style.modalHeader}>Add a new item</h1>
+        <form
+          method="dialog"
+          className={style.newItemForm}
+          onSubmit={handleSubmit}
+        >
+          <div className={style.itemDiv}>
+            <div className={style.inputDivs}>
+              <label htmlFor="newItem">Item</label>
+              <input
+                id="newItem"
+                type="text"
+                name="item"
+                value={formData.item}
+                onChange={handleInputChange}
+                autoFocus
+              />
+            </div>
+
+            <p className={style.errorDiv} ref={itemErrorRef}>
+              This field cannot be empty *
+            </p>
           </div>
 
-          <p className={style.errorDiv} ref={itemErrorRef}>
-            This field cannot be empty *
-          </p>
-        </div>
+          <div className={style.currentAmountDiv}>
+            <div className={style.inputDivs}>
+              <label htmlFor="currentAmount">Current Amount</label>
+              <input
+                id="currentAmount"
+                type="number"
+                name="currentAmount"
+                value={formData.currentAmount}
+                onChange={handleInputChange}
+                min={0}
+              />
+            </div>
 
-        <div className={style.currentAmountDiv}>
-          <div className={style.inputDivs}>
-            <label htmlFor="currentAmount">Current Amount</label>
-            <input
-              id="currentAmount"
-              type="number"
-              name="currentAmount"
-              value={formData.currentAmount}
-              onChange={handleInputChange}
-              min={0}
-            />
+            <p className={style.errorDiv} ref={currentAmountErrorRef}>
+              This field cannot be empty *
+            </p>
           </div>
 
-          <p className={style.errorDiv} ref={currentAmountErrorRef}>
-            This field cannot be empty *
-          </p>
-        </div>
+          <div className={style.minimumAmountDiv}>
+            <div className={style.inputDivs}>
+              <label htmlFor="minimumAmount">Minimum Amount</label>
+              <input
+                id="minimumAmount"
+                type="number"
+                name="minimumAmount"
+                value={formData.minimumAmount}
+                onChange={handleInputChange}
+                min={0}
+              />
+            </div>
 
-        <div className={style.minimumAmountDiv}>
-          <div className={style.inputDivs}>
-            <label htmlFor="minimumAmount">Minimum Amount</label>
-            <input
-              id="minimumAmount"
-              type="number"
-              name="minimumAmount"
-              value={formData.minimumAmount}
-              onChange={handleInputChange}
-              min={0}
-            />
+            <p className={style.errorDiv} ref={minimumAmountErrorRef}>
+              This field cannot be empty *
+            </p>
           </div>
 
-          <p className={style.errorDiv} ref={minimumAmountErrorRef}>
-            This field cannot be empty *
-          </p>
-        </div>
-
-        <div className={style.buttonsDiv}>
-          <button type="submit">Add Item</button>
-          <button className={style.cancelBtn} onClick={closeModal}>
-            Cancel
-          </button>
-        </div>
-      </form>
+          <div className={style.buttonsDiv}>
+            <button type="submit">Add Item</button>
+            <button className={style.cancelBtn} onClick={closeModal}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </dialog>,
     document.body
   );
