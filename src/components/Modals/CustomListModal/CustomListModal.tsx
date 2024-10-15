@@ -179,7 +179,7 @@ const CustomListModal = ({
           </div>
 
           <div className={style.buttonsDiv}>
-            <button type="submit">Add Item</button>
+            <button type="submit">Add List</button>
             <button className={style.cancelBtn} onClick={closeModal}>
               Cancel
             </button>
