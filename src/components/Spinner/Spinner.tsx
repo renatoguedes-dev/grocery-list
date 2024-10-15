@@ -2,7 +2,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const override = {
   display: "block",
-  "user-select": "none"
 };
 
 type SpinnerProp = {
