@@ -11,7 +11,7 @@ function handlePasswordChange(
     formData: IChangePasswordForm
 ): boolean {
     const foundUser = usersDatabase.find(
-        (user) => user.userId === loggedUserId
+        (user) => user.id === loggedUserId
     );
 
     if (!foundUser) {
