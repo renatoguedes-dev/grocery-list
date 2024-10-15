@@ -3,8 +3,8 @@
 A web application for managing grocery lists and inventory, built with React and TypeScript.
 
 <p float="left" style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-  <img src="src\assets\images\projectpic1.png" alt="list section's picture" style="width: 100%; max-width: 300px;">
-  <img src="src\assets\images\projectpic2.png" alt="list detailed's picture" style="width: 100%; max-width: 300px;">
+  <img src="src\assets\images\projectpic1.png" alt="list section's picture" style="width: 350px; max-width: 350px;">
+  <img src="src\assets\images\projectpic2.png" alt="list detailed's picture" style="width: 350px; max-width: 350px;">
 </p>
 
 ## Features
@@ -63,7 +63,6 @@ The application uses React Router for navigation. Routes are defined in `routes.
 - Home (`/`)
 - Login (`/login`)
 - Signup (`/signup`)
-- Dashboard (`/dashboard`)
 - Lists (`/lists`)
 - Reset Password (`/reset-password`)
 - Individual List (`/lists/:id`)
