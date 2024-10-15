@@ -18,8 +18,6 @@ const HomeContent = () => {
 
   useEffect(() => {
     WakeBackendAPI();
-    console.log("here");
-    
 
     if (loggedUser) {
       navigate("/lists");
