@@ -3,6 +3,16 @@ import axios from "axios";
 //const BASE_URL_API = "http://localhost:3000";
 const BASE_URL_API = "https://grocery-list-backend-x404.onrender.com";
 
+export const wakeBackend = async () => {
+  try {
+    const result = await axios.get(`${BASE_URL_API}/api`);
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export const login = async (email: string, password: string) => {
   try {
     const result = await axios.post(`${BASE_URL_API}/api/login`, {

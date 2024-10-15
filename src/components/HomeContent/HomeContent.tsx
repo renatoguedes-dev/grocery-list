@@ -2,12 +2,25 @@ import { useContext, useEffect } from "react";
 import style from "./homeContent.module.css";
 import PageContext from "../Contexts/PageContext";
 import { useNavigate } from "react-router-dom";
+import { wakeBackend } from "../../axios";
 
 const HomeContent = () => {
   const navigate = useNavigate();
   const { loggedUser } = useContext(PageContext);
 
+  const WakeBackendAPI = async () => {
+    try {
+      await wakeBackend();
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
   useEffect(() => {
+    WakeBackendAPI();
+    console.log("here");
+    
+
     if (loggedUser) {
       navigate("/lists");
     }
