@@ -1,6 +1,8 @@
+import { Dispatch, SetStateAction } from "react";
 import { IInventories } from "../In-memory-repository/Inventories";
 
 const changeQuantityButtons = async (
+    setLocalInventoryData: Dispatch<SetStateAction<IInventories[]>>,
     updateItemAPI: (
         itemId: string,
         updatedInventoryArray: IInventories[]
@@ -24,6 +26,8 @@ const changeQuantityButtons = async (
 
         return inventory;
     });
+
+    setLocalInventoryData(updatedInventory);
 
     //update database only after to make sure the user doesn't get staggered
     updateItemAPI(inventoryItem.id, updatedInventory);

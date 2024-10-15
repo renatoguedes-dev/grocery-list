@@ -5,7 +5,7 @@ const ResetPassword = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(
-      `Our website does not have enough funds to send emails. You can donate to help us improve.\n\nReach the administrator for password resetting.`
+      `This feature is not working yet. Contact the server admin if you need to reset your password.`
     );
   };
   return (

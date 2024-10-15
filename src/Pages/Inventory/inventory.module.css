@@ -178,4 +178,9 @@
   .trashIcon {
     height: 14px;
   }
+
+  .emptyDiv .newItemBtn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
 }

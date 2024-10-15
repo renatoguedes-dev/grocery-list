@@ -1,3 +1,7 @@
+.mainContainer {
+  min-width: 400px;
+}
+
 .listHeader {
   display: flex;
   width: 100%;
@@ -76,8 +80,8 @@
   flex: 1;
   cursor: pointer;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
   max-width: 18px;
   max-height: 18px;
   border: 2px solid var(--light-grey);
@@ -127,4 +131,23 @@
   filter: invert(57%) sepia(87%) saturate(2989%) hue-rotate(324deg)
     brightness(88%) contrast(98%);
   cursor: pointer;
+}
+
+@media screen and (max-width: 670px) {
+  .mainContainer {
+    min-width: 90%;
+    padding: 16px 12px;
+  }
+
+  .listHeader h2 {
+    font-size: 20px;
+  }
+
+  .itemNameDiv, .itemAmountDiv {
+    font-size: 14px;
+  }
+
+  .dateDiv {
+    font-size: 12px;
+  }
 }

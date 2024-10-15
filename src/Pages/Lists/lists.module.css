@@ -147,4 +147,17 @@
     cursor: pointer;
     width: 100%;
   }
+
+  .headerDiv h2 {
+    font-size: 20px;
+  }
+
+  .listHeader {
+    font-size: 14px;
+  }
+
+  .insideBtn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
 }

@@ -50,6 +50,7 @@
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   position: relative;
   left: -10px;
+  align-self: center;
 }
 
 .inputDivs {
@@ -141,14 +142,19 @@
 }
 
 @media screen and (max-width: 670px) {
+  .mainContainer {
+    max-width: 345px;
+  }
+
   .personalDataDiv {
     margin-top: 24px;
     align-items: flex-start;
     gap: 18px;
     position: relative;
+    max-width: 100%;
   }
   .changePasswordForm {
-    max-width: 300px;
+    width: 98%;
     padding: 16px;
     gap: 12px;
     left: 0px;
@@ -171,5 +177,14 @@
   .changePasswordBtn {
     padding: 8px;
     font-size: 14px;
+  }
+
+  .firstPasswordBtn {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 20px;
   }
 }

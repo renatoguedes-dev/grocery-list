@@ -24,6 +24,9 @@ const InventoryPage = () => {
   const { loading, setLoading } = useContext(PageContext);
 
   const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
+  const [localInventoryData, setLocalInventoryData] = useState<IInventories[]>(
+    []
+  );
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const getInventoryAPI = useCallback(async () => {
@@ -71,18 +74,13 @@ const InventoryPage = () => {
     if (!updatedItemFound) throw new Error("No updated item found");
 
     try {
-      setLoading(true);
       await updateInventoryItem(
         token,
         itemId,
         updatedItemFound.currentAmount,
         updatedItemFound.minimumAmount
       );
-
-      getInventoryAPI();
-      setLoading(false);
     } catch (err: any) {
-      setLoading(false);
       console.log(err.message);
     }
   };
@@ -91,11 +89,17 @@ const InventoryPage = () => {
     getInventoryAPI();
   }, [getInventoryAPI]);
 
+  useEffect(() => {
+    if (localInventoryData.length !== inventoryData.length) {
+      setLocalInventoryData(inventoryData);
+    }
+  }, [inventoryData, localInventoryData]);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     currentInventory: IInventories
   ) => {
-    const updatedInventory = inventoryData.map((inventory) => {
+    const updatedInventory = localInventoryData.map((inventory) => {
       // Check if the current inventory item matches the one being
       // updated or not
       if (inventory.id === currentInventory.id) {
@@ -109,6 +113,7 @@ const InventoryPage = () => {
       return inventory;
     });
 
+    setLocalInventoryData(updatedInventory);
     updateItemAPI(currentInventory.id, updatedInventory);
   };
 
@@ -123,7 +128,7 @@ const InventoryPage = () => {
         <div className={style.headerDiv}>
           <h2 className={style.inventoryHeader}>Inventory</h2>
 
-          {!loading && inventoryData.length > 0 && (
+          {!loading && localInventoryData.length > 0 && (
             <button
               className={style.newItemBtn}
               onClick={() => setIsModalOpen(true)}
@@ -139,7 +144,7 @@ const InventoryPage = () => {
           </div>
         )}
 
-        {!loading && inventoryData.length <= 0 && (
+        {!loading && localInventoryData.length <= 0 && (
           <div className={style.emptyDiv}>
             <p className={style.emptyInventory}>Your Inventory is empty.</p>
 
@@ -152,7 +157,7 @@ const InventoryPage = () => {
           </div>
         )}
 
-        {!loading && inventoryData.length > 0 && (
+        {!loading && localInventoryData.length > 0 && (
           <table className={style.table}>
             <thead className={style.tableHead}>
               <tr>
@@ -163,7 +168,7 @@ const InventoryPage = () => {
               </tr>
             </thead>
             <tbody>
-              {inventoryData.map((inventory) => {
+              {localInventoryData.map((inventory) => {
                 return (
                   <tr key={inventory.id}>
                     <td className={style.itemTD}>{inventory.item}</td>
@@ -173,8 +178,9 @@ const InventoryPage = () => {
                           className={`${style.buttons} ${style.minusBtn}`}
                           onClick={() =>
                             changeQuantityButtons(
+                              setLocalInventoryData,
                               updateItemAPI,
-                              inventoryData,
+                              localInventoryData,
                               inventory,
                               -1,
                               "currentAmount"
@@ -202,8 +208,9 @@ const InventoryPage = () => {
                           className={`${style.buttons} ${style.plusBtn}`}
                           onClick={() =>
                             changeQuantityButtons(
+                              setLocalInventoryData,
                               updateItemAPI,
-                              inventoryData,
+                              localInventoryData,
                               inventory,
                               1,
                               "currentAmount"
@@ -224,8 +231,9 @@ const InventoryPage = () => {
                           className={`${style.buttons} ${style.minusBtn}`}
                           onClick={() =>
                             changeQuantityButtons(
+                              setLocalInventoryData,
                               updateItemAPI,
-                              inventoryData,
+                              localInventoryData,
                               inventory,
                               -1,
                               "minimumAmount"
@@ -252,8 +260,9 @@ const InventoryPage = () => {
                           className={`${style.buttons} ${style.plusBtn}`}
                           onClick={() =>
                             changeQuantityButtons(
+                              setLocalInventoryData,
                               updateItemAPI,
-                              inventoryData,
+                              localInventoryData,
                               inventory,
                               1,
                               "minimumAmount"

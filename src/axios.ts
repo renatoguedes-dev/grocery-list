@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL_API = "http://localhost:3000";
+//const BASE_URL_API = "http://localhost:3000";
+const BASE_URL_API = "https://grocery-list-backend-x404.onrender.com"
 
 export const login = async (email: string, password: string) => {
   try {
