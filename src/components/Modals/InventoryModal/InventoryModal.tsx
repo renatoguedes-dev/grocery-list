@@ -77,7 +77,7 @@ const InventoryModal = ({ isOpen, onClose, onUpdate }: InventoryModalProps) => {
 
     // Validate input fields
     const hasErrors = validateFields(
-      [{ fieldType: "item", value: formData.item, ref: itemErrorRef }],
+      [{ fieldType: "name", value: formData.item, ref: itemErrorRef }],
       style.activateError
     );
 

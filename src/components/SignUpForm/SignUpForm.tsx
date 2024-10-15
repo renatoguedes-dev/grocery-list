@@ -83,6 +83,7 @@ const SignUpForm = () => {
       [nameErrorRef, emailErrorRef, passwordErrorRef, confirmPasswordErrorRef],
       style.activateError
     );
+    setError(null);
 
     // Validate input fields
     const hasErrors = validateFields(

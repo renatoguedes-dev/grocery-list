@@ -12,10 +12,15 @@
   border-collapse: collapse;
   margin-top: 24px;
   user-select: text;
+  max-width: 90vw;
 }
 
 .tableHead {
   font-size: 16px;
+}
+
+.table tr {
+  max-width: 100%;
 }
 
 .table th,
@@ -25,7 +30,12 @@
   text-align: center;
 }
 
+.itemTD {
+  max-width: 60vw;
+}
+
 .table td {
+  word-wrap: break-word;
   font-size: 15px;
 }
 
@@ -157,7 +167,8 @@
   }
 
   .itemTD {
-    max-width: 100px;
+    width: 100px;
+    max-width: 30vw;
   }
 
   .table td:not(.itemTD) {

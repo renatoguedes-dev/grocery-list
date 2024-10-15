@@ -29,15 +29,23 @@ export const validateFields = (
       ref.current.classList.add(errorClass);
       ref.current.textContent = "This field cannot be empty *";
       hasError = true;
-    } else if (fieldType === "password" && value.length < 8 && ref.current) {
+    } else if (
+      fieldType === "password" &&
+      (value.length < 8 || value.length > 60) &&
+      ref.current
+    ) {
       ref.current.classList.add(errorClass);
-      ref.current.textContent = "Password must be at least 8 characters *";
+      ref.current.textContent = "Password length must be 8 - 60 characters *";
       hasError = true;
     } else if (fieldType === "email" && ref.current && !validateEmail(value)) {
       ref.current.classList.add(errorClass);
       ref.current.textContent = "Please enter a valid email *";
       hasError = true;
-    } else if (fieldType === "name" && ref.current && value.length < 2) {
+    } else if (
+      fieldType === "name" &&
+      ref.current &&
+      (value.length < 2 || value.length > 50)
+    ) {
       ref.current.classList.add(errorClass);
       ref.current.textContent = "Provide a valid name *";
       hasError = true;
@@ -72,6 +80,14 @@ export const validateNewItemAmount = (
     ) {
       ref.current.classList.add(errorClass);
       ref.current.textContent = "Amount cannot be less than 0 *";
+      amountHasError = true;
+    } else if (
+      typeof valueConverted === "number" &&
+      valueConverted > 99999 &&
+      ref.current
+    ) {
+      ref.current.classList.add(errorClass);
+      ref.current.textContent = "Amount cannot be more than 99999 *";
       amountHasError = true;
     } else if (typeof valueConverted !== "number" && ref.current) {
       ref.current.classList.add(errorClass);
