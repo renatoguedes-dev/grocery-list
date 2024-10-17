@@ -5,9 +5,10 @@ const BackArrowIcon = ({
   size = "24",
   className,
 }: IconProps) => {
+  // Create conditional attributes based on className
   const svgProps = className
     ? { className } // If className is provided, use only className
-    : { width: size, height: size, fill: color };
+    : { width: size, height: size, fill: color }; // Otherwise, use size and color
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" {...svgProps} viewBox="0 0 256 256">
