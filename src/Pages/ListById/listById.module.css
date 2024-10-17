@@ -15,7 +15,7 @@
   cursor: pointer;
   position: absolute;
   left: 30px;
-  top: 67px;
+  top: 70px;
   z-index: 5;
 }
 
@@ -169,7 +169,7 @@
   }
 
   .backArrowIcon {
-    top: 48px;
+    top: 52px;
     left: 12px;
     height: 21px;
   }
