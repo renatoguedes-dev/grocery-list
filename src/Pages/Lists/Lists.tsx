@@ -116,18 +116,15 @@ const Lists = () => {
 
         <div className={style.headerDiv}>
           <h2 className={style.listsHeader}>Your lists</h2>
-          {!loading &&
-            (userCustomLists.length > 0 || inventoryData.length > 0) && (
-              <button
-                className={style.customListBtn}
-                onClick={() => setIsModalOpen(true)}
-              >
-                <p>New List</p>
-              </button>
-            )}
+          {(userCustomLists.length > 0 || inventoryData.length > 0) && (
+            <button
+              className={style.customListBtn}
+              onClick={() => setIsModalOpen(true)}
+            >
+              <p>New List</p>
+            </button>
+          )}
         </div>
-
-        {loading && <Spinner loading={loading} />}
 
         {!loading &&
           userCustomLists.length <= 0 &&
@@ -142,6 +139,8 @@ const Lists = () => {
               </button>
             </>
           )}
+
+        {loading && <Spinner loading={loading} />}
 
         {!loading &&
           (userCustomLists.length > 0 || inventoryData.length > 0) && (

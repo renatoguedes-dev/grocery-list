@@ -1,4 +1,4 @@
-import { IconProps } from "../../../models/IconProps";
+import { IconProps } from "../../models/IconProps";
 
 const SettingsIcon = ({
     color = "#000000",

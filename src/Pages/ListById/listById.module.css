@@ -1,5 +1,22 @@
+.container {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+
 .mainContainer {
   min-width: 400px;
+}
+
+.backArrowIcon {
+  height: 25px;
+  fill: var(--main-color);
+  cursor: pointer;
+  position: absolute;
+  left: 30px;
+  top: 67px;
+  z-index: 5;
 }
 
 .listHeader {
@@ -149,5 +166,11 @@
 
   .dateDiv {
     font-size: 12px;
+  }
+
+  .backArrowIcon {
+    top: 48px;
+    left: 12px;
+    height: 21px;
   }
 }

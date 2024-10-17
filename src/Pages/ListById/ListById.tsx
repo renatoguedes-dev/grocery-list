@@ -1,6 +1,6 @@
 import style from "./listById.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import {
   deleteListItem,
@@ -14,6 +14,7 @@ import { formatDate } from "../../utils/datesFormatter";
 import ListItemModal from "../../components/Modals/ListItemModal/ListItemModal";
 import { IListItem } from "../../models/IListItem";
 import trashIcon from "../../assets/images/trashIcon.png";
+import BackArrowIcon from "../../components/icons/BackArrowIcon";
 
 const ListById = () => {
   const { id } = useParams();
@@ -93,8 +94,12 @@ const ListById = () => {
             onClose={() => setIsAddItemModalOpen(false)}
             onUpdate={getListItemsAPI}
           />
-          <div className="container">
+
+          <div className={`container ${style.container}`}>
             <main className={`mainContainer ${style.mainContainer}`}>
+              <Link to="/lists">
+                <BackArrowIcon className={style.backArrowIcon} />
+              </Link>
               <div className={style.listHeader}>
                 <h2>{list.name}</h2>
               </div>

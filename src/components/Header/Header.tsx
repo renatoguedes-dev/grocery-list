@@ -6,8 +6,8 @@ import logo from "../../assets/images/logo.png";
 import profileIcon from "../../assets/images/profile.png";
 import useCheckLoggedUser from "../../hooks/useCheckLoggedUser";
 import Cookies from "js-cookie";
-import LogoutIcon from "../icons/LogoutIcon/LogoutIcon";
-import ProfileIcon from "../icons/ProfileIcon/ProfileIcon";
+import LogoutIcon from "../icons/LogoutIcon";
+import ProfileIcon from "../icons/ProfileIcon";
 import MenuBtnBurger from "../MenuBtnBurger/MenuBtnBurger";
 
 const Header = () => {
@@ -31,7 +31,7 @@ const Header = () => {
       setMenuOpen((prev) => !prev);
     }
 
-    return
+    return;
   };
 
   return (
