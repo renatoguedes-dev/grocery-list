@@ -27,6 +27,7 @@ const ListById = () => {
 
   const [list, setList] = useState<IList | null>(null);
   const [listItems, setListItems] = useState<IListItem[]>([]);
+  const [localListItems, setLocalListItems] = useState<IListItem[]>([]);
   const [idNotFound, setIdNotFound] = useState(false);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
 
@@ -57,6 +58,22 @@ const ListById = () => {
 
     setListItems(result.data);
   }, [token, id]);
+
+  const handleCompleteStatus = (
+    listId: string,
+    itemId: string,
+    complete: boolean
+  ) => {
+    setLocalListItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId && item.listId === listId
+          ? { ...item, complete: !complete }
+          : item
+      )
+    );
+
+    updateCompleteStatusAPI(listId, itemId, complete);
+  };
 
   const updateCompleteStatusAPI = useCallback(
     async (listId: string, itemId: string, complete: boolean) => {
@@ -90,6 +107,12 @@ const ListById = () => {
     getListByIdAPI();
     getListItemsAPI();
   }, [getListByIdAPI, getListItemsAPI]);
+
+  useEffect(() => {
+    if (localListItems.length !== listItems.length) {
+      setLocalListItems(listItems);
+    }
+  }, [localListItems, listItems]);
 
   if (!list && idNotFound) {
     return <NotFoundPage />;
@@ -125,7 +148,7 @@ const ListById = () => {
                 <p>{formatDate(list.date)} </p>
               </div>
 
-              {listItems.length <= 0 && (
+              {localListItems.length <= 0 && (
                 <div className={style.emptyListDiv}>
                   <div>This list has no items yet.</div>
                   <button className={style.addItemBtn} onClick={handleAddItem}>
@@ -134,7 +157,7 @@ const ListById = () => {
                 </div>
               )}
 
-              {listItems.length > 0 && (
+              {localListItems.length > 0 && (
                 <div className={style.contentDiv}>
                   <button
                     className={style.insideAddItemBtn}
@@ -143,14 +166,14 @@ const ListById = () => {
                     <p>Add Item</p>
                   </button>
 
-                  {listItems.map((item) => (
+                  {localListItems.map((item) => (
                     <div key={item.id} className={style.itemDiv}>
                       <input
                         type="checkbox"
                         className={style.checkboxDiv}
                         checked={item.complete}
                         onChange={() =>
-                          updateCompleteStatusAPI(
+                          handleCompleteStatus(
                             item.listId,
                             item.id,
                             item.complete
