@@ -2,11 +2,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  
-}
-
-.loadingComponent {
-  margin-top: 100px;
 }
 
 .mainContainer {
@@ -164,7 +159,8 @@
     font-size: 20px;
   }
 
-  .itemNameDiv, .itemAmountDiv {
+  .itemNameDiv,
+  .itemAmountDiv {
     font-size: 14px;
   }
 

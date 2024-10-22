@@ -80,6 +80,10 @@ button {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.loadingDiv {
+  user-select: none;
+}
+
 @media screen and (max-width: 670px) {
   .container {
     height: calc(100vh - 60px);

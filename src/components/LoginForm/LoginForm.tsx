@@ -73,7 +73,7 @@ const LoginForm = () => {
   return (
     <>
       {loading && (
-        <div className={style.loadingDiv}>
+        <div className="loadingDiv">
           <Spinner loading={loading} />{" "}
         </div>
       )}

@@ -139,7 +139,7 @@ const InventoryPage = () => {
         </div>
 
         {loading && (
-          <div style={{ marginTop: "15px" }}>
+          <div className="loadingDiv" style={{ marginTop: "15px" }}>
             <Spinner loading={loading} />
           </div>
         )}

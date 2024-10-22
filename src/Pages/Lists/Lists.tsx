@@ -140,7 +140,11 @@ const Lists = () => {
             </>
           )}
 
-        {loading && <Spinner loading={loading} />}
+        {loading && (
+          <div className="loadingDiv">
+            <Spinner loading={loading} />
+          </div>
+        )}
 
         {!loading &&
           (userCustomLists.length > 0 || inventoryData.length > 0) && (

@@ -6,10 +6,6 @@
   position: relative;
 }
 
-.loadingDiv {
-  user-select: none;
-}
-
 .image {
   height: 500px;
 }

@@ -121,7 +121,7 @@ const ListById = () => {
   return (
     <div className={`container ${style.container}`}>
       {loading && (
-        <div className={style.loadingComponent}>
+        <div className="loadingDiv" style={{ marginTop: "100px" }}>
           <Spinner loading={loading} />
         </div>
       )}
