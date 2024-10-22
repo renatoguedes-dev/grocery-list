@@ -1,5 +1,5 @@
 import style from "./listById.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import {
@@ -15,11 +15,15 @@ import ListItemModal from "../../components/Modals/ListItemModal/ListItemModal";
 import { IListItem } from "../../models/IListItem";
 import trashIcon from "../../assets/images/trashIcon.png";
 import BackArrowIcon from "../../components/icons/BackArrowIcon";
+import PageContext from "../../components/Contexts/PageContext";
+import Spinner from "../../components/Spinner/Spinner";
 
 const ListById = () => {
   const { id } = useParams();
 
   const token = Cookies.get("token");
+
+  const { loading, setLoading } = useContext(PageContext);
 
   const [list, setList] = useState<IList | null>(null);
   const [listItems, setListItems] = useState<IListItem[]>([]);
@@ -30,14 +34,21 @@ const ListById = () => {
     if (!token) throw new Error("No token provided");
 
     try {
+      setLoading(true);
+
       const result = await getListById(token, id!);
 
       setList(result.data.requestedList);
+
+      setLoading(false);
     } catch (err: any) {
       setIdNotFound(true);
+
+      setLoading(false);
+
       console.log(err.message);
     }
-  }, [token, id]);
+  }, [token, id, setLoading]);
 
   const getListItemsAPI = useCallback(async () => {
     if (!token) throw new Error("No token provided");
@@ -85,8 +96,14 @@ const ListById = () => {
   }
 
   return (
-    <>
-      {list && !idNotFound && (
+    <div className={`container ${style.container}`}>
+      {loading && (
+        <div className={style.loadingComponent}>
+          <Spinner loading={loading} />
+        </div>
+      )}
+
+      {!loading && list && !idNotFound && (
         <>
           <ListItemModal
             listId={id!}
@@ -95,73 +112,68 @@ const ListById = () => {
             onUpdate={getListItemsAPI}
           />
 
-          <div className={`container ${style.container}`}>
-            <main className={`mainContainer ${style.mainContainer}`}>
-              <Link to="/lists">
-                <BackArrowIcon className={style.backArrowIcon} />
-              </Link>
-              <div className={style.listHeader}>
-                <h2>{list.name}</h2>
+          <main className={`mainContainer ${style.mainContainer}`}>
+            <Link to="/lists">
+              <BackArrowIcon className={style.backArrowIcon} />
+            </Link>
+            <div className={style.listHeader}>
+              <h2>{list.name}</h2>
+            </div>
+
+            <div className={style.listBody}>
+              <div className={style.dateDiv}>
+                <p>{formatDate(list.date)} </p>
               </div>
 
-              <div className={style.listBody}>
-                <div className={style.dateDiv}>
-                  <p>{formatDate(list.date)} </p>
+              {listItems.length <= 0 && (
+                <div className={style.emptyListDiv}>
+                  <div>This list has no items yet.</div>
+                  <button className={style.addItemBtn} onClick={handleAddItem}>
+                    Add Item
+                  </button>
                 </div>
+              )}
 
-                {listItems.length <= 0 && (
-                  <div className={style.emptyListDiv}>
-                    <div>This list has no items yet.</div>
-                    <button
-                      className={style.addItemBtn}
-                      onClick={handleAddItem}
-                    >
-                      Add Item
-                    </button>
-                  </div>
-                )}
+              {listItems.length > 0 && (
+                <div className={style.contentDiv}>
+                  <button
+                    className={style.insideAddItemBtn}
+                    onClick={handleAddItem}
+                  >
+                    <p>Add Item</p>
+                  </button>
 
-                {listItems.length > 0 && (
-                  <div className={style.contentDiv}>
-                    <button
-                      className={style.insideAddItemBtn}
-                      onClick={handleAddItem}
-                    >
-                      <p>Add Item</p>
-                    </button>
-
-                    {listItems.map((item) => (
-                      <div key={item.id} className={style.itemDiv}>
-                        <input
-                          type="checkbox"
-                          className={style.checkboxDiv}
-                          checked={item.complete}
-                          onChange={() =>
-                            updateCompleteStatusAPI(
-                              item.listId,
-                              item.id,
-                              item.complete
-                            )
-                          }
-                        />
-                        <div className={style.itemNameDiv}>{item.name}</div>
-                        <div className={style.itemAmountDiv}>{item.amount}</div>
-                        <img
-                          className={`${style.trashIcon} ${style.icons}`}
-                          src={trashIcon}
-                          alt="trash icon"
-                          onClick={() => deleteListItemAPI(item.id)}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </main>
-          </div>
+                  {listItems.map((item) => (
+                    <div key={item.id} className={style.itemDiv}>
+                      <input
+                        type="checkbox"
+                        className={style.checkboxDiv}
+                        checked={item.complete}
+                        onChange={() =>
+                          updateCompleteStatusAPI(
+                            item.listId,
+                            item.id,
+                            item.complete
+                          )
+                        }
+                      />
+                      <div className={style.itemNameDiv}>{item.name}</div>
+                      <div className={style.itemAmountDiv}>{item.amount}</div>
+                      <img
+                        className={`${style.trashIcon} ${style.icons}`}
+                        src={trashIcon}
+                        alt="trash icon"
+                        onClick={() => deleteListItemAPI(item.id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </main>
         </>
       )}
-    </>
+    </div>
   );
 };
 
