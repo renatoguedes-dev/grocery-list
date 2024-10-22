@@ -12,7 +12,7 @@
   background-color: var(--light-blue);
 
   --light-grey: #d1d1d1;
-  --dark-grey: #4a4a4a;
+  --dark-grey: #3d3d3d;
   --darker-grey: hsl(225, 11%, 15%);
   --darker-grey-hover: hsl(228, 10%, 18%);
   --light-blue: #ddf1fd;
@@ -88,7 +88,8 @@ button {
   .container {
     height: calc(100vh - 60px);
   }
-  body, html {
+  body,
+  html {
     overflow-x: hidden;
   }
 

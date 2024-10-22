@@ -38,6 +38,7 @@
   gap: 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .inputs {
@@ -69,8 +70,8 @@
 
 .icons {
   width: 100%;
-  filter: invert(62%) sepia(0%) saturate(59%) hue-rotate(279deg) brightness(84%)
-    contrast(91%);
+  filter: invert(22%) sepia(0%) saturate(0%) hue-rotate(173deg) brightness(98%)
+    contrast(92%);
 }
 
 .showPassword {
