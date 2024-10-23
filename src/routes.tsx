@@ -11,7 +11,7 @@ import Logout from "./Pages/Logout/Logout";
 import ListById from "./Pages/ListById/ListById";
 import InventoryList from "./Pages/InventoryList/InventoryList";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import ResetPassword from "./Pages/ResetPassword/temp_ResetPassword";
 
 const routes = [
   {
