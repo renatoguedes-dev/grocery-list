@@ -50,6 +50,8 @@
   color: var(--dark-grey);
 }
 
+
+
 .inputDivs:focus-within {
   border: 2px solid var(--dark-grey);
   border-color: var(--dark-grey);

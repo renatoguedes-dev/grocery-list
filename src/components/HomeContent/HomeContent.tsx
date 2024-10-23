@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import style from "./homeContent.module.css";
-import PageContext from "../Contexts/PageContext";
 import { useNavigate } from "react-router-dom";
 import { wakeBackend } from "../../axios";
+import Cookies from "js-cookie";
 
 const HomeContent = () => {
   const navigate = useNavigate();
-  const { loggedUser } = useContext(PageContext);
+  let loggedUserData = null;
 
   const WakeBackendAPI = async () => {
     try {
@@ -19,13 +19,17 @@ const HomeContent = () => {
   useEffect(() => {
     WakeBackendAPI();
 
-    if (loggedUser) {
-      navigate("/lists");
-    }
-  }, [loggedUser, navigate]);
+    loggedUserData = Cookies.get("tokenData");
 
-  if (loggedUser) {
+    if (loggedUserData) {
+      navigate("/lists");
+      return;
+    }
+  }, [navigate]);
+
+  if (loggedUserData) {
     // Prevent rendering the rest of the page if redirecting
+
     return null;
   }
 

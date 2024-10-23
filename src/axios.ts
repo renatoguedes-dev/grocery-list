@@ -294,3 +294,44 @@ export const changePassword = async (
     throw new Error(err.response.data.message);
   }
 };
+
+export const sendResetEmail = async (userEmail: string) => {
+  try {
+    const result = await axios.post(`${BASE_URL_API}/api/reset-password`, {
+      email: userEmail,
+    });
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const checkResetToken = async (token: string) => {
+  try {
+    const result = await axios.get(
+      `${BASE_URL_API}/api/reset-password/${token}`
+    );
+
+    return result.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+export const resetPassword = async (
+  password: string,
+  confirmPassword: string,
+  token: string
+) => {
+  try {
+    const result = await axios.post(
+      `${BASE_URL_API}/api/reset-password/${token}`,
+      { password, confirmPassword }
+    );
+
+    return result;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};

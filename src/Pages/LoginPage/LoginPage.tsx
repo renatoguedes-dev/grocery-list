@@ -5,8 +5,6 @@ import useRedirectIfLoggedIn from "../../hooks/useRedirectIfLoggedIn";
 const LoginPage = () => {
   useRedirectIfLoggedIn();
 
-  // const { loading } = useContext(PageContext);
-
   return (
     <div className="container">
       <main className={style.mainContainer}>

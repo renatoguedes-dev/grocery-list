@@ -41,7 +41,7 @@ const LoginForm = () => {
       const userFound = await login(formData.email, formData.password);
 
       if (!userFound.data.token) {
-        throw new Error("E-mail and/or password is invalid! (loginAPI())");
+        throw new Error("E-mail and/or password is invalid!");
       }
 
       const token = userFound.data.token;
@@ -133,7 +133,7 @@ const LoginForm = () => {
               </p>
             </div>
 
-            <Link to="/reset-password" className={style.signUpLink}>
+            <Link to="/forgot-password" className={style.signUpLink}>
               <p className={style.forgotSignUp}>Forgot password?</p>
             </Link>
 

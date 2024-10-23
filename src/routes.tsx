@@ -3,17 +3,15 @@ import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import HomeContent from "./components/HomeContent/HomeContent";
 import SignUp from "./Pages/SignUpPage/SignUpPage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
-import ResetPassword from "./Pages/ResetPassword/resetPassword";
 import Dashboard from "./Pages/DashboardPage/Dashboard";
 import InventoryPage from "./Pages/Inventory/Inventory";
 import Lists from "./Pages/Lists/Lists";
 import Profile from "./Pages/Profile/Profile";
 import Logout from "./Pages/Logout/Logout";
-import Cookies from "js-cookie";
 import ListById from "./Pages/ListById/ListById";
 import InventoryList from "./Pages/InventoryList/InventoryList";
-
-const token = Cookies.get("token");
+import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 
 const routes = [
   {
@@ -42,36 +40,35 @@ const routes = [
         element: <Lists />,
       },
       {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
         path: "/reset-password",
         element: <ResetPassword />,
+      },
+      {
+        path: "/lists/:id",
+        element: <ListById />,
+      },
+      {
+        path: "/inventory/list",
+        element: <InventoryList />,
+      },
+      {
+        path: "/inventory",
+        element: <InventoryPage />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
     ],
   },
 ];
-
-if (token) {
-  routes[0].children.push(
-    {
-      path: "/lists/:id",
-      element: <ListById />,
-    },
-    {
-      path: "/inventory/list",
-      element: <InventoryList />,
-    },
-    {
-      path: "/inventory",
-      element: <InventoryPage />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/logout",
-      element: <Logout />,
-    }
-  );
-}
 
 export default routes;

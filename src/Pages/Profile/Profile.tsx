@@ -191,6 +191,7 @@ const Profile = () => {
                       className={style.icons}
                     />
                   </div>
+
                   <input
                     type="password"
                     name="oldPassword"
@@ -201,6 +202,7 @@ const Profile = () => {
                     ref={oldPasswordInputRef}
                     autoFocus
                   />
+                  
                   <div className={style.imageDiv}>
                     <img
                       src={showOldPassword ? eyeOpen : eyeHidden}
