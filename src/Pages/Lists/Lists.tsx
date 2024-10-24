@@ -36,9 +36,9 @@ const Lists = () => {
   const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
 
   const getInventoryAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
-
+    
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
 
       const result = await getUserInventory(token);
@@ -65,9 +65,9 @@ const Lists = () => {
   }, [token, setLoading]);
 
   const getCustomListsAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
-
+    
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
       const result = await getUserCustomLists(token);
 
@@ -82,9 +82,9 @@ const Lists = () => {
   const deleteCustomListAPI = async (e: MouseEvent, listId: string) => {
     e.preventDefault();
 
-    if (!token) throw new Error("No token provided");
-
+    
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
 
       await deleteCustomList(token, listId);

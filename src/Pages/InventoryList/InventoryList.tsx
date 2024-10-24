@@ -11,9 +11,8 @@ const InventoryList = () => {
   const [inventoryData, setInventoryData] = useState<IInventories[]>([]);
 
   const getInventoryAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
-
     try {
+      if (!token) throw new Error("No token provided");
       const result = await getUserInventory(token);
 
       const resultData = result.data.userInventory;

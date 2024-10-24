@@ -47,8 +47,15 @@ const LoginForm = () => {
       const token = userFound.data.token;
       const tokenData: any = decodeToken(token);
 
-      Cookies.set("token", token);
-      Cookies.set("tokenData", JSON.stringify(tokenData));
+      Cookies.set("token", token, {
+        sameSite: "None",
+        secure: true,
+      });
+      
+      Cookies.set("tokenData", JSON.stringify(tokenData), {
+        sameSite: "None",
+        secure: true,
+      });
 
       setLoggedUser(tokenData);
 

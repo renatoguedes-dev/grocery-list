@@ -69,9 +69,8 @@ const Profile = () => {
   };
 
   const changePasswordAPI = async () => {
-    if (!token) throw new Error("No token provided");
-
     try {
+      if (!token) throw new Error("No token provided");
       const result = await changePassword(
         token,
         formData.oldPassword,
@@ -202,7 +201,7 @@ const Profile = () => {
                     ref={oldPasswordInputRef}
                     autoFocus
                   />
-                  
+
                   <div className={style.imageDiv}>
                     <img
                       src={showOldPassword ? eyeOpen : eyeHidden}

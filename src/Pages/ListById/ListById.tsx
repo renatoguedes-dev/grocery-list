@@ -32,9 +32,8 @@ const ListById = () => {
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
 
   const getListByIdAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
-
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
 
       const result = await getListById(token, id!);
@@ -52,11 +51,15 @@ const ListById = () => {
   }, [token, id, setLoading]);
 
   const getListItemsAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
+    try {
+      if (!token) throw new Error("No token provided");
 
-    const result = await getListItems(token, id!);
+      const result = await getListItems(token, id!);
 
-    setListItems(result.data);
+      setListItems(result.data);
+    } catch (err: any) {
+      console.log(err.message);
+    }
   }, [token, id]);
 
   const handleCompleteStatus = (
@@ -77,22 +80,30 @@ const ListById = () => {
 
   const updateCompleteStatusAPI = useCallback(
     async (listId: string, itemId: string, complete: boolean) => {
-      if (!token) throw new Error("No token provided");
+      try {
+        if (!token) throw new Error("No token provided");
 
-      await updateCompleteStatus(token, listId, itemId, !complete);
+        await updateCompleteStatus(token, listId, itemId, !complete);
 
-      getListItemsAPI();
+        getListItemsAPI();
+      } catch (err: any) {
+        console.log(err.message);
+      }
     },
     [token, getListItemsAPI]
   );
 
   const deleteListItemAPI = useCallback(
     async (itemId: string) => {
-      if (!token) throw new Error("No token provided");
+      try {
+        if (!token) throw new Error("No token provided");
 
-      await deleteListItem(token, id!, itemId);
+        await deleteListItem(token, id!, itemId);
 
-      getListItemsAPI();
+        getListItemsAPI();
+      } catch (err: any) {
+        console.log(err.message);
+      }
     },
     [token, id, getListItemsAPI]
   );

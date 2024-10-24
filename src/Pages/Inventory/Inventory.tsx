@@ -30,9 +30,8 @@ const InventoryPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const getInventoryAPI = useCallback(async () => {
-    if (!token) throw new Error("No token provided");
-
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
       const result = await getUserInventory(token);
 
@@ -47,9 +46,8 @@ const InventoryPage = () => {
   }, [token, setLoading]);
 
   const removeItemAPI = async (itemId: string) => {
-    if (!token) throw new Error("No token provided");
-
     try {
+      if (!token) throw new Error("No token provided");
       setLoading(true);
       await removeInventoryItem(token, itemId);
 
@@ -65,15 +63,14 @@ const InventoryPage = () => {
     itemId: string,
     updatedInventoryArray: IInventories[]
   ) => {
-    if (!token) throw new Error("No token provided");
-
-    const updatedItemFound = updatedInventoryArray.find(
-      (updated) => updated.id === itemId
-    );
-
-    if (!updatedItemFound) throw new Error("No updated item found");
-
     try {
+      if (!token) throw new Error("No token provided");
+
+      const updatedItemFound = updatedInventoryArray.find(
+        (updated) => updated.id === itemId
+      );
+
+      if (!updatedItemFound) throw new Error("No updated item found");
       await updateInventoryItem(
         token,
         itemId,

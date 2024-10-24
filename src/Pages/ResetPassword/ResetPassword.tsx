@@ -70,8 +70,15 @@ const ResetPassword = () => {
       console.log({ newToken });
       console.log({ tokenData });
 
-      Cookies.set("token", newToken);
-      Cookies.set("tokenData", JSON.stringify(tokenData));
+      Cookies.set("token", newToken, {
+        sameSite: "None",
+        secure: true,
+      });
+
+      Cookies.set("tokenData", JSON.stringify(tokenData), {
+        sameSite: "None",
+        secure: true,
+      });
 
       setLoggedUser(tokenData);
 
